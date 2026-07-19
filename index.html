@@ -500,6 +500,52 @@ body.view-proveedores .proveedores{display:block}
   .prov-table td::before{content:attr(data-lbl);display:block;font-size:11px;text-transform:uppercase;color:#8a7d84;font-weight:700;margin-bottom:3px}
 }
 
+
+/* ===== Hito 5: itinerario checks + usuarios ===== */
+.itin-prog{display:flex;align-items:center;gap:12px;margin:6px 0 14px}
+.itin-prog .ip-bar{flex:1;height:12px;background:#eadfe4;border-radius:99px;overflow:hidden}
+.itin-prog #itinProgFill{height:100%;background:linear-gradient(90deg,#c98aa4,#6b8f5e);width:0;transition:width .3s}
+.itin-prog #itinProgTxt{font-size:12.5px;color:#8a7d84;white-space:nowrap}
+.itin-chk{text-align:center;width:56px}
+.itcheck{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--line);background:#fff;cursor:pointer;font-size:16px;color:#6b8f5e;font-weight:700}
+.itcheck.on{background:#6b8f5e;border-color:#6b8f5e;color:#fff}
+tr.itdone .cinput input{text-decoration:line-through;color:#9a9a9a}
+.um-modal{position:fixed;inset:0;z-index:9500;display:none;align-items:flex-start;justify-content:center;background:rgba(20,14,18,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:20px;overflow:auto}
+.um-card{background:#fff;border-radius:18px;max-width:820px;width:100%;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.3)}
+.um-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.um-top h2{font-family:Georgia,serif;color:#7a3b52;margin:0;font-size:22px}
+.um-x{border:none;background:none;font-size:22px;cursor:pointer;color:#8a7d84}
+.um-section{border-top:1px solid var(--line);padding:14px 0}
+.um-section h3{margin:0 0 10px;font-size:14px;color:#5c2a3d}
+.um-form,.mm-add{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.um-form input,.um-form select,.mm-add select{border:1px solid var(--line);border-radius:9px;padding:9px 11px;font-size:14px}
+.um-form input{flex:1;min-width:130px}
+.users-list{display:flex;flex-direction:column;gap:6px;max-height:210px;overflow:auto}
+.urow{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.uinfo b{font-size:14px}.uinfo span{display:block;font-size:12px;color:#8a7d84}
+.uacts{display:flex;gap:6px}
+.uacts button,.member-head button,.mm-add button,.um-form button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px;font-size:12.5px;font-weight:600;cursor:pointer}
+.uacts .danger,.member-head .danger{color:#c0392b;border-color:#e0b4ad}
+.um-empty{color:#8a7d84;font-size:13px;padding:8px 0}
+.perm-palette{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.pp-lbl{font-size:12px;color:#8a7d84}
+.perm-card{padding:7px 13px;border-radius:99px;font-size:12.5px;font-weight:700;cursor:grab;color:#fff;user-select:none}
+.perm-card[data-perm="read"]{background:#e0a83c}
+.perm-card[data-perm="edit"]{background:#3f7d52}
+.perm-card[data-perm="default"]{background:#8a7d84}
+.member{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.member-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.member-head b{flex:1;min-width:120px}
+.member-head select{border:1px solid var(--line);border-radius:8px;padding:7px;font-size:13px}
+.perm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px}
+.perm-slot{border:1.5px dashed var(--line);border-radius:10px;padding:8px;text-align:center;cursor:pointer;transition:.15s}
+.perm-slot.over{border-color:#c98aa4;background:#fbeef3}
+.perm-slot b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:#8a7d84}
+.perm-chip{display:inline-block;margin-top:4px;font-size:12px;font-weight:700;padding:3px 8px;border-radius:99px;background:#f0e7ea;color:#9a7d86}
+.perm-slot.p-edit .perm-chip{background:#e3f0e6;color:#2f6b41}
+.perm-slot.p-read .perm-chip{background:#f7ecd4;color:#8a6a1e}
+@media(max-width:760px){ .um-card{padding:16px} .um-form input{min-width:0} }
+
 </style>
 </head>
 <body>
@@ -596,7 +642,7 @@ body.view-proveedores .proveedores{display:block}
     <span class="tb-todo">
       <button class="primary" onclick="window.print()">Descargar PDF</button>
     </span>
-    <span id="countdown" class="evbadge"></span><span id="saveState" class="savestate"></span><button class="ghost" onclick="backToEvents()">Eventos</button><button class="ghost" onclick="logout()">Salir</button>
+    <span id="countdown" class="evbadge"></span><span id="saveState" class="savestate"></span><button class="ghost um-btn" onclick="openUsers()" style="display:none">Usuarios</button><button class="ghost" onclick="backToEvents()">Eventos</button><button class="ghost" onclick="logout()">Salir</button>
     <button class="ghost tb-extra" onclick="exportJSON()">Guardar archivo</button>
     <button class="ghost tb-extra" onclick="document.getElementById('importer').click()">Abrir archivo</button>
     <button class="ghost tb-extra" onclick="window.print()">Imprimir</button>
@@ -726,8 +772,9 @@ body.view-proveedores .proveedores{display:block}
 <div class="itin">
   <div class="budget-inner">
     <h2 class="bsec">Itinerario del evento</h2>
+    <div class="itin-prog"><div class="ip-bar"><div id="itinProgFill"></div></div><span id="itinProgTxt"></span></div>
     <table class="btable">
-      <thead><tr><th style="width:110px">Hora</th><th>Actividad</th><th>Responsable / Notas</th><th></th></tr></thead>
+      <thead><tr><th class="itin-chk">Hecho</th><th style="width:110px">Hora</th><th>Actividad</th><th>Responsable / Notas</th><th></th></tr></thead>
       <tbody id="itinBody"></tbody>
     </table>
     <button class="addrow" onclick="addItin()">＋ Agregar renglón</button>
@@ -778,6 +825,28 @@ body.view-proveedores .proveedores{display:block}
 </div>
 
 </div><!--/app-shell-->
+<div id="usersModal" class="um-modal">
+  <div class="um-card">
+    <div class="um-top"><h2>Usuarios y permisos</h2><button class="um-x" onclick="closeUsers()">x</button></div>
+    <div class="um-section">
+      <h3>Crear usuario</h3>
+      <div class="um-form">
+        <input id="nuEmail" type="email" placeholder="Correo">
+        <input id="nuName" type="text" placeholder="Nombre">
+        <input id="nuPass" type="text" placeholder="Contrasena (min 6)">
+        <select id="nuRole" class="umSuperOnly"><option value="member">Usuario</option><option value="admin">Administrador</option><option value="super_admin">Super Admin</option></select>
+        <button class="primary" onclick="createUserUI()">Crear</button>
+      </div>
+    </div>
+    <div class="um-section"><h3>Usuarios</h3><div id="usersList" class="users-list"></div></div>
+    <div class="um-section">
+      <h3>Miembros de este evento</h3>
+      <div class="mm-add"><select id="mmUser"></select><select id="mmRole"><option value="wedding_planner">Wedding Planner</option><option value="novios">Novios</option><option value="jardin">Jardin/Salon</option><option value="admin">Administrador</option></select><button class="primary" onclick="addMemberUI()">Asignar</button></div>
+      <div class="perm-palette"><span class="pp-lbl">Arrastra a cada pestana (o clic para alternar):</span><span class="perm-card" draggable="true" data-perm="read">Lectura</span><span class="perm-card" draggable="true" data-perm="edit">Edicion</span><span class="perm-card" draggable="true" data-perm="default">Por rol</span></div>
+      <div id="membersList" class="members-list"></div>
+    </div>
+  </div>
+</div>
 <div id="toast" class="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1490,13 +1559,22 @@ function addNo(){ state.music.no.push({id:uid(),cancion:"",artista:""}); mark('m
 function renderItin(){
   const ib=document.getElementById('itinBody'); ib.innerHTML='';
   state.itin.forEach(r=>{
-    const tr=document.createElement('tr');
+    const tr=document.createElement('tr'); if(r.done) tr.classList.add('itdone');
+    const chk=document.createElement('td'); chk.className='itin-chk';
+    const b=document.createElement('button'); b.className='itcheck'+(r.done?' on':''); b.textContent=r.done?'✓':'';
+    b.title='Marcar completado';
+    b.addEventListener('click',()=>{ r.done=!r.done; mark('itin'); renderItin(); });
+    chk.appendChild(b); tr.appendChild(chk);
     const h=txtCell(r.hora,v=>r.hora=v); h.querySelector('input').style.textAlign='center'; tr.appendChild(h);
     const a=txtCell(r.actividad,v=>r.actividad=v); a.className='cinput'; tr.appendChild(a);
     tr.appendChild(txtCell(r.notas,v=>r.notas=v));
     tr.appendChild(delCell(()=>{ state.itin=state.itin.filter(x=>x.id!==r.id); mark('itin'); renderItin(); }));
     ib.appendChild(tr);
   });
+  const total=state.itin.length, done=state.itin.filter(x=>x.done).length;
+  const pct=total?Math.round(done/total*100):0;
+  const f=document.getElementById('itinProgFill'); if(f) f.style.width=pct+'%';
+  const t=document.getElementById('itinProgTxt'); if(t) t.textContent=done+' de '+total+' completado ('+pct+'%)';
   applyRO();
 }
 function addItin(){ state.itin.push({id:uid(),hora:"",actividad:"",notas:""}); mark('itin'); renderItin(); }
@@ -1685,6 +1763,7 @@ async function openEvent(ev){
   // primera pestaña visible
   const firstVisible=[...document.querySelectorAll('.vtab')].find(b=>b.style.display!=='none');
   setView(firstVisible?firstVisible.dataset.v:'jardin');
+  const umb=document.querySelector('.um-btn'); if(umb) umb.style.display=canManageUsers()?'':'none';
   document.getElementById('app-shell').style.display='';
 }
 /* nuevo evento */
@@ -1705,6 +1784,102 @@ async function createEvent(e){
   if(error){ toast('Error al crear el evento'); console.error(error); return; }
   closeNewEvent();
   await openEvent(data);
+}
+
+/* ---------------- Gestión de usuarios y permisos (Hito 5) ---------------- */
+let ALLUSERS=[], MEMBERS=[];
+const PERM_TABS=[['invitados','Invitados'],['layout','Layout'],['presupuesto','Presupuesto'],['proveedores','Proveedores'],['musica','Música'],['itinerario','Itinerario'],['todo','To Do']];
+function canManageUsers(){ return PROFILE && (PROFILE.platform_role==='super_admin'||PROFILE.platform_role==='admin'); }
+async function openUsers(){
+  if(!canManageUsers()){ toast('Sin permiso'); return; }
+  const isSuper=PROFILE.platform_role==='super_admin';
+  document.querySelectorAll('.umSuperOnly').forEach(e=>e.style.display=isSuper?'':'none');
+  document.getElementById('usersModal').style.display='flex';
+  await loadUsers();
+}
+function closeUsers(){ document.getElementById('usersModal').style.display='none'; }
+async function loadUsers(){
+  const p=await sb.from('profiles').select('id,email,full_name,platform_role').order('email');
+  ALLUSERS=p.data||[];
+  const m=await sb.from('event_members').select('*').eq('event_id',EVENT.id);
+  MEMBERS=m.data||[];
+  renderUsersList(); renderMembers();
+}
+async function createUserUI(){
+  const email=document.getElementById('nuEmail').value.trim();
+  const pass=document.getElementById('nuPass').value;
+  const name=document.getElementById('nuName').value.trim();
+  const prole=(document.getElementById('nuRole')&&PROFILE.platform_role==='super_admin')?document.getElementById('nuRole').value:'member';
+  if(!email||pass.length<6){ toast('Correo y contraseña (mín 6)'); return; }
+  const { data, error } = await sb.functions.invoke('admin-users',{ body:{ action:'create_user', email, password:pass, full_name:name, platform_role:prole } });
+  if(error||(data&&data.error)){ toast('Error: '+((data&&data.error)||error.message)); return; }
+  document.getElementById('nuEmail').value=''; document.getElementById('nuPass').value=''; document.getElementById('nuName').value='';
+  toast('Usuario creado'); await loadUsers();
+}
+async function resetPwUI(userId,email){
+  const np=prompt('Nueva contraseña para '+email+' (mín 6):'); if(np===null) return;
+  if(np.length<6){ toast('Mínimo 6 caracteres'); return; }
+  const { data, error } = await sb.functions.invoke('admin-users',{ body:{ action:'reset_password', user_id:userId, password:np } });
+  if(error||(data&&data.error)){ toast('Error: '+((data&&data.error)||error.message)); return; }
+  toast('Contraseña actualizada');
+}
+async function deleteUserUI(userId,email){
+  if(!confirm('¿Borrar al usuario '+email+'? Es permanente.')) return;
+  const { data, error } = await sb.functions.invoke('admin-users',{ body:{ action:'delete_user', user_id:userId } });
+  if(error||(data&&data.error)){ toast('Error: '+((data&&data.error)||error.message)); return; }
+  toast('Usuario borrado'); await loadUsers();
+}
+function renderUsersList(){
+  const box=document.getElementById('usersList'); if(!box) return;
+  const isSuper=PROFILE.platform_role==='super_admin';
+  box.innerHTML=ALLUSERS.map(u=>'<div class="urow"><div class="uinfo"><b>'+escH(u.email||'(sin correo)')+'</b><span>'+escH(u.full_name||'')+' · '+u.platform_role+'</span></div>'
+    +(isSuper?('<div class="uacts"><button onclick="resetPwUI(\''+u.id+'\',\''+escH(u.email)+'\')">Reset</button><button class="danger" onclick="deleteUserUI(\''+u.id+'\',\''+escH(u.email)+'\')">Borrar</button></div>'):'')
+    +'</div>').join('') || '<div class="um-empty">Sin usuarios.</div>';
+}
+function emailOf(uid){ const u=ALLUSERS.find(x=>x.id===uid); return u?u.email:uid; }
+function effPerm(m,tab){ const ov=m.permissions?m.permissions[tab]:null; return ov||defaultPerm(m.role,tab); }
+async function addMemberUI(){
+  const uid=document.getElementById('mmUser').value; const role=document.getElementById('mmRole').value;
+  if(!uid){ toast('Elige un usuario'); return; }
+  const { error }=await sb.from('event_members').upsert({event_id:EVENT.id,user_id:uid,role,permissions:{}},{onConflict:'event_id,user_id'});
+  if(error){ toast('Error: '+error.message); return; }
+  toast('Miembro asignado'); await loadUsers();
+}
+async function setMemberRole(mid,role){ await sb.from('event_members').update({role}).eq('id',mid); const m=MEMBERS.find(x=>x.id===mid); if(m)m.role=role; renderMembers(); }
+async function removeMember(mid){ if(!confirm('¿Quitar a este usuario del evento?'))return; await sb.from('event_members').delete().eq('id',mid); await loadUsers(); }
+async function setMemberPerm(mid,tab,perm){
+  const m=MEMBERS.find(x=>x.id===mid); if(!m) return;
+  m.permissions=m.permissions||{};
+  if(perm==='default') delete m.permissions[tab]; else m.permissions[tab]=perm;
+  const { error }=await sb.from('event_members').update({permissions:m.permissions}).eq('id',mid);
+  if(error){ toast('Error: '+error.message); }
+  renderMembers();
+}
+function renderMembers(){
+  const box=document.getElementById('membersList'); if(!box) return;
+  const sel=document.getElementById('mmUser');
+  if(sel){ const memberIds=new Set(MEMBERS.map(m=>m.user_id)); sel.innerHTML='<option value="">— Usuario —</option>'+ALLUSERS.filter(u=>!memberIds.has(u.id)&&u.id!==(ME&&ME.id)).map(u=>'<option value="'+u.id+'">'+escH(u.email)+'</option>').join(''); }
+  box.innerHTML=MEMBERS.map(m=>{
+    const cells=PERM_TABS.map(([tab,lbl])=>{
+      const p=effPerm(m,tab); const ov=m.permissions&&m.permissions[tab];
+      const txt=p==='edit'?'Edición':(p==='read'?'Lectura':'Sin acceso');
+      return '<div class="perm-slot p-'+p+'" data-mid="'+m.id+'" data-tab="'+tab+'" title="Arrastra una tarjeta o haz clic"><b>'+lbl+'</b><span class="perm-chip">'+txt+(ov?'':' (rol)')+'</span></div>';
+    }).join('');
+    return '<div class="member"><div class="member-head"><b>'+escH(emailOf(m.user_id))+'</b>'
+      +'<select onchange="setMemberRole(\''+m.id+'\',this.value)">'+[['admin','Administrador'],['novios','Novios'],['wedding_planner','Wedding Planner'],['jardin','Jardín/Salón']].map(([r,l])=>'<option value="'+r+'"'+(m.role===r?' selected':'')+'>'+l+'</option>').join('')+'</select>'
+      +'<button class="danger" onclick="removeMember(\''+m.id+'\')">Quitar</button></div>'
+      +'<div class="perm-grid">'+cells+'</div></div>';
+  }).join('') || '<div class="um-empty">Aún no hay miembros en este evento.</div>';
+  wirePermDnD();
+}
+function wirePermDnD(){
+  document.querySelectorAll('.perm-card').forEach(c=>{ c.ondragstart=e=>e.dataTransfer.setData('text/plain',c.dataset.perm); });
+  document.querySelectorAll('.perm-slot').forEach(s=>{
+    s.ondragover=e=>{e.preventDefault();s.classList.add('over');};
+    s.ondragleave=()=>s.classList.remove('over');
+    s.ondrop=e=>{e.preventDefault();s.classList.remove('over');const perm=e.dataTransfer.getData('text/plain');if(perm)setMemberPerm(s.dataset.mid,s.dataset.tab,perm);};
+    s.onclick=()=>{ const order=['default','read','edit']; const m=MEMBERS.find(x=>x.id===s.dataset.mid); const ov=m.permissions&&m.permissions[s.dataset.tab]; const now=ov||'default'; setMemberPerm(s.dataset.mid,s.dataset.tab,order[(order.indexOf(now)+1)%order.length]); };
+  });
 }
 
 /* ---------------- arranque ---------------- */
