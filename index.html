@@ -457,6 +457,49 @@ img{max-width:100%}
 .lobj-arch{background:linear-gradient(#f6eef2,#efe0ea);border-color:#d9b8cc}
 @media (max-width:760px){ .layout-bar{padding:6px 8px;gap:8px} .layout-bar input{width:52px} }
 
+
+/* ===== Presupuesto + Proveedores (Hito 4) ===== */
+.proveedores{display:none;flex:1 1 auto;min-height:0;height:auto !important;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--paper)}
+body.view-proveedores .proveedores{display:block}
+.bcard{position:relative}
+.bcard .bpct{display:block;font-size:12px;color:#8a7d84;margin-top:2px;font-style:normal}
+.bcard.pag .bpct{color:#3f7d52}
+.budget-actions{display:flex;gap:10px;margin:8px 0 16px;flex-wrap:wrap}
+.exp-list{display:flex;flex-direction:column;gap:10px}
+.exp-card{border:1px solid var(--line);border-radius:12px;background:var(--white);overflow:hidden}
+.exp-head{display:flex;align-items:center;gap:10px;padding:10px 12px;flex-wrap:wrap}
+.exp-tog{border:none;background:none;font-size:15px;cursor:pointer;color:#8a7d84;width:22px;flex:none}
+.exp-cn{flex:1;min-width:150px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px;font-weight:600}
+.exp-prov{border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13px;max-width:160px}
+.exp-f{display:flex;flex-direction:column;gap:2px;min-width:90px}
+.exp-f>span{font-size:10px;text-transform:uppercase;letter-spacing:.03em;color:#8a7d84;font-weight:700}
+.exp-f .money{width:110px;border:1px solid var(--line);border-radius:8px;padding:7px;font-size:14px}
+.exp-f b{font-size:14px}
+.exp-pend b.neg{color:#c0392b}
+.exp-nota{flex:1;min-width:150px}
+.exp-nota input{border:1px solid var(--line);border-radius:8px;padding:7px;font-size:13px;width:100%;box-sizing:border-box}
+.exp-pay{border:1px solid #6b8f5e;background:#6b8f5e;color:#fff;border-radius:8px;padding:7px 11px;font-weight:600;cursor:pointer;font-size:12.5px;white-space:nowrap}
+.exp-body{padding:2px 12px 12px 44px;display:none;flex-direction:column;gap:6px}
+.exp-card.open .exp-body{display:flex}
+.exp-empty{color:#8a7d84;font-size:13px;padding:6px 0}
+.pay-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pay-row input{border:1px solid var(--line);border-radius:8px;padding:7px;font-size:13.5px}
+.pay-row .pay-date{width:150px}.pay-row .pay-amt{width:120px}.pay-row .pay-note{flex:1;min-width:140px}
+.prov-inner{max-width:1100px;margin:0 auto;padding:18px}
+.prov-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.prov-count{font-size:12.5px;color:#8a7d84}
+.prov-tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.prov-table td .pv{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13.5px}
+@media (max-width:760px){
+  .exp-prov,.exp-f,.exp-nota{max-width:none;width:100%;min-width:0}
+  .exp-f .money{width:100%}
+  .prov-table thead{display:none}
+  .prov-table,.prov-table tbody,.prov-table tr,.prov-table td{display:block;width:100%;box-sizing:border-box}
+  .prov-table tr{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;padding:6px 12px;background:var(--white)}
+  .prov-table td{border:0;padding:6px 2px}
+  .prov-table td::before{content:attr(data-lbl);display:block;font-size:11px;text-transform:uppercase;color:#8a7d84;font-weight:700;margin-bottom:3px}
+}
+
 </style>
 </head>
 <body>
@@ -537,15 +580,13 @@ img{max-width:100%}
       <button class="vtab" data-v="invitados" onclick="setView('invitados')">Invitados</button>
       <button class="vtab active" data-v="jardin" onclick="setView('jardin')">Layout</button>
       <button class="vtab" data-v="budget" onclick="setView('budget')">Presupuesto</button>
+      <button class="vtab" data-v="proveedores" onclick="setView('proveedores')">Proveedores</button>
       <button class="vtab" data-v="music" onclick="setView('music')">Música</button>
       <button class="vtab" data-v="itin" onclick="setView('itin')">Itinerario</button>
       <button class="vtab" data-v="todo" onclick="setView('todo')">To Do</button>
     </span>
     <span class="tb-jardin"></span>
-    <span class="tb-budget">
-      <button class="primary" onclick="openPay()">＋ Registrar pago</button>
-      <button class="blush" onclick="addExpense()">＋ Gasto</button>
-    </span>
+    <span class="tb-budget"></span>
     <span class="tb-music">
       <button class="primary" onclick="window.print()">Descargar PDF</button>
     </span>
@@ -632,20 +673,28 @@ img{max-width:100%}
   <div class="budget-inner">
     <div class="bcards">
       <div class="bcard"><span>Presupuesto</span><b id="bPres">$0</b></div>
-      <div class="bcard"><span>Pagado</span><b id="bPag">$0</b></div>
-      <div class="bcard pend"><span>Pendiente</span><b id="bPend">$0</b></div>
+      <div class="bcard pag"><span>Pagado</span><b id="bPag">$0</b><em id="bPagPct" class="bpct"></em></div>
+      <div class="bcard pend"><span>Pendiente</span><b id="bPend">$0</b><em id="bPendPct" class="bpct"></em></div>
     </div>
     <div class="bprogress"><div id="bProgFill"></div><span id="bProgTxt"></span></div>
-
-    <h2 class="bsec">Gastos</h2>
-    <table class="btable">
-      <thead><tr><th>Concepto</th><th class="r">Presupuesto</th><th class="r">Pagado</th><th class="r">Pendiente</th><th></th></tr></thead>
-      <tbody id="expBody"></tbody>
-      <tfoot><tr><td>Totales</td><td id="expPres"></td><td id="expPag"></td><td id="expPend"></td><td></td></tr></tfoot>
-    </table>
+    <div class="budget-actions">
+      <button class="primary" onclick="openPay()">Registrar pago</button>
+      <button class="blush" onclick="addExpense()">+ Concepto</button>
+    </div>
+    <div id="expList" class="exp-list"></div>
   </div>
 </div>
-
+<div class="proveedores">
+  <div class="prov-inner">
+    <div class="prov-top"><button class="primary" onclick="addProvider()">+ Proveedor</button><span class="prov-count" id="provCount"></span></div>
+    <div class="prov-tablewrap">
+      <table class="btable prov-table">
+        <thead><tr><th>Nombre</th><th>Tipo</th><th>Telefono</th><th>Correo</th><th>Contacto</th><th>Notas</th><th></th></tr></thead>
+        <tbody id="provBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <div class="music">
   <div class="budget-inner">
     <h2 class="bsec">Música por momento</h2>
@@ -714,6 +763,12 @@ img{max-width:100%}
     <label>Monto del pago
       <input id="payAmt" type="number" min="0" step="100" placeholder="0">
     </label>
+    <label>Fecha del pago
+      <input id="payDate" type="date">
+    </label>
+    <label>Nota (opcional)
+      <input id="payNote" type="text" placeholder="ej. transferencia, anticipo">
+    </label>
     <div class="paynew"><span>Nuevo pendiente</span><b id="payNew">$0</b></div>
     <div class="modal-actions">
       <button class="ghost" onclick="closePay()">Cancelar</button>
@@ -734,7 +789,7 @@ const SB_URL="https://pkxkauqcthiqosulmnkx.supabase.co";
 const SB_KEY="sb_publishable_aIykGvvAhE5Yja9SoBipIA_vFCrh5Bb";
 const sb=supabase.createClient(SB_URL,SB_KEY);
 
-let state = { guests:[], tables:[], objects:[], budget:{expenses:[]}, payments:[], music:{moments:[],si:[],no:[],notas:""}, itin:[], todos:[] };
+let state = { guests:[], tables:[], objects:[], providers:[], budget:{expenses:[]}, payments:[], music:{moments:[],si:[],no:[],notas:""}, itin:[], todos:[] };
 let selectedGuest=null;
 let selectedObj=null;
 let _venueT=null;
@@ -826,7 +881,9 @@ async function flush(){
     if(d.has('tables')) await syncTables();
     if(d.has('seats')||d.has('tables')||d.has('guests')) await syncSeats();
     if(d.has('objects')) await syncObjects();
+    if(d.has('providers')) await syncProviders();
     if(d.has('budget')) await syncExpenses();
+    if(d.has('payments')) await syncPayments();
     if(d.has('music')) await syncMusic();
     if(d.has('itin')) await syncItin();
     if(d.has('todos')) await syncTodos();
@@ -841,7 +898,7 @@ function save(){ mark('tables','seats'); }
 async function loadEventIntoState(ev){
   EVENT=ev;
   const eid=ev.id;
-  const [g,t,s,ex,pay,mm,ms,mn,it,td,lo] = await Promise.all([
+  const [g,t,s,ex,pay,mm,ms,mn,it,td,lo,pr] = await Promise.all([
     sb.from('guests').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('tables').select('*').eq('event_id',eid).order('num'),
     sb.from('table_seats').select('*').eq('event_id',eid),
@@ -852,7 +909,8 @@ async function loadEventIntoState(ev){
     sb.from('music_no').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('itinerary').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('todos').select('*').eq('event_id',eid).order('sort_order'),
-    sb.from('layout_objects').select('*').eq('event_id',eid)
+    sb.from('layout_objects').select('*').eq('event_id',eid),
+    sb.from('providers').select('*').eq('event_id',eid).order('sort_order')
   ]);
   state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance}));
   const seatsByTable={}; (s.data||[]).forEach(r=>{ (seatsByTable[r.table_id]=seatsByTable[r.table_id]||[]).push(r.guest_id); });
@@ -867,6 +925,7 @@ async function loadEventIntoState(ev){
   state.itin=(it.data||[]).map(r=>({id:r.id,hora:r.hora,actividad:r.actividad,notas:r.notas,done:r.done}));
   state.todos=(td.data||[]).map(r=>({id:r.id,text:r.descripcion,responsable:r.responsable,due:r.due,done:r.done,important:r.important}));
   state.objects=(lo.data||[]).map(r=>({id:r.id,kind:r.kind,label:r.label,x:+r.x,y:+r.y,w:+r.w,h:+r.h,rotation:+r.rotation,z:r.z}));
+  state.providers=(pr.data||[]).map(r=>({id:r.id,name:r.name,type:r.type,phone:r.phone,email:r.email,contact_person:r.contact_person,notes:r.notes}));
 }
 
 /* ---------------- helpers ---------------- */
@@ -1228,90 +1287,162 @@ function exportJSON(){
 }
 function importJSON(ev){ ev.target.value=""; toast("La importación se hará por evento en una versión próxima."); }
 
-/* ---------------- presupuesto ---------------- */
+/* ---------------- presupuesto + proveedores (Hito 4) ---------------- */
 const fmtMXN = n => new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0}).format(+n||0);
+function escH(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+let expandedExp=new Set();
+function paymentsOf(id){ return state.payments.filter(p=>p.expense_id===id); }
+function paidOf(id){ return paymentsOf(id).reduce((a,p)=>a+(+p.amount||0),0); }
 function budgetTotals(){
-  const b=state.budget;
-  const pres=b.expenses.reduce((a,e)=>a+(+e.presupuesto||0),0);
-  const pag=b.expenses.reduce((a,e)=>a+(+e.pagado||0),0);
+  const pres=state.budget.expenses.reduce((a,e)=>a+(+e.presupuesto||0),0);
+  const pag=state.payments.reduce((a,p)=>a+(+p.amount||0),0);
   return {pres,pag,pend:pres-pag};
 }
 function updateBudgetSummary(){
   const t=budgetTotals();
+  const pct=t.pres>0?Math.round(t.pag/t.pres*100):0;
+  const pendPct=t.pres>0?Math.round(t.pend/t.pres*100):0;
   const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
-  set('bPres',fmtMXN(t.pres)); set('bPag',fmtMXN(t.pag)); set('bPend',fmtMXN(t.pend));
-  set('expPres',fmtMXN(t.pres)); set('expPag',fmtMXN(t.pag)); set('expPend',fmtMXN(t.pend));
-  const pct=t.pres>0?Math.min(100,Math.round(t.pag/t.pres*100)):0;
-  const f=document.getElementById('bProgFill'); if(f) f.style.width=pct+'%';
+  set('bPres',fmtMXN(t.pres)); set('bPag',fmtMXN(t.pag)); set('bPagPct',(t.pres>0?pct+'%':''));
+  set('bPend',fmtMXN(t.pend)); set('bPendPct',(t.pres>0?pendPct+'%':''));
+  const f=document.getElementById('bProgFill'); if(f) f.style.width=Math.max(0,Math.min(100,pct))+'%';
   const x=document.getElementById('bProgTxt'); if(x) x.textContent='Pagado '+pct+'% del presupuesto';
 }
+function provOptions(sel){
+  return '<option value="">— Proveedor —</option>'+(state.providers||[]).map(p=>'<option value="'+p.id+'"'+(p.id===sel?' selected':'')+'>'+escH(p.name||'(sin nombre)')+'</option>').join('');
+}
 function renderBudget(){
-  const b=state.budget;
-  const tb=document.getElementById('expBody'); tb.innerHTML='';
-  b.expenses.forEach(e=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML='<td class="cinput"><input class="cn" type="text"></td>'
-      +'<td><input class="money" type="number" min="0" step="100"></td>'
-      +'<td class="paidcell"></td>'
-      +'<td class="pend"></td><td style="text-align:center"><button class="brow-del" title="Eliminar">×</button></td>';
-    const cn=tr.querySelector('.cn'); cn.value=e.concepto;
-    const presI=tr.querySelector('.money'); presI.value=e.presupuesto||0;
-    const paid=tr.querySelector('.paidcell'); paid.textContent=fmtMXN(e.pagado||0);
-    const pend=tr.querySelector('.pend'); const setPend=()=>pend.textContent=fmtMXN((+e.presupuesto||0)-(+e.pagado||0)); setPend();
-    cn.addEventListener('input',ev=>{e.concepto=ev.target.value;mark('budget');});
-    presI.addEventListener('input',ev=>{e.presupuesto=+ev.target.value||0;setPend();mark('budget');updateBudgetSummary();});
-    tr.querySelector('.brow-del').addEventListener('click',()=>{ if(confirm('¿Eliminar "'+(e.concepto||'este gasto')+'"?')){ b.expenses=b.expenses.filter(x=>x.id!==e.id); mark('budget'); renderBudget(); } });
-    tb.appendChild(tr);
+  const list=document.getElementById('expList'); if(!list) return;
+  list.innerHTML='';
+  state.budget.expenses.forEach(e=>{
+    const paid=paidOf(e.id), pend=(+e.presupuesto||0)-paid;
+    const open=expandedExp.has(e.id);
+    const card=document.createElement('div'); card.className='exp-card'+(open?' open':'');
+    card.innerHTML=
+      '<div class="exp-head">'
+      +'<button class="exp-tog" title="Expandir">'+(open?'▾':'▸')+'</button>'
+      +'<input class="exp-cn" type="text" placeholder="Concepto">'
+      +'<select class="exp-prov" title="Proveedor"></select>'
+      +'<label class="exp-f"><span>Presupuesto</span><input class="exp-pres money" type="number" min="0" step="100"></label>'
+      +'<div class="exp-f"><span>Pagado</span><b class="exp-paid"></b></div>'
+      +'<div class="exp-f"><span>Pendiente</span><b class="exp-pend"></b></div>'
+      +'<label class="exp-f exp-nota"><span>Nota (fecha pago total)</span><input class="exp-notain" type="text" placeholder="ej. liquidar 30 ago"></label>'
+      +'<button class="exp-pay" title="Registrar pago">＋ pago</button>'
+      +'<button class="brow-del exp-del" title="Eliminar concepto">×</button>'
+      +'</div><div class="exp-body"></div>';
+    card.querySelector('.exp-cn').value=e.concepto||'';
+    card.querySelector('.exp-prov').innerHTML=provOptions(e.provider_id);
+    card.querySelector('.exp-pres').value=e.presupuesto||0;
+    card.querySelector('.exp-paid').textContent=fmtMXN(paid);
+    const pendEl=card.querySelector('.exp-pend'); pendEl.textContent=fmtMXN(pend); if(pend<0) pendEl.classList.add('neg');
+    card.querySelector('.exp-notain').value=e.nota||'';
+    card.querySelector('.exp-tog').addEventListener('click',()=>{ open?expandedExp.delete(e.id):expandedExp.add(e.id); renderBudget(); });
+    card.querySelector('.exp-cn').addEventListener('input',ev=>{e.concepto=ev.target.value;mark('budget');});
+    card.querySelector('.exp-prov').addEventListener('change',ev=>{e.provider_id=ev.target.value||null;mark('budget');});
+    card.querySelector('.exp-pres').addEventListener('input',ev=>{e.presupuesto=+ev.target.value||0;mark('budget');updateBudgetSummary();pendEl.textContent=fmtMXN((+e.presupuesto||0)-paidOf(e.id));});
+    card.querySelector('.exp-notain').addEventListener('input',ev=>{e.nota=ev.target.value;mark('budget');});
+    card.querySelector('.exp-pay').addEventListener('click',()=>addPayment(e.id));
+    card.querySelector('.exp-del').addEventListener('click',()=>{ if(confirm('¿Eliminar "'+(e.concepto||'concepto')+'" y sus pagos?')){ state.payments=state.payments.filter(p=>p.expense_id!==e.id); state.budget.expenses=state.budget.expenses.filter(x=>x.id!==e.id); mark('budget','payments'); renderBudget(); } });
+    if(open){
+      const body=card.querySelector('.exp-body');
+      const pays=paymentsOf(e.id);
+      if(!pays.length){ body.innerHTML='<div class="exp-empty">Sin pagos registrados. Usa “＋ pago”.</div>'; }
+      pays.forEach(p=>{
+        const row=document.createElement('div'); row.className='pay-row';
+        row.innerHTML='<input class="pay-date" type="date"><input class="pay-amt money" type="number" min="0" step="100" placeholder="Monto"><input class="pay-note" type="text" placeholder="Nota del pago"><button class="brow-del" title="Eliminar pago">×</button>';
+        row.querySelector('.pay-date').value=p.pay_date||'';
+        row.querySelector('.pay-amt').value=p.amount||0;
+        row.querySelector('.pay-note').value=p.note||'';
+        row.querySelector('.pay-date').addEventListener('input',ev=>{p.pay_date=ev.target.value||null;mark('payments');});
+        row.querySelector('.pay-amt').addEventListener('input',ev=>{p.amount=+ev.target.value||0;mark('payments');updateBudgetSummary();card.querySelector('.exp-paid').textContent=fmtMXN(paidOf(e.id));pendEl.textContent=fmtMXN((+e.presupuesto||0)-paidOf(e.id));});
+        row.querySelector('.pay-note').addEventListener('input',ev=>{p.note=ev.target.value;mark('payments');});
+        row.querySelector('.brow-del').addEventListener('click',()=>{ state.payments=state.payments.filter(x=>x.id!==p.id); mark('payments'); renderBudget(); });
+        body.appendChild(row);
+      });
+    }
+    list.appendChild(card);
   });
   updateBudgetSummary();
   applyRO();
 }
-function addExpense(){ state.budget.expenses.push({id:uid(),concepto:"",presupuesto:0,pagado:0}); mark('budget'); renderBudget(); }
+function addExpense(){ const e={id:uid(),concepto:'',presupuesto:0,provider_id:null,nota:''}; state.budget.expenses.push(e); expandedExp.add(e.id); mark('budget'); renderBudget(); }
+function addPayment(id){ const p={id:uid(),expense_id:id,amount:0,pay_date:todayStr(),note:''}; state.payments.push(p); expandedExp.add(id); mark('payments'); renderBudget(); }
 function openPay(){
   const sel=document.getElementById('paySel'); sel.innerHTML='';
-  if(!state.budget.expenses.length){ toast('Primero agrega un gasto'); return; }
+  if(!state.budget.expenses.length){ toast('Primero agrega un concepto'); return; }
   state.budget.expenses.forEach(e=>{ const o=document.createElement('option'); o.value=e.id; o.textContent=e.concepto||'(sin nombre)'; sel.appendChild(o); });
-  document.getElementById('payAmt').value='';
-  sel.onchange=payRefresh;
-  const amt=document.getElementById('payAmt'); amt.oninput=payRefresh; amt.onkeydown=ev=>{ if(ev.key==='Enter') confirmPay(); };
+  const amt=document.getElementById('payAmt'); amt.value='';
+  const dt=document.getElementById('payDate'); if(dt) dt.value=todayStr();
+  const nt=document.getElementById('payNote'); if(nt) nt.value='';
+  sel.onchange=payRefresh; amt.oninput=payRefresh; amt.onkeydown=ev=>{ if(ev.key==='Enter') confirmPay(); };
   payRefresh();
   document.getElementById('payModal').classList.add('show');
   setTimeout(()=>amt.focus(),50);
 }
 function payRefresh(){
   const e=state.budget.expenses.find(x=>x.id===document.getElementById('paySel').value); if(!e) return;
-  const pend=(+e.presupuesto||0)-(+e.pagado||0);
+  const paid=paidOf(e.id), pend=(+e.presupuesto||0)-paid;
   document.getElementById('payPres').textContent=fmtMXN(e.presupuesto);
-  document.getElementById('payPag').textContent=fmtMXN(e.pagado);
+  document.getElementById('payPag').textContent=fmtMXN(paid);
   document.getElementById('payPend').textContent=fmtMXN(pend);
   const amt=+document.getElementById('payAmt').value||0;
   document.getElementById('payNew').textContent=fmtMXN(pend-amt);
 }
 function closePay(){ document.getElementById('payModal').classList.remove('show'); }
-async function confirmPay(){
+function confirmPay(){
   const e=state.budget.expenses.find(x=>x.id===document.getElementById('paySel').value);
   const amt=+document.getElementById('payAmt').value||0;
   if(!e){ toast('Elige un concepto'); return; }
   if(amt<=0){ toast('Ingresa un monto mayor a 0'); return; }
   if(!canEdit('presupuesto')){ toast('No tienes permiso'); return; }
-  const {data,error}=await sb.from('payments').insert({event_id:EVENT.id,expense_id:e.id,amount:amt,note:'Pago'}).select().single();
-  if(error){ toast('Error al registrar el pago'); console.error(error); return; }
-  state.payments.push({id:data.id,expense_id:e.id,amount:amt});
-  e.pagado=(+e.pagado||0)+amt;
-  renderBudget(); closePay();
+  const dt=document.getElementById('payDate'), nt=document.getElementById('payNote');
+  state.payments.push({id:uid(),expense_id:e.id,amount:amt,pay_date:(dt&&dt.value)||null,note:(nt&&nt.value)||''});
+  mark('payments'); renderBudget(); closePay();
   toast('Pago de '+fmtMXN(amt)+' registrado en '+(e.concepto||'gasto'));
+}
+async function syncPayments(){
+  if(!canEdit('presupuesto')) return;
+  await syncRows('payments', state.payments.map(p=>({id:p.id,event_id:EVENT.id,expense_id:p.expense_id,amount:+p.amount||0,pay_date:p.pay_date||null,note:p.note||''})));
+}
+/* ---- proveedores ---- */
+async function syncProviders(){
+  if(!canEdit('proveedores')) return;
+  await syncRows('providers', (state.providers||[]).map((p,i)=>({id:p.id,event_id:EVENT.id,name:p.name||'',type:p.type||'',phone:p.phone||'',email:p.email||'',contact_person:p.contact_person||'',notes:p.notes||'',sort_order:i})));
+}
+function addProvider(){ if(!canEdit('proveedores')){ toast('No tienes permiso'); return; } state.providers.push({id:uid(),name:'',type:'',phone:'',email:'',contact_person:'',notes:''}); mark('providers'); renderProviders(); }
+function renderProviders(){
+  const body=document.getElementById('provBody'); if(!body) return;
+  body.innerHTML='';
+  (state.providers||[]).forEach(p=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td data-lbl="Nombre"><input class="pv pv-name" type="text"></td>'
+      +'<td data-lbl="Tipo"><input class="pv pv-type" type="text" placeholder="ej. Banquete"></td>'
+      +'<td data-lbl="Teléfono"><input class="pv pv-phone" type="text"></td>'
+      +'<td data-lbl="Correo"><input class="pv pv-email" type="text"></td>'
+      +'<td data-lbl="Contacto"><input class="pv pv-contact" type="text"></td>'
+      +'<td data-lbl="Notas"><input class="pv pv-notes" type="text"></td>'
+      +'<td><button class="brow-del" title="Eliminar">×</button></td>';
+    const set=(cls,key)=>{ const i=tr.querySelector('.'+cls); i.value=p[key]||''; i.addEventListener('input',ev=>{p[key]=ev.target.value;mark('providers');}); };
+    set('pv-name','name'); set('pv-type','type'); set('pv-phone','phone'); set('pv-email','email'); set('pv-contact','contact_person'); set('pv-notes','notes');
+    tr.querySelector('.pv-name').addEventListener('change',()=>renderBudget());
+    tr.querySelector('.brow-del').addEventListener('click',()=>{ if(confirm('¿Eliminar este proveedor?')){ state.providers=state.providers.filter(x=>x.id!==p.id); state.budget.expenses.forEach(e=>{ if(e.provider_id===p.id){ e.provider_id=null; } }); mark('providers','budget'); renderProviders(); renderBudget(); } });
+    body.appendChild(tr);
+  });
+  const el=document.getElementById('provCount'); if(el) el.textContent=(state.providers||[]).length+' proveedor(es)';
+  applyRO();
 }
 
 /* ---------------- vistas ---------------- */
 function setView(v){
-  document.body.classList.remove('view-invitados','view-jardin','view-budget','view-music','view-itin','view-todo');
+  document.body.classList.remove('view-invitados','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
   document.body.classList.add('view-'+v);
   document.querySelectorAll('.vtab').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
-  const subs={invitados:'Invitados',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
+  const subs={invitados:'Invitados',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
   const hSub=document.getElementById('hSub'); if(hSub) hSub.textContent=(subs[v]||'')+' · '+eventDateLabel();
   if(v==='invitados') renderInvitados();
   if(v==='jardin') paintVenueBar();
   if(v==='budget') renderBudget();
+  if(v==='proveedores') renderProviders();
   if(v==='music') renderMusic();
   if(v==='itin') renderItin();
   if(v==='todo') renderTodos();
@@ -1458,7 +1589,7 @@ function renderInvitados(){
 }
 
 /* ---------------- permisos: gate visual de pestañas y edición ---------------- */
-const TAB_OF_VIEW={jardin:'layout',budget:'presupuesto',music:'musica',itin:'itinerario',todo:'todo'};
+const TAB_OF_VIEW={invitados:'invitados',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
 function applyTabVisibility(){
   document.querySelectorAll('.vtab').forEach(b=>{
     const view=b.dataset.v; const tab=TAB_OF_VIEW[view];
@@ -1468,7 +1599,7 @@ function applyTabVisibility(){
 }
 function applyRO(){
   // deshabilita edición en paneles sin permiso (para roles restringidos)
-  const map=[['aside','invitados'],['.invitados','invitados'],['.layout-bar','layout'],['.garden','layout'],['.budget','presupuesto'],['.music','musica'],['.itin','itinerario'],['.todo','todo']];
+  const map=[['aside','invitados'],['.invitados','invitados'],['.layout-bar','layout'],['.garden','layout'],['.budget','presupuesto'],['.proveedores','proveedores'],['.music','musica'],['.itin','itinerario'],['.todo','todo']];
   map.forEach(([sel,tab])=>{
     const ro=!canEdit(tab);
     document.querySelectorAll(sel).forEach(panel=>{
