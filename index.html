@@ -564,6 +564,35 @@ tr.itdone .cinput input{text-decoration:line-through;color:#9a9a9a}
 .lobj-arch .fl.c{bottom:-10px;left:-22px}.lobj-arch .fl.d{bottom:-10px;right:-22px}
 #garden{transform-origin:0 0}
 
+
+/* ===== Temas de color + login 3D + tarjetas ===== */
+:root{--grad:linear-gradient(135deg,#0e7490 0%,#22d3ee 55%,#5eead4 100%)}
+#gate,#picker,#neModal{background:var(--grad) !important}
+#app-shell{background:var(--grad)}
+#app-shell>header{background:rgba(255,255,255,.82) !important;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.budget,.music,.itin,.todo,.invitados,.proveedores{background:rgba(255,255,255,.80) !important}
+aside{background:rgba(255,255,255,.90)}
+#gate .gate-inner{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:400px}
+#gate .card{background:linear-gradient(#ffffff,#eaf5f6);border:1px solid rgba(255,255,255,.85);border-radius:22px;padding:34px 30px;width:100%;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,45,55,.4),0 12px 24px rgba(0,0,0,.15),inset 0 2px 3px rgba(255,255,255,.95),inset 0 -8px 18px rgba(0,70,80,.10)}
+#gate h1{color:#0e6a78}
+#gate button.go{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,#22d3ee,#0e7490) !important;box-shadow:0 8px 18px rgba(14,116,144,.4),inset 0 1px 2px rgba(255,255,255,.5)}
+#gate button.go .ring{font-size:17px}
+#gate button.go .veil{position:absolute;top:-80%;left:-45%;width:45%;height:260%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);transform:rotate(18deg);animation:veilshine 3.4s ease-in-out infinite;pointer-events:none}
+@keyframes veilshine{0%,100%{left:-45%}55%{left:130%}}
+.axol-legend{display:flex;align-items:center;gap:9px;color:rgba(255,255,255,.95);font-size:13px;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.axol-legend b{font-weight:700}
+.axol-logo{filter:drop-shadow(0 1px 2px rgba(0,0,0,.3));flex:none}
+.theme-wrap{position:relative;display:inline-flex}
+.theme-pop{display:none;position:absolute;top:112%;right:0;z-index:120;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px;width:152px;box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.theme-sw{width:30px;height:30px;border-radius:8px;cursor:pointer;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);display:inline-block;margin:3px}
+.theme-sw.on{border-color:#0e7490;box-shadow:0 0 0 2px #0e7490}
+.evc-meta{color:#8a7d84;font-size:13px}
+.evc-cd{margin-left:auto;text-align:right;flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.evc-days{font-style:normal;font-size:30px;font-weight:800;line-height:1;color:#0e7490;white-space:nowrap}
+.evc-days small{display:block;font-size:12px;font-weight:600;color:#8a7d84}
+.evc-date{font-size:13px;color:#5c2a3d;font-weight:700;background:#f4eaf0;padding:3px 9px;border-radius:8px;white-space:nowrap}
+@media(max-width:760px){ .evc-days{font-size:24px} }
+
 </style>
 </head>
 <body>
@@ -595,12 +624,15 @@ tr.itdone .cinput input{text-decoration:line-through;color:#9a9a9a}
 .evbadge{font-size:12px;color:#a5566f;font-weight:600;margin-right:6px;align-self:center}
 .ev-logo{height:40px;width:auto;max-width:120px;object-fit:contain;border-radius:8px;margin-right:4px;flex:none}
 </style>
-<div id="gate"><div class="card">
-  <h1>Planeacion de Bodas</h1><p>Inicia sesion para gestionar tus eventos.</p>
-  <input id="gEmail" type="email" placeholder="Correo" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
-  <input id="gPass" type="password" placeholder="Contrasena" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
-  <button class="go" onclick="doLogin()">Entrar</button>
-  <div class="err" id="gErr"></div>
+<div id="gate"><div class="gate-inner">
+  <div class="card">
+    <h1>Planeación de eventos</h1><p>Inicia sesión para gestionar tus eventos.</p>
+    <input id="gEmail" type="email" placeholder="Correo" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
+    <input id="gPass" type="password" placeholder="Contraseña" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="go" onclick="doLogin()"><span class="veil"></span><span class="ring">💍</span>Entrar</button>
+    <div class="err" id="gErr"></div>
+  </div>
+  <div class="axol-legend"><svg class="axol-logo" width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="axg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2a9c2"/><stop offset="1" stop-color="#5b8cf0"/></linearGradient></defs><path d="M32 6 L54 18 L54 46 L32 58 L10 46 L10 18 Z" fill="none" stroke="url(#axg)" stroke-width="3"/><circle cx="32" cy="35" r="9.5" fill="url(#axg)"/><path d="M23 31 q-11 -7 -17 -3 q9 2 13 9 M23 39 q-11 4 -16 13 q10 -3 16 -7 M41 31 q11 -7 17 -3 q-9 2 -13 9 M41 39 q11 4 16 13 q-10 -3 -16 -7" fill="none" stroke="url(#axg)" stroke-width="3" stroke-linecap="round"/></svg><span>Powered and developed by <b>Axol Labs</b></span></div>
 </div></div>
 <div id="picker"><div class="pcard">
   <h1>Tus eventos</h1><p>Elige un evento para gestionarlo.</p>
@@ -613,8 +645,10 @@ tr.itdone .cinput input{text-decoration:line-through;color:#9a9a9a}
 <div id="neModal"><div class="card">
   <h1>Nuevo evento</h1>
   <form id="neForm" onsubmit="createEvent(event)">
-    <input id="neCouple" type="text" placeholder="Nombres de los novios (ej. Ana & Luis)" required>
-    <span class="ne-lbl">Logo de los novios (opcional)</span>
+    <input id="neCouple" type="text" placeholder="Nombres (ej. Ana & Luis)" required>
+    <span class="ne-lbl">Tipo de evento</span>
+    <select id="neType"><option value="boda">Boda</option><option value="xv">XV años</option><option value="fiesta">Fiesta</option><option value="compromiso">Compromiso</option><option value="graduacion">Graduación</option><option value="cumpleanos">Cumpleaños</option></select>
+    <span class="ne-lbl">Logo de los novios o del evento (opcional)</span>
     <input id="neLogo" type="file" accept="image/*">
     <span class="ne-lbl">Fecha del evento</span>
     <input id="neDate" type="date">
@@ -660,7 +694,7 @@ tr.itdone .cinput input{text-decoration:line-through;color:#9a9a9a}
     <span class="tb-todo">
       <button class="primary" onclick="window.print()">Descargar PDF</button>
     </span>
-    <span id="countdown" class="evbadge"></span><span id="saveState" class="savestate"></span><button class="ghost um-btn" onclick="openUsers()" style="display:none">Usuarios</button><button class="ghost" onclick="backToEvents()">Eventos</button><button class="ghost" onclick="logout()">Salir</button>
+    <span class="theme-wrap"><button class="ghost" onclick="toggleThemePop()" title="Tema de color">🎨</button><div id="themePop" class="theme-pop"><span class="theme-sw" data-t="turquesa" style="background:linear-gradient(135deg,#0e7490,#5eead4)" onclick="setTheme('turquesa')" title="Turquesa"></span><span class="theme-sw" data-t="pastel" style="background:linear-gradient(135deg,#f7cfe3,#cdeee0)" onclick="setTheme('pastel')" title="Pastel"></span><span class="theme-sw" data-t="rosa" style="background:linear-gradient(135deg,#9d174d,#fbcfe8)" onclick="setTheme('rosa')" title="Rosa"></span><span class="theme-sw" data-t="azul" style="background:linear-gradient(135deg,#1e3a8a,#93c5fd)" onclick="setTheme('azul')" title="Azul"></span><span class="theme-sw" data-t="olivo" style="background:linear-gradient(135deg,#3f4d1e,#c3cd8a)" onclick="setTheme('olivo')" title="Verde olivo"></span><span class="theme-sw" data-t="romero" style="background:linear-gradient(135deg,#1f3d2f,#9ec5a8)" onclick="setTheme('romero')" title="Verde romero"></span><span class="theme-sw" data-t="cafe" style="background:linear-gradient(135deg,#3b2416,#c9a06f)" onclick="setTheme('cafe')" title="Cafe"></span></div></span><span id="countdown" class="evbadge"></span><span id="saveState" class="savestate"></span><button class="ghost um-btn" onclick="openUsers()" style="display:none">Usuarios</button><button class="ghost" onclick="backToEvents()">Eventos</button><button class="ghost" onclick="logout()">Salir</button>
     <button class="ghost tb-extra" onclick="exportJSON()">Guardar archivo</button>
     <button class="ghost tb-extra" onclick="document.getElementById('importer').click()">Abrir archivo</button>
     <button class="ghost tb-extra" onclick="window.print()">Imprimir</button>
@@ -1770,12 +1804,17 @@ async function showPicker(){
   const list=document.getElementById('pickerList'); list.innerHTML='';
   (data||[]).forEach(ev=>{
     const c=document.createElement('button'); c.className='ev-card';
-    const dd=(()=>{ if(!ev.event_date) return ''; const t=new Date();t.setHours(0,0,0,0); const d=Math.round((new Date(ev.event_date+'T00:00:00')-t)/86400000); return d>0?('Faltan '+d+' días'):(d===0?'¡Hoy!':''); })();
-    c.innerHTML='<img class="evc-logo" alt=""><div class="evc-body"><b></b><span></span><em></em></div>';
+    let days=null; if(ev.event_date){ const t=new Date();t.setHours(0,0,0,0); days=Math.round((new Date(ev.event_date+'T00:00:00')-t)/86400000); }
+    c.innerHTML='<img class="evc-logo" alt=""><div class="evc-body"><b></b><span class="evc-meta"></span></div><div class="evc-cd"><em class="evc-days"></em><span class="evc-date"></span></div>';
     const lg=c.querySelector('.evc-logo'); if(ev.logo_url){ lg.src=ev.logo_url; } else { lg.style.display='none'; }
     c.querySelector('b').textContent=ev.couple_names||ev.name;
-    c.querySelector('span').textContent=(ev.event_date?ev.event_date.split('-').reverse().join('.'):'sin fecha')+(ev.venue_name?(' · '+ev.venue_name):'');
-    c.querySelector('em').textContent=dd;
+    c.querySelector('.evc-meta').textContent=(EVENT_TYPES[ev.event_type]||'Evento')+(ev.venue_name?(' · '+ev.venue_name):'');
+    const cd=c.querySelector('.evc-days'), dt=c.querySelector('.evc-date');
+    if(days===null) cd.innerHTML='<small>sin fecha</small>';
+    else if(days>0) cd.innerHTML=days+'<small>días</small>';
+    else if(days===0) cd.innerHTML='<small>¡Hoy! 🎉</small>';
+    else cd.innerHTML='<small>ya pasó</small>';
+    dt.textContent=ev.event_date?ev.event_date.split('-').reverse().join('.'):'';
     c.addEventListener('click',()=>openEvent(ev));
     list.appendChild(c);
   });
@@ -1807,11 +1846,12 @@ async function createEvent(e){
   const vtype=document.getElementById('neVenueType').value||null;
   const vname=document.getElementById('neVenueName').value.trim();
   const vloc=document.getElementById('neVenueLoc').value.trim();
-  if(!couple){ toast('Escribe los nombres de los novios'); return; }
+  if(!couple){ toast('Escribe los nombres'); return; }
+  const etype=document.getElementById('neType')?document.getElementById('neType').value:'boda';
   let logo_url='';
   const lf=document.getElementById('neLogo');
   if(lf && lf.files && lf.files[0]){ try{ logo_url=await fileToDataURL(lf.files[0]); }catch(e){} }
-  const {data,error}=await sb.from('events').insert({name:'Boda '+couple,couple_names:couple,event_date:date,venue_type:vtype,venue_name:vname,venue_location:vloc,logo_url:logo_url,created_by:ME.id}).select().single();
+  const {data,error}=await sb.from('events').insert({name:(EVENT_TYPES[etype]||'Evento')+' '+couple,couple_names:couple,event_type:etype,event_date:date,venue_type:vtype,venue_name:vname,venue_location:vloc,logo_url:logo_url,created_by:ME.id}).select().single();
   if(error){ toast('Error al crear el evento'); console.error(error); return; }
   closeNewEvent();
   await openEvent(data);
@@ -1913,8 +1953,32 @@ function wirePermDnD(){
   });
 }
 
+/* ---------------- tipos de evento + temas de color ---------------- */
+const EVENT_TYPES={boda:'Boda',xv:'XV años',fiesta:'Fiesta',compromiso:'Compromiso',graduacion:'Graduación',cumpleanos:'Cumpleaños'};
+const THEMES={
+  turquesa:'linear-gradient(135deg,#0e7490 0%,#22d3ee 55%,#5eead4 100%)',
+  pastel:'linear-gradient(135deg,#f7cfe3 0%,#cfe0f7 50%,#cdeee0 100%)',
+  rosa:'linear-gradient(135deg,#9d174d 0%,#f472b6 55%,#fbcfe8 100%)',
+  azul:'linear-gradient(135deg,#1e3a8a 0%,#3b82f6 55%,#93c5fd 100%)',
+  olivo:'linear-gradient(135deg,#3f4d1e 0%,#7a8b3a 55%,#c3cd8a 100%)',
+  romero:'linear-gradient(135deg,#1f3d2f 0%,#3f7d52 55%,#9ec5a8 100%)',
+  cafe:'linear-gradient(135deg,#3b2416 0%,#8a5a34 55%,#c9a06f 100%)'
+};
+function setTheme(name){
+  const g=THEMES[name]||THEMES.turquesa;
+  document.documentElement.style.setProperty('--grad',g);
+  try{ localStorage.setItem('acomodo_theme',name); }catch(_){}
+  document.querySelectorAll('.theme-sw').forEach(s=>s.classList.toggle('on',s.dataset.t===name));
+  const p=document.getElementById('themePop'); if(p) p.style.display='none';
+}
+function loadTheme(){ let n='turquesa'; try{ n=localStorage.getItem('acomodo_theme')||'turquesa'; }catch(_){}
+  document.documentElement.style.setProperty('--grad',THEMES[n]||THEMES.turquesa);
+  document.querySelectorAll('.theme-sw').forEach(s=>s.classList.toggle('on',s.dataset.t===n)); }
+function toggleThemePop(){ const p=document.getElementById('themePop'); if(p) p.style.display=(p.style.display==='block'?'none':'block'); }
+
 /* ---------------- arranque ---------------- */
 (async function init(){
+  loadTheme();
   const {data:{session}}=await sb.auth.getSession();
   if(session) await afterLogin();
   else document.getElementById('gate').style.display='flex';
