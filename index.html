@@ -770,6 +770,12 @@ aside{background:#fff}
 .dash{display:none;flex:1 1 auto;min-height:0;height:auto!important;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--paper)}
 body.view-dash .dash{display:block}
 .dash-inner{max-width:1180px;margin:0 auto;padding:26px 26px 80px}
+.dash-hero{position:relative;overflow:hidden;border-radius:22px;padding:34px 34px;margin-bottom:26px;border:1px solid #ecdcae;background:linear-gradient(120deg,#1b1c1c 0%,#3a3320 55%,#735c00 120%)}
+.dash-hero::after{content:'';position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.4),transparent 70%);pointer-events:none}
+.dash-hero-badge{display:inline-block;background:rgba(212,175,55,.22);color:var(--primary-fixed,#ffe088);border:1px solid rgba(212,175,55,.4);padding:4px 12px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.dash-hero h2{font-size:36px;color:#fff;margin:14px 0 8px;line-height:1.1;position:relative;z-index:1}
+.dash-hero p{color:rgba(255,255,255,.82);font-size:16px;max-width:640px;margin:0;position:relative;z-index:1}
+@media(max-width:760px){ .dash-hero{padding:24px 20px} .dash-hero h2{font-size:28px} }
 .dstat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:26px}
 .dstat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px;box-shadow:var(--shadow)}
 .dstat-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-soft);font-weight:700}
@@ -1004,8 +1010,43 @@ body.view-dash .dash{display:block}
 .ne-lbl{color:var(--ink-soft)}
 .linkbtn{color:var(--ink-soft)}
 .pick-empty{color:var(--ink-soft)}
-#neModal button.go[style]{background:var(--sage-soft)!important;color:var(--ink)!important}
 .axol-logo{filter:none}
+
+/* ============================================================
+   WIZARD NUEVO EVENTO (onboarding)
+   ============================================================ */
+.ne-wizard{max-width:560px}
+.wiz-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.wiz-x{border:none;background:none;font-size:24px;line-height:1;color:var(--ink-soft);cursor:pointer;padding:0 4px}
+.wiz-x:hover{color:var(--ink);transform:none;box-shadow:none}
+.wiz-prog{display:flex;gap:6px;margin:14px 0 20px}
+.wp{flex:1;height:5px;border-radius:999px;background:var(--line);transition:background .2s}
+.wp.on{background:var(--gold)}
+.wiz-step{display:none}
+.wiz-step.active{display:block;animation:wizfade .25s ease}
+@keyframes wizfade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.wiz-q{font-size:26px;color:var(--ink);margin:0 0 4px}
+.wiz-sub{color:var(--ink-soft);font-size:14px;margin:0 0 18px}
+.wiz-opts{display:grid;gap:10px}
+.wiz-opt{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:center;text-align:left;border:1px solid var(--line);background:#fff;border-radius:14px;padding:14px 16px;cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s,box-shadow .15s}
+.wiz-opt:hover{border-color:var(--gold);transform:none;box-shadow:var(--shadow)}
+.wiz-opt.sel{border-color:var(--gold);background:var(--sage-soft);box-shadow:0 0 0 2px rgba(212,175,55,.3)}
+.wiz-opt .material-symbols-outlined{grid-row:1/3;font-size:26px;color:var(--gold-ink)}
+.wiz-opt b{grid-column:2;font-size:15px;color:var(--ink)}
+.wiz-opt>span:last-child{grid-column:2;font-size:12.5px;color:var(--ink-soft)}
+.wiz-opt.sel .material-symbols-outlined{font-variation-settings:'FILL' 1}
+.wiz-svcs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.wiz-svc{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:16px 8px;cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink);transition:border-color .15s,background .15s,transform .15s,box-shadow .15s}
+.wiz-svc:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:var(--shadow)}
+.wiz-svc .material-symbols-outlined{font-size:28px;color:var(--gold-ink)}
+.wiz-svc.sel{background:var(--gold);border-color:var(--gold);color:#3d3100}
+.wiz-svc.sel .material-symbols-outlined{color:#3d3100;font-variation-settings:'FILL' 1}
+.wiz-actions{display:flex;align-items:center;gap:10px;margin-top:22px}
+.wiz-spacer{flex:1}
+.wiz-back{border:1px solid var(--line);background:#fff;border-radius:11px;padding:11px 18px;font-weight:600;color:var(--ink-soft);cursor:pointer}
+.wiz-back:hover{border-color:var(--gold);transform:none;box-shadow:none}
+.wiz-next,.wiz-create{width:auto!important;padding:12px 26px!important}
+@media(max-width:520px){ .wiz-svcs{grid-template-columns:repeat(2,1fr)} .ne-wizard{max-width:100%} }
 
 </style>
 </head>
@@ -1056,22 +1097,65 @@ body.view-dash .dash{display:block}
     <button class="linkbtn" onclick="logout()">Cerrar sesion</button>
   </div>
 </div></div>
-<div id="neModal"><div class="card">
-  <h1>Nuevo evento</h1>
+<div id="neModal"><div class="card ne-wizard">
+  <div class="wiz-top">
+    <h1 id="wizTitle">Nuevo evento</h1>
+    <button type="button" class="wiz-x" onclick="closeNewEvent()" title="Cerrar">×</button>
+  </div>
+  <div class="wiz-prog"><span class="wp on" data-s="1"></span><span class="wp" data-s="2"></span><span class="wp" data-s="3"></span><span class="wp" data-s="4"></span></div>
   <form id="neForm" onsubmit="createEvent(event)">
-    <input id="neCouple" type="text" placeholder="Nombres (ej. Ana & Luis)" required>
-    <span class="ne-lbl">Tipo de evento</span>
-    <select id="neType"><option value="boda">Boda</option><option value="xv">XV años</option><option value="fiesta">Fiesta</option><option value="compromiso">Compromiso</option><option value="graduacion">Graduación</option><option value="cumpleanos">Cumpleaños</option></select>
-    <span class="ne-lbl">Logo de los novios o del evento (opcional)</span>
-    <input id="neLogo" type="file" accept="image/*">
-    <span class="ne-lbl">Fecha del evento</span>
-    <input id="neDate" type="date">
-    <select id="neVenueType"><option value="">Tipo de lugar...</option><option value="salon">Salon</option><option value="jardin">Jardin</option></select>
-    <input id="neVenueName" type="text" placeholder="Nombre del salon / jardin">
-    <input id="neVenueLoc" type="text" placeholder="Ubicacion">
-    <div class="ne-actions">
-      <button type="button" class="go" style="background:#eee;color:#555" onclick="closeNewEvent()">Cancelar</button>
-      <button type="submit" class="go">Crear evento</button>
+    <div class="wiz-step active" data-step="1">
+      <h2 class="serif wiz-q">Comencemos a conocernos</h2>
+      <p class="wiz-sub">¿Cómo se llama la pareja o el evento?</p>
+      <span class="ne-lbl">Nombres</span>
+      <input id="neCouple" type="text" placeholder="Ej. Ana & Luis" required>
+      <span class="ne-lbl">Tipo de evento</span>
+      <select id="neType"><option value="boda">Boda</option><option value="xv">XV años</option><option value="fiesta">Fiesta</option><option value="compromiso">Compromiso</option><option value="graduacion">Graduación</option><option value="cumpleanos">Cumpleaños</option></select>
+    </div>
+    <div class="wiz-step" data-step="2">
+      <h2 class="serif wiz-q">¿En qué etapa están?</h2>
+      <p class="wiz-sub">Esto personaliza el panel de inicio. (Opcional)</p>
+      <input type="hidden" id="neStage" value="">
+      <div class="wiz-opts">
+        <button type="button" class="wiz-opt" data-v="exploring" onclick="selectStage(this)"><span class="material-symbols-outlined">favorite</span><b>Aún no comprometidos</b><span>Explorando ideas</span></button>
+        <button type="button" class="wiz-opt" data-v="engaged" onclick="selectStage(this)"><span class="material-symbols-outlined">diamond</span><b>Recién comprometidos</b><span>Listos para empezar</span></button>
+        <button type="button" class="wiz-opt" data-v="venue_booked" onclick="selectStage(this)"><span class="material-symbols-outlined">location_on</span><b>Ya reservamos lugar</b><span>Buscando proveedores</span></button>
+        <button type="button" class="wiz-opt" data-v="invitations_sent" onclick="selectStage(this)"><span class="material-symbols-outlined">mail</span><b>Invitaciones enviadas</b><span>Afinando detalles</span></button>
+      </div>
+    </div>
+    <div class="wiz-step" data-step="3">
+      <h2 class="serif wiz-q">¿Qué servicios necesitarán?</h2>
+      <p class="wiz-sub">Selecciona todos los que apliquen. Podrás cambiarlos después.</p>
+      <div class="wiz-svcs">
+        <button type="button" class="wiz-svc" data-v="lugar" onclick="toggleService(this)"><span class="material-symbols-outlined">stadium</span>Lugar</button>
+        <button type="button" class="wiz-svc" data-v="fotografia" onclick="toggleService(this)"><span class="material-symbols-outlined">photo_camera</span>Fotografía</button>
+        <button type="button" class="wiz-svc" data-v="banquete" onclick="toggleService(this)"><span class="material-symbols-outlined">restaurant</span>Banquete</button>
+        <button type="button" class="wiz-svc" data-v="flores" onclick="toggleService(this)"><span class="material-symbols-outlined">local_florist</span>Flores</button>
+        <button type="button" class="wiz-svc" data-v="musica" onclick="toggleService(this)"><span class="material-symbols-outlined">music_note</span>Música / DJ</button>
+        <button type="button" class="wiz-svc" data-v="vestuario" onclick="toggleService(this)"><span class="material-symbols-outlined">checkroom</span>Vestuario</button>
+        <button type="button" class="wiz-svc" data-v="maquillaje" onclick="toggleService(this)"><span class="material-symbols-outlined">brush</span>Maquillaje</button>
+        <button type="button" class="wiz-svc" data-v="invitaciones" onclick="toggleService(this)"><span class="material-symbols-outlined">mail</span>Invitaciones</button>
+        <button type="button" class="wiz-svc" data-v="pastel" onclick="toggleService(this)"><span class="material-symbols-outlined">cake</span>Pastelería</button>
+        <button type="button" class="wiz-svc" data-v="otros" onclick="toggleService(this)"><span class="material-symbols-outlined">add_circle</span>Otros</button>
+      </div>
+    </div>
+    <div class="wiz-step" data-step="4">
+      <h2 class="serif wiz-q">Últimos detalles</h2>
+      <p class="wiz-sub">Fecha, lugar y logo. Todo opcional.</p>
+      <span class="ne-lbl">Fecha del evento</span>
+      <input id="neDate" type="date">
+      <span class="ne-lbl">Tipo de lugar</span>
+      <select id="neVenueType"><option value="">Tipo de lugar...</option><option value="salon">Salón</option><option value="jardin">Jardín</option></select>
+      <input id="neVenueName" type="text" placeholder="Nombre del salón / jardín">
+      <input id="neVenueLoc" type="text" placeholder="Ubicación">
+      <span class="ne-lbl">Logo de los novios o del evento (opcional)</span>
+      <input id="neLogo" type="file" accept="image/*">
+    </div>
+    <div class="wiz-actions">
+      <button type="button" class="wiz-back" id="wizBack" onclick="wizBack()">Atrás</button>
+      <span class="wiz-spacer"></span>
+      <button type="button" class="go wiz-next" id="wizNext" onclick="wizNext()">Continuar</button>
+      <button type="submit" class="go wiz-create" id="wizCreate" style="display:none">Crear evento</button>
     </div>
   </form>
 </div></div>
@@ -1136,6 +1220,11 @@ body.view-dash .dash{display:block}
 
 <div class="dash">
   <div class="dash-inner">
+    <div class="dash-hero">
+      <span class="dash-hero-badge">Inicio</span>
+      <h2 class="serif" id="dsHello">Hola</h2>
+      <p id="dsWelcome">Bienvenidos a su planificador. Aquí organizan cada detalle de su día especial con elegancia y precisión.</p>
+    </div>
     <div class="dstat-row">
       <div class="dstat dstat-cd">
         <span class="dstat-lbl">Faltan</span>
@@ -2092,6 +2181,11 @@ function provIcon(t){ t=(t||'').toLowerCase();
 }
 function renderDash(){
   const setT=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+  // hero
+  setT('dsHello','Hola, '+((EVENT&&EVENT.couple_names)||'bienvenidos'));
+  const WELCOME={exploring:'Explorando ideas y soñando con el gran día. Vayan capturando todo aquí.',engaged:'¡Felicidades por el compromiso! Empecemos a organizar los primeros detalles.',venue_booked:'Con el lugar reservado, es momento de definir proveedores y el acomodo.',invitations_sent:'Invitaciones enviadas: a afinar confirmaciones y últimos detalles.'};
+  const w=EVENT&&EVENT.planning_stage&&WELCOME[EVENT.planning_stage];
+  setT('dsWelcome',w||'Bienvenidos a su planificador. Aquí organizan cada detalle de su día especial con elegancia y precisión.');
   // countdown
   const d=daysToEvent();
   if(d===null){ setT('dsDays','—'); setT('dsDaysLbl',''); }
@@ -2422,8 +2516,32 @@ async function openEvent(ev){
   document.getElementById('app-shell').style.display='';
 }
 /* nuevo evento */
-function openNewEvent(){ document.getElementById('neForm').reset(); document.getElementById('neModal').style.display='flex'; }
+function openNewEvent(){
+  document.getElementById('neForm').reset();
+  document.querySelectorAll('#neModal .wiz-opt.sel,#neModal .wiz-svc.sel').forEach(e=>e.classList.remove('sel'));
+  const st=document.getElementById('neStage'); if(st) st.value='';
+  wizShow(1);
+  document.getElementById('neModal').style.display='flex';
+}
 function closeNewEvent(){ document.getElementById('neModal').style.display='none'; }
+/* ---- wizard nuevo evento ---- */
+let wizStep=1;
+function wizShow(n){
+  wizStep=n;
+  document.querySelectorAll('#neForm .wiz-step').forEach(s=>s.classList.toggle('active',+s.dataset.step===n));
+  document.querySelectorAll('#neModal .wp').forEach(p=>p.classList.toggle('on',+p.dataset.s<=n));
+  const back=document.getElementById('wizBack'); if(back) back.style.visibility=n>1?'visible':'hidden';
+  const next=document.getElementById('wizNext'), create=document.getElementById('wizCreate');
+  if(next&&create){ const last=n>=4; next.style.display=last?'none':''; create.style.display=last?'':'none'; }
+}
+function wizNext(){
+  if(wizStep===1){ const c=document.getElementById('neCouple'); if(!c.value.trim()){ toast('Escribe los nombres'); c.focus(); return; } }
+  wizShow(Math.min(4,wizStep+1));
+}
+function wizBack(){ wizShow(Math.max(1,wizStep-1)); }
+function selectStage(el){ document.querySelectorAll('#neModal .wiz-opt').forEach(o=>o.classList.remove('sel')); el.classList.add('sel'); const st=document.getElementById('neStage'); if(st) st.value=el.dataset.v; }
+function toggleService(el){ el.classList.toggle('sel'); }
+function selectedServices(){ return [...document.querySelectorAll('#neModal .wiz-svc.sel')].map(b=>b.dataset.v); }
 async function createEvent(e){
   e.preventDefault();
   const couple=document.getElementById('neCouple').value.trim();
@@ -2436,7 +2554,10 @@ async function createEvent(e){
   let logo_url='';
   const lf=document.getElementById('neLogo');
   if(lf && lf.files && lf.files[0]){ try{ logo_url=await fileToDataURL(lf.files[0]); }catch(e){} }
-  const {data,error}=await sb.from('events').insert({name:(EVENT_TYPES[etype]||'Evento')+' '+couple,couple_names:couple,event_type:etype,event_date:date,venue_type:vtype,venue_name:vname,venue_location:vloc,logo_url:logo_url,created_by:ME.id}).select().single();
+  const stageEl=document.getElementById('neStage');
+  const planning_stage=(stageEl&&stageEl.value)?stageEl.value:null;
+  const services=selectedServices();
+  const {data,error}=await sb.from('events').insert({name:(EVENT_TYPES[etype]||'Evento')+' '+couple,couple_names:couple,event_type:etype,event_date:date,venue_type:vtype,venue_name:vname,venue_location:vloc,logo_url:logo_url,planning_stage:planning_stage,services:services,created_by:ME.id}).select().single();
   if(error){ toast('Error al crear el evento'); console.error(error); return; }
   closeNewEvent();
   await openEvent(data);
