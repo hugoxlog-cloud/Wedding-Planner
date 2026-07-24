@@ -1205,6 +1205,18 @@ body.view-menu .menu{display:block}
   .menu-table td::before{content:attr(data-lbl);font-size:11px;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
   .menu-table td.inv-nm{display:block} }
 
+/* ============================================================
+   MESA DE REGALOS
+   ============================================================ */
+.regalos{display:none;flex:1 1 auto;min-height:0;height:auto!important;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--paper)}
+body.view-regalos .regalos{display:block}
+.reg-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stpill.st-res{background:#e4e7f2;color:#3a4a86}
+.prov-fields select{flex:1;border:1px solid transparent!important;border-radius:8px;padding:7px 9px!important;font-size:13.5px;background:var(--paper)!important;color:var(--ink);box-shadow:none!important;width:100%;box-sizing:border-box}
+.prov-fields select:hover{border-color:var(--line)!important}
+.prov-fields select:focus{border-color:var(--gold)!important;box-shadow:0 0 0 3px rgba(212,175,55,.15)!important}
+@media(max-width:760px){ .reg-summary{grid-template-columns:1fr 1fr} }
+
 </style>
 </head>
 <body>
@@ -1335,6 +1347,7 @@ body.view-menu .menu{display:block}
   <button class="navlink active" data-v="dash" onclick="setView('dash')"><span class="material-symbols-outlined">dashboard</span>Inicio</button>
   <button class="navlink" data-v="invitados" onclick="setView('invitados')"><span class="material-symbols-outlined">group</span>Invitados</button>
   <button class="navlink" data-v="menu" onclick="setView('menu')"><span class="material-symbols-outlined">restaurant_menu</span>Menú</button>
+  <button class="navlink" data-v="regalos" onclick="setView('regalos')"><span class="material-symbols-outlined">card_giftcard</span>Regalos</button>
   <button class="navlink" data-v="jardin" onclick="setView('jardin')"><span class="material-symbols-outlined">grid_view</span>Layout</button>
   <button class="navlink" data-v="budget" onclick="setView('budget')"><span class="material-symbols-outlined">payments</span>Presupuesto</button>
   <button class="navlink" data-v="proveedores" onclick="setView('proveedores')"><span class="material-symbols-outlined">storefront</span>Proveedores</button>
@@ -1524,6 +1537,22 @@ body.view-menu .menu{display:block}
     </div>
   </div>
 </div>
+<div class="regalos">
+  <div class="prov-inner">
+    <div class="prov-head">
+      <div>
+        <h2 class="serif prov-h">Mesa de regalos</h2>
+        <span class="prov-count" id="regCount"></span>
+      </div>
+      <div class="prov-search-wrap">
+        <span class="material-symbols-outlined">search</span>
+        <input id="regFilter" class="prov-search" placeholder="Buscar regalo…" oninput="renderRegistry()">
+      </div>
+    </div>
+    <div class="reg-summary" id="regSummary"></div>
+    <div id="regGrid" class="prov-grid"></div>
+  </div>
+</div>
 <div class="budget budget-only">
   <div class="budget-inner">
     <div class="budget-summary">
@@ -1651,6 +1680,7 @@ body.view-menu .menu{display:block}
   <button class="bnav active" data-v="dash" onclick="setView('dash')"><span class="material-symbols-outlined">dashboard</span>Inicio</button>
   <button class="bnav" data-v="invitados" onclick="setView('invitados')"><span class="material-symbols-outlined">group</span>Invitados</button>
   <button class="bnav" data-v="menu" onclick="setView('menu')"><span class="material-symbols-outlined">restaurant_menu</span>Menú</button>
+  <button class="bnav" data-v="regalos" onclick="setView('regalos')"><span class="material-symbols-outlined">card_giftcard</span>Regalos</button>
   <button class="bnav" data-v="jardin" onclick="setView('jardin')"><span class="material-symbols-outlined">grid_view</span>Layout</button>
   <button class="bnav" data-v="budget" onclick="setView('budget')"><span class="material-symbols-outlined">payments</span>Presup.</button>
   <button class="bnav" data-v="proveedores" onclick="setView('proveedores')"><span class="material-symbols-outlined">storefront</span>Prov.</button>
@@ -1692,7 +1722,7 @@ const SB_URL="https://pkxkauqcthiqosulmnkx.supabase.co";
 const SB_KEY="sb_publishable_aIykGvvAhE5Yja9SoBipIA_vFCrh5Bb";
 const sb=supabase.createClient(SB_URL,SB_KEY);
 
-let state = { guests:[], tables:[], objects:[], providers:[], budget:{expenses:[]}, payments:[], music:{moments:[],si:[],no:[],notas:""}, itin:[], todos:[] };
+let state = { guests:[], tables:[], objects:[], providers:[], budget:{expenses:[]}, payments:[], music:{moments:[],si:[],no:[],notas:""}, itin:[], todos:[], registry:[] };
 let selectedGuest=null;
 let selectedObj=null;
 let _venueT=null;
@@ -1777,6 +1807,10 @@ async function syncTodos(){
   if(!canEdit('todo')) return;
   await syncRows('todos', state.todos.map((r,i)=>({id:r.id,event_id:EVENT.id,descripcion:r.text||'',responsable:r.responsable||'',due:r.due||null,done:!!r.done,important:!!r.important,sort_order:i})));
 }
+async function syncRegistry(){
+  if(!canEdit('invitados')) return;
+  await syncRows('registry_items', state.registry.map((r,i)=>({id:r.id,event_id:EVENT.id,name:r.name||'',store:r.store||'',price:+r.price||0,url:r.url||'',status:r.status||'pendiente',notes:r.notes||'',sort_order:i})));
+}
 async function flush(){
   if(!EVENT) return;
   const d=_dirty; _dirty=new Set();
@@ -1791,6 +1825,7 @@ async function flush(){
     if(d.has('music')) await syncMusic();
     if(d.has('itin')) await syncItin();
     if(d.has('todos')) await syncTodos();
+    if(d.has('registry')) await syncRegistry();
     setSaving('Guardado ✓');
     setTimeout(()=>{ if((document.getElementById('saveState')||{}).textContent==='Guardado ✓') setSaving(''); },1500);
   }catch(e){ console.error(e); setSaving('Error al guardar'); }
@@ -1802,7 +1837,7 @@ function save(){ mark('tables','seats'); }
 async function loadEventIntoState(ev){
   EVENT=ev;
   const eid=ev.id;
-  const [g,t,s,ex,pay,mm,ms,mn,it,td,lo,pr] = await Promise.all([
+  const [g,t,s,ex,pay,mm,ms,mn,it,td,lo,pr,rg] = await Promise.all([
     sb.from('guests').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('tables').select('*').eq('event_id',eid).order('num'),
     sb.from('table_seats').select('*').eq('event_id',eid),
@@ -1814,7 +1849,8 @@ async function loadEventIntoState(ev){
     sb.from('itinerary').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('todos').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('layout_objects').select('*').eq('event_id',eid),
-    sb.from('providers').select('*').eq('event_id',eid).order('sort_order')
+    sb.from('providers').select('*').eq('event_id',eid).order('sort_order'),
+    sb.from('registry_items').select('*').eq('event_id',eid).order('sort_order')
   ]);
   state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||''}));
   const seatsByTable={}; (s.data||[]).forEach(r=>{ (seatsByTable[r.table_id]=seatsByTable[r.table_id]||[]).push(r.guest_id); });
@@ -1830,6 +1866,7 @@ async function loadEventIntoState(ev){
   state.todos=(td.data||[]).map(r=>({id:r.id,text:r.descripcion,responsable:r.responsable,due:r.due,done:r.done,important:r.important}));
   state.objects=(lo.data||[]).map(r=>({id:r.id,kind:r.kind,label:r.label,x:+r.x,y:+r.y,w:+r.w,h:+r.h,rotation:+r.rotation,z:r.z}));
   state.providers=(pr.data||[]).map(r=>({id:r.id,name:r.name,type:r.type,phone:r.phone,email:r.email,contact_person:r.contact_person,notes:r.notes}));
+  state.registry=(rg.data||[]).map(r=>({id:r.id,name:r.name,store:r.store,price:+r.price||0,url:r.url,status:r.status||'pendiente',notes:r.notes}));
 }
 
 /* ---------------- helpers ---------------- */
@@ -2498,14 +2535,15 @@ function renderDash(){
 
 /* ---------------- vistas ---------------- */
 function setView(v){
-  document.body.classList.remove('view-dash','view-invitados','view-menu','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
+  document.body.classList.remove('view-dash','view-invitados','view-menu','view-regalos','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
   document.body.classList.add('view-'+v);
   document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
-  const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
+  const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',regalos:'Mesa de regalos',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
   const hSub=document.getElementById('hSub'); if(hSub) hSub.textContent=(subs[v]||'')+' · '+eventDateLabel();
   if(v==='dash') renderDash();
   if(v==='invitados') renderInvitados();
   if(v==='menu') renderMenu();
+  if(v==='regalos') renderRegistry();
   if(v==='jardin') paintVenueBar();
   if(v==='budget') renderBudget();
   if(v==='proveedores') renderProviders();
@@ -2514,6 +2552,63 @@ function setView(v){
   if(v==='todo') renderTodos();
 }
 
+/* ---------------- mesa de regalos ---------------- */
+const REG_STATUS={pendiente:{t:'Pendiente',k:'pend'},reservado:{t:'Reservado',k:'res'},comprado:{t:'Comprado',k:'ok'}};
+function addRegistryItem(){ if(!canEdit('invitados')){toast('No tienes permiso');return;} state.registry.push({id:uid(),name:'',store:'',price:0,url:'',status:'pendiente',notes:''}); mark('registry'); renderRegistry(); }
+function renderRegSummary(){
+  const box=document.getElementById('regSummary'); if(!box) return;
+  const all=state.registry||[];
+  const total=all.reduce((a,r)=>a+(+r.price||0),0);
+  const comprados=all.filter(r=>r.status==='comprado');
+  const compVal=comprados.reduce((a,r)=>a+(+r.price||0),0);
+  const pct=total>0?Math.round(compVal/total*100):0;
+  box.innerHTML=
+     '<div class="ms-card"><span class="ms-lbl">Regalos</span><b>'+all.length+'</b></div>'
+    +'<div class="ms-card"><span class="ms-lbl">Valor total</span><b>'+fmtMXN(total)+'</b></div>'
+    +'<div class="ms-card"><span class="ms-lbl">Comprados</span><b>'+comprados.length+'</b></div>'
+    +'<div class="ms-card"><span class="ms-lbl">Avance</span><b>'+pct+'%</b></div>';
+}
+function renderRegistry(){
+  const grid=document.getElementById('regGrid'); if(!grid) return;
+  const q=(document.getElementById('regFilter')?document.getElementById('regFilter').value:'').toLowerCase();
+  const all=state.registry||[];
+  const list=all.filter(r=>((r.name||'')+' '+(r.store||'')).toLowerCase().includes(q));
+  grid.innerHTML='';
+  list.forEach(r=>{
+    const st=REG_STATUS[r.status]||REG_STATUS.pendiente;
+    const card=document.createElement('div'); card.className='prov-card reg-card';
+    card.innerHTML=
+      '<div class="prov-card-top">'
+      +'<span class="stpill st-'+st.k+'">'+st.t+'</span>'
+      +'<button class="prov-del" title="Eliminar">×</button>'
+      +'</div>'
+      +'<input class="pv prov-name reg-name" type="text" placeholder="Regalo">'
+      +'<div class="prov-fields">'
+      +'<label><span class="material-symbols-outlined">store</span><input class="pv reg-store" type="text" placeholder="Tienda / marca"></label>'
+      +'<label><span class="material-symbols-outlined">payments</span><input class="pv reg-price" type="number" min="0" step="50" placeholder="Precio"></label>'
+      +'<label><span class="material-symbols-outlined">link</span><input class="pv reg-url" type="text" placeholder="Link (opcional)"></label>'
+      +'<label><span class="material-symbols-outlined">flag</span><select class="pv reg-status"><option value="pendiente">Pendiente</option><option value="reservado">Reservado</option><option value="comprado">Comprado</option></select></label>'
+      +'<label class="full"><span class="material-symbols-outlined">sticky_note_2</span><input class="pv reg-notes" type="text" placeholder="Notas"></label>'
+      +'</div>';
+    const set=(cls,key,extra)=>{ const i=card.querySelector('.'+cls); i.value=(key==='price'?(r.price||0):(r[key]||'')); i.addEventListener('input',ev=>{ r[key]=(key==='price'?(+ev.target.value||0):ev.target.value); mark('registry'); if(extra)extra(); }); };
+    set('reg-name','name',renderRegSummary);
+    set('reg-store','store');
+    set('reg-price','price',renderRegSummary);
+    set('reg-url','url');
+    set('reg-notes','notes');
+    const selEl=card.querySelector('.reg-status'); selEl.value=r.status||'pendiente';
+    selEl.addEventListener('change',ev=>{ r.status=ev.target.value; mark('registry'); renderRegistry(); });
+    card.querySelector('.prov-del').addEventListener('click',()=>{ if(confirm('¿Eliminar este regalo?')){ state.registry=state.registry.filter(x=>x.id!==r.id); mark('registry'); renderRegistry(); } });
+    grid.appendChild(card);
+  });
+  const add=document.createElement('button'); add.className='prov-add-card'; add.type='button';
+  add.innerHTML='<span class="prov-add-ic"><span class="material-symbols-outlined">add</span></span><b>Agregar regalo</b><span>Producto, precio y estado</span>';
+  add.addEventListener('click',()=>addRegistryItem());
+  grid.appendChild(add);
+  const el=document.getElementById('regCount'); if(el) el.textContent=all.length+' regalo(s)';
+  renderRegSummary();
+  applyRO();
+}
 /* ---------------- menú / platillos ---------------- */
 let _menuT=null;
 function saveMenuConfig(){
@@ -2757,7 +2852,7 @@ function renderInvitados(){
 }
 
 /* ---------------- permisos: gate visual de pestañas y edición ---------------- */
-const TAB_OF_VIEW={invitados:'invitados',menu:'invitados',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
+const TAB_OF_VIEW={invitados:'invitados',menu:'invitados',regalos:'invitados',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
 function applyTabVisibility(){
   document.querySelectorAll('[data-v]').forEach(b=>{
     const view=b.dataset.v;
