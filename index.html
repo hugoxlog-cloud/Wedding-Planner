@@ -1048,6 +1048,39 @@ body.view-dash .dash{display:block}
 .wiz-next,.wiz-create{width:auto!important;padding:12px 26px!important}
 @media(max-width:520px){ .wiz-svcs{grid-template-columns:repeat(2,1fr)} .ne-wizard{max-width:100%} }
 
+/* ============================================================
+   PRESUPUESTO: dona + resumen bento + categorías
+   ============================================================ */
+.budget-summary{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:16px;margin-bottom:14px;align-items:stretch}
+.bcard-donut{display:flex;align-items:center;justify-content:center;padding:14px}
+.donut-wrap{position:relative;width:118px;height:118px}
+.donut{width:118px;height:118px;transform:rotate(-90deg)}
+.donut-bg{fill:none;stroke:var(--sage-soft);stroke-width:12}
+.donut-fg{fill:none;stroke:var(--gold);stroke-width:12;stroke-linecap:round;transition:stroke-dashoffset .4s ease}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donut-center b{font-family:"Libre Caslon Text",Georgia,serif;font-size:27px;color:var(--gold-ink);line-height:1}
+.donut-center span{font-size:10.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.1em;margin-top:2px}
+.bcard-kpi span{display:flex;align-items:center;gap:6px}
+.bcard-kpi span .material-symbols-outlined{font-size:17px;color:var(--gold-ink)}
+@media(max-width:760px){ .budget-summary{grid-template-columns:1fr 1fr} .bcard-donut{grid-column:1/-1} }
+.cat-group{margin-bottom:24px}
+.cat-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.cat-title{display:flex;align-items:center;gap:12px;min-width:0}
+.cat-ic{width:40px;height:40px;border-radius:12px;background:var(--sage-soft);display:flex;align-items:center;justify-content:center;color:var(--gold-ink);flex:none}
+.cat-ic .material-symbols-outlined{font-size:22px}
+.cat-titxt h3{font-family:"Libre Caslon Text",Georgia,serif;font-size:20px;color:var(--ink);margin:0;line-height:1.15}
+.cat-meta{font-size:12.5px;color:var(--ink-soft)}
+.cat-pct{font-family:"Libre Caslon Text",Georgia,serif;font-size:22px;color:var(--gold-ink);font-weight:700;flex:none}
+.cat-bar{height:8px;border-radius:999px;background:var(--sage-soft);overflow:hidden;margin-bottom:12px}
+.cat-bar>div{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-ink))}
+.cat-cards{display:flex;flex-direction:column;gap:10px}
+.cat-add{margin-top:10px;border:1px dashed var(--gold);background:var(--sage-soft);color:var(--gold-deep);border-radius:10px;padding:9px 14px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-family:inherit}
+.cat-add:hover{background:#f7edcf;transform:none;box-shadow:none}
+.cat-add .material-symbols-outlined{font-size:18px}
+.exp-cat{border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13px;max-width:150px;background:#fff}
+.budget-actions button{display:inline-flex;align-items:center;gap:6px}
+.budget-actions .material-symbols-outlined{font-size:18px}
+
 </style>
 </head>
 <body>
@@ -1341,15 +1374,24 @@ body.view-dash .dash{display:block}
 </div>
 <div class="budget budget-only">
   <div class="budget-inner">
-    <div class="bcards">
-      <div class="bcard"><span>Presupuesto</span><b id="bPres">$0</b></div>
-      <div class="bcard pag"><span>Pagado</span><b id="bPag">$0</b><em id="bPagPct" class="bpct"></em></div>
-      <div class="bcard pend"><span>Pendiente</span><b id="bPend">$0</b><em id="bPendPct" class="bpct"></em></div>
+    <div class="budget-summary">
+      <div class="bcard bcard-donut">
+        <div class="donut-wrap">
+          <svg class="donut" viewBox="0 0 120 120" aria-hidden="true">
+            <circle class="donut-bg" cx="60" cy="60" r="52"></circle>
+            <circle id="bDonut" class="donut-fg" cx="60" cy="60" r="52"></circle>
+          </svg>
+          <div class="donut-center"><b id="bDonutPct">0%</b><span>pagado</span></div>
+        </div>
+      </div>
+      <div class="bcard bcard-kpi"><span><span class="material-symbols-outlined">account_balance_wallet</span>Presupuesto</span><b id="bPres">$0</b></div>
+      <div class="bcard bcard-kpi pag"><span><span class="material-symbols-outlined">credit_card</span>Pagado</span><b id="bPag">$0</b><em id="bPagPct" class="bpct"></em></div>
+      <div class="bcard bcard-kpi pend"><span><span class="material-symbols-outlined">savings</span>Pendiente</span><b id="bPend">$0</b><em id="bPendPct" class="bpct"></em></div>
     </div>
     <div class="bprogress"><div id="bProgFill"></div><span id="bProgTxt"></span></div>
     <div class="budget-actions">
-      <button class="primary" onclick="openPay()">Registrar pago</button>
-      <button class="blush" onclick="addExpense()">+ Concepto</button>
+      <button class="primary" onclick="openPay()"><span class="material-symbols-outlined">payments</span> Registrar pago</button>
+      <button class="blush" onclick="addExpense()"><span class="material-symbols-outlined">add</span> Concepto</button>
     </div>
     <div id="expList" class="exp-list"></div>
   </div>
@@ -1565,7 +1607,7 @@ async function syncExpenses(){
   if(!canEdit('presupuesto')) return;
   await syncRows('budget_expenses', state.budget.expenses.map((e,i)=>({
     id:e.id, event_id:EVENT.id, concepto:e.concepto||'', presupuesto:+e.presupuesto||0,
-    nota:e.nota||'', provider_id:e.provider_id||null, sort_order:i })));
+    nota:e.nota||'', provider_id:e.provider_id||null, categoria:e.categoria||'', sort_order:i })));
 }
 async function syncMusic(){
   if(!canEdit('musica')) return;
@@ -1625,7 +1667,7 @@ async function loadEventIntoState(ev){
   const seatsByTable={}; (s.data||[]).forEach(r=>{ (seatsByTable[r.table_id]=seatsByTable[r.table_id]||[]).push(r.guest_id); });
   state.tables=(t.data||[]).map(r=>({id:r.id,num:r.num,name:r.name,cap:r.cap,shape:r.shape,x:+r.x,y:+r.y,novios:r.is_novios,seats:seatsByTable[r.id]||[]}));
   const paidBy={}; (pay.data||[]).forEach(p=>{ paidBy[p.expense_id]=(paidBy[p.expense_id]||0)+(+p.amount||0); });
-  state.budget={ expenses:(ex.data||[]).map(r=>({id:r.id,concepto:r.concepto,presupuesto:+r.presupuesto,pagado:paidBy[r.id]||0,nota:r.nota,provider_id:r.provider_id})) };
+  state.budget={ expenses:(ex.data||[]).map(r=>({id:r.id,concepto:r.concepto,presupuesto:+r.presupuesto,pagado:paidBy[r.id]||0,nota:r.nota,provider_id:r.provider_id,categoria:r.categoria||''})) };
   state.payments=(pay.data||[]).map(p=>({id:p.id,expense_id:p.expense_id,amount:+p.amount,pay_date:p.pay_date,note:p.note}));
   state.music={ moments:(mm.data||[]).map(r=>({id:r.id,momento:r.momento,cancion:r.cancion,artista:r.artista,notas:r.notas})),
                 si:(ms.data||[]).map(r=>({id:r.id,cancion:r.cancion,artista:r.artista})),
@@ -2026,14 +2068,37 @@ function updateBudgetSummary(){
   set('bPend',fmtMXN(t.pend)); set('bPendPct',(t.pres>0?pendPct+'%':''));
   const f=document.getElementById('bProgFill'); if(f) f.style.width=Math.max(0,Math.min(100,pct))+'%';
   const x=document.getElementById('bProgTxt'); if(x) x.textContent='Pagado '+pct+'% del presupuesto';
+  // dona
+  const d=document.getElementById('bDonut');
+  if(d){ const C=2*Math.PI*52; d.style.strokeDasharray=C.toFixed(1); d.style.strokeDashoffset=(C*(1-Math.max(0,Math.min(100,pct))/100)).toFixed(1); }
+  set('bDonutPct',pct+'%');
+}
+const EXP_CATS=['Lugar','Banquete','Bebidas','Fotografía y Video','Música','Flores y Decoración','Vestuario','Belleza','Papelería','Pastel','Transporte','Otros'];
+function catIcon(c){ c=(c||'').toLowerCase();
+  if(/lugar|sal|jard|recep/.test(c))return'location_on';
+  if(/banquete|catering|comida/.test(c))return'restaurant';
+  if(/bebida|bar|vino/.test(c))return'local_bar';
+  if(/foto|video/.test(c))return'photo_camera';
+  if(/mús|music|dj/.test(c))return'music_note';
+  if(/flor|decor/.test(c))return'local_florist';
+  if(/vestu|vestido|traje/.test(c))return'checkroom';
+  if(/belle|maquil/.test(c))return'brush';
+  if(/papel|invita/.test(c))return'mail';
+  if(/pastel|postre/.test(c))return'cake';
+  if(/transp|auto/.test(c))return'directions_car';
+  return'sell';
+}
+function catOptions(sel){
+  const cur=sel||'';
+  let opts='<option value="">Sin categoría</option>';
+  const extra=cur&&!EXP_CATS.includes(cur)?[cur]:[];
+  EXP_CATS.concat(extra).forEach(c=>{ opts+='<option value="'+escH(c)+'"'+(c===cur?' selected':'')+'>'+escH(c)+'</option>'; });
+  return opts;
 }
 function provOptions(sel){
   return '<option value="">— Proveedor —</option>'+(state.providers||[]).map(p=>'<option value="'+p.id+'"'+(p.id===sel?' selected':'')+'>'+escH(p.name||'(sin nombre)')+'</option>').join('');
 }
-function renderBudget(){
-  const list=document.getElementById('expList'); if(!list) return;
-  list.innerHTML='';
-  state.budget.expenses.forEach(e=>{
+function buildExpCard(e){
     const paid=paidOf(e.id), pend=(+e.presupuesto||0)-paid;
     const open=expandedExp.has(e.id);
     const card=document.createElement('div'); card.className='exp-card'+(open?' open':'');
@@ -2041,6 +2106,7 @@ function renderBudget(){
       '<div class="exp-head">'
       +'<button class="exp-tog" title="Expandir">'+(open?'▾':'▸')+'</button>'
       +'<input class="exp-cn" type="text" placeholder="Concepto">'
+      +'<select class="exp-cat" title="Categoría"></select>'
       +'<select class="exp-prov" title="Proveedor"></select>'
       +'<label class="exp-f"><span>Presupuesto</span><input class="exp-pres money" type="number" min="0" step="100"></label>'
       +'<div class="exp-f"><span>Pagado</span><b class="exp-paid"></b></div>'
@@ -2050,6 +2116,7 @@ function renderBudget(){
       +'<button class="brow-del exp-del" title="Eliminar concepto">×</button>'
       +'</div><div class="exp-body"></div>';
     card.querySelector('.exp-cn').value=e.concepto||'';
+    card.querySelector('.exp-cat').innerHTML=catOptions(e.categoria);
     card.querySelector('.exp-prov').innerHTML=provOptions(e.provider_id);
     card.querySelector('.exp-pres').value=e.presupuesto||0;
     card.querySelector('.exp-paid').textContent=fmtMXN(paid);
@@ -2057,6 +2124,7 @@ function renderBudget(){
     card.querySelector('.exp-notain').value=e.nota||'';
     card.querySelector('.exp-tog').addEventListener('click',()=>{ open?expandedExp.delete(e.id):expandedExp.add(e.id); renderBudget(); });
     card.querySelector('.exp-cn').addEventListener('input',ev=>{e.concepto=ev.target.value;mark('budget');});
+    card.querySelector('.exp-cat').addEventListener('change',ev=>{e.categoria=ev.target.value;mark('budget');renderBudget();});
     card.querySelector('.exp-prov').addEventListener('change',ev=>{e.provider_id=ev.target.value||null;mark('budget');});
     card.querySelector('.exp-pres').addEventListener('input',ev=>{e.presupuesto=+ev.target.value||0;mark('budget');updateBudgetSummary();pendEl.textContent=fmtMXN((+e.presupuesto||0)-paidOf(e.id));});
     card.querySelector('.exp-notain').addEventListener('input',ev=>{e.nota=ev.target.value;mark('budget');});
@@ -2079,12 +2147,44 @@ function renderBudget(){
         body.appendChild(row);
       });
     }
-    list.appendChild(card);
+    return card;
+}
+function renderBudget(){
+  const list=document.getElementById('expList'); if(!list) return;
+  list.innerHTML='';
+  const exps=state.budget.expenses||[];
+  if(!exps.length){ list.innerHTML='<div class="exp-empty" style="padding:22px;text-align:center">Aún no hay conceptos. Agrega el primero con “＋ Concepto”.</div>'; updateBudgetSummary(); applyRO(); return; }
+  const groups={};
+  exps.forEach(e=>{ const k=e.categoria||''; (groups[k]=groups[k]||[]).push(e); });
+  const keys=Object.keys(groups).sort((a,b)=>{
+    if(a===''&&b!=='')return 1; if(b===''&&a!=='')return -1;
+    const ia=EXP_CATS.indexOf(a), ib=EXP_CATS.indexOf(b);
+    return (ia<0?99:ia)-(ib<0?99:ib);
+  });
+  keys.forEach(k=>{
+    const items=groups[k];
+    const sumB=items.reduce((a,e)=>a+(+e.presupuesto||0),0);
+    const sumP=items.reduce((a,e)=>a+paidOf(e.id),0);
+    const pct=sumB>0?Math.round(sumP/sumB*100):0;
+    const sec=document.createElement('div'); sec.className='cat-group';
+    sec.innerHTML=
+      '<div class="cat-head">'
+      +'<div class="cat-title"><span class="cat-ic"><span class="material-symbols-outlined">'+catIcon(k)+'</span></span>'
+      +'<div class="cat-titxt"><h3>'+escH(k||'Sin categoría')+'</h3><span class="cat-meta">'+items.length+' concepto(s) · '+fmtMXN(sumP)+' de '+fmtMXN(sumB)+'</span></div></div>'
+      +'<span class="cat-pct">'+pct+'%</span>'
+      +'</div>'
+      +'<div class="cat-bar"><div style="width:'+Math.max(0,Math.min(100,pct))+'%"></div></div>'
+      +'<div class="cat-cards"></div>'
+      +'<button class="cat-add" type="button"><span class="material-symbols-outlined">add</span> Concepto</button>';
+    const cc=sec.querySelector('.cat-cards');
+    items.forEach(e=>cc.appendChild(buildExpCard(e)));
+    sec.querySelector('.cat-add').addEventListener('click',()=>addExpense(k));
+    list.appendChild(sec);
   });
   updateBudgetSummary();
   applyRO();
 }
-function addExpense(){ const e={id:uid(),concepto:'',presupuesto:0,provider_id:null,nota:''}; state.budget.expenses.push(e); expandedExp.add(e.id); mark('budget'); renderBudget(); }
+function addExpense(cat){ const e={id:uid(),concepto:'',presupuesto:0,provider_id:null,nota:'',categoria:(typeof cat==='string'?cat:'')}; state.budget.expenses.push(e); expandedExp.add(e.id); mark('budget'); renderBudget(); }
 function addPayment(id){ const p={id:uid(),expense_id:id,amount:0,pay_date:todayStr(),note:''}; state.payments.push(p); expandedExp.add(id); mark('payments'); renderBudget(); }
 function openPay(){
   const sel=document.getElementById('paySel'); sel.innerHTML='';
