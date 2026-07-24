@@ -1103,7 +1103,7 @@ body.view-dash .dash{display:block}
     <button type="button" class="wiz-x" onclick="closeNewEvent()" title="Cerrar">×</button>
   </div>
   <div class="wiz-prog"><span class="wp on" data-s="1"></span><span class="wp" data-s="2"></span><span class="wp" data-s="3"></span><span class="wp" data-s="4"></span></div>
-  <form id="neForm" onsubmit="createEvent(event)">
+  <form id="neForm" onsubmit="submitNewEvent(event)">
     <div class="wiz-step active" data-step="1">
       <h2 class="serif wiz-q">Comencemos a conocernos</h2>
       <p class="wiz-sub">¿Cómo se llama la pareja o el evento?</p>
@@ -2542,7 +2542,7 @@ function wizBack(){ wizShow(Math.max(1,wizStep-1)); }
 function selectStage(el){ document.querySelectorAll('#neModal .wiz-opt').forEach(o=>o.classList.remove('sel')); el.classList.add('sel'); const st=document.getElementById('neStage'); if(st) st.value=el.dataset.v; }
 function toggleService(el){ el.classList.toggle('sel'); }
 function selectedServices(){ return [...document.querySelectorAll('#neModal .wiz-svc.sel')].map(b=>b.dataset.v); }
-async function createEvent(e){
+async function submitNewEvent(e){
   e.preventDefault();
   const couple=document.getElementById('neCouple').value.trim();
   const date=document.getElementById('neDate').value||null;
