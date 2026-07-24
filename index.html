@@ -1361,6 +1361,33 @@ body.view-fases .fases{display:block}
 .fases-empty button{margin-top:12px;display:inline-flex;align-items:center;gap:6px}
 @media(max-width:760px){ .fases-inner{padding:16px 14px 84px} }
 
+/* ===== Panel de invitados colapsable (Layout) — se despliega al pasar el apuntador ===== */
+.aside-rail{display:none}
+@media (hover:hover) and (min-width:761px){
+  .app aside{width:56px;transition:width .24s cubic-bezier(.4,0,.2,1);overflow:hidden;position:relative;z-index:5}
+  .app aside:hover{width:300px;box-shadow:12px 0 30px rgba(51,51,51,.10)}
+  .app aside .aside-rail{
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:14px;
+    position:absolute;inset:0;z-index:3;background:#fff;padding-top:18px;cursor:pointer;
+  }
+  .app aside:hover .aside-rail{display:none}
+  .aside-rail .material-symbols-outlined{color:var(--gold-ink);font-size:24px}
+  .aside-rail .aside-rail-chev{color:var(--ink-soft);font-size:20px;margin-top:auto;margin-bottom:14px}
+  .aside-rail .aside-rail-t{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12px;color:var(--ink-soft);white-space:nowrap}
+}
+
+/* ===== Fases en el feed del Inicio ===== */
+.ds-fases{display:flex;flex-direction:column;gap:12px}
+.dphase{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:13px 16px;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.dphase:hover{transform:translateY(-2px);box-shadow:var(--shadow-lift)}
+.dphase-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.dphase-n{font-family:"Libre Caslon Text",Georgia,serif;font-size:15px;color:var(--ink)}
+.dphase-c{font-size:12.5px;color:var(--ink-soft);font-weight:600}
+.dphase.done .dphase-c{color:var(--ok)}
+.dphase-bar{height:7px;border-radius:999px;background:var(--sage-soft);overflow:hidden}
+.dphase-bar>div{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-ink))}
+.dphase.done .dphase-bar>div{background:var(--ok)}
+
 </style>
 </head>
 <body>
@@ -1566,8 +1593,8 @@ body.view-fases .fases{display:block}
 
     <div class="dbento">
       <div class="dcol-main">
-        <div class="dsec-head"><h3 class="serif">Próximos pendientes</h3><button class="dsec-link" onclick="setView('itin')">Ver itinerario <span class="material-symbols-outlined">arrow_forward</span></button></div>
-        <div id="dsTimeline" class="dthread"></div>
+        <div class="dsec-head"><h3 class="serif">Fases de la boda</h3><button class="dsec-link" onclick="setView('fases')">Ver fases <span class="material-symbols-outlined">arrow_forward</span></button></div>
+        <div id="dsFases" class="ds-fases"></div>
       </div>
       <div class="dcol-side">
         <div class="dpanel dpanel-dark">
@@ -1594,6 +1621,7 @@ body.view-fases .fases{display:block}
 
 <div class="app">
   <aside>
+    <div class="aside-rail"><span class="material-symbols-outlined">group</span><span class="aside-rail-t">Lista de invitados</span><span class="material-symbols-outlined aside-rail-chev">chevron_right</span></div>
     <div class="aside-head"><h2>Lista de invitados</h2></div>
     <div class="add-box">
       <textarea id="bulk" placeholder="Pega aquí los nombres (uno por línea)…&#10;Cada uno cuenta con acompañante (2 personas).&#10;Para quien va solo, escribe (solo) al final.&#10;Ej:&#10;María González&#10;Juan Pérez (solo)"></textarea>
@@ -1608,14 +1636,6 @@ body.view-fases .fases{display:block}
   <div class="garden-wrap">
     <div class="layout-bar">
   <div class="lb-handle" onclick="toggleLayoutDrawer()"><span></span></div>
-  <div class="lb-group"><span class="lb-lbl">Lugar</span>
-    <button class="vt-type" data-t="salon" onclick="setVenueType('salon')">Salon</button>
-    <button class="vt-type" data-t="jardin" onclick="setVenueType('jardin')">Jardin</button></div>
-  <div class="lb-group"><span class="lb-lbl">Medidas (m)</span>
-    <input id="venueW" type="number" min="5" max="300" oninput="setVenueDim('w',this.value)"> x
-    <input id="venueH" type="number" min="5" max="300" oninput="setVenueDim('h',this.value)"></div>
-  <div class="lb-group"><span class="lb-lbl">Zoom</span>
-    <button onclick="zoomBy(-0.1)">-</button><span id="zoomLbl">100%</span><button onclick="zoomBy(0.1)">+</button><button onclick="zoomReset()">Reset</button></div>
   <div class="lb-palette"><span class="lb-lbl">Agregar</span>
     <button onclick="addTable(10)"><span class="material-symbols-outlined">table_restaurant</span>Mesa 10</button>
     <button onclick="addTable(12)"><span class="material-symbols-outlined">table_restaurant</span>Mesa 12</button>
@@ -2753,19 +2773,23 @@ function renderDash(){
   setT('dsBudget',fmtMXN(t.pres));
   const bar=document.getElementById('dsBudgetBar'); if(bar) bar.style.width=Math.max(0,Math.min(100,pct))+'%';
   setT('dsBudgetSub',fmtMXN(t.pag)+' pagado ('+pct+'%) · '+fmtMXN(t.pend)+' pendiente');
-  // itinerario → próximos pendientes
-  const tl=document.getElementById('dsTimeline');
-  if(tl){
-    tl.innerHTML='';
-    const pend=(state.itin||[]).filter(r=>!r.done);
-    const rows=(pend.length?pend:(state.itin||[])).slice(0,5);
-    if(!rows.length){ tl.innerHTML='<div class="dtl-empty">Aún no hay renglones en el itinerario. Agrégalos para verlos aquí.</div>'; }
-    else rows.forEach(r=>{
-      const it=document.createElement('div'); it.className='dtl-item'+(r.done?' done':'');
-      it.innerHTML='<span class="dtl-dot"><span class="material-symbols-outlined">'+(r.done?'check':'schedule')+'</span></span>'
-        +'<div class="dtl-card"><b>'+escH(r.actividad||'(sin título)')+'</b>'+(r.hora?'<span class="dtl-time">'+escH(r.hora)+'</span>':'')+'</div>';
-      tl.appendChild(it);
-    });
+  // fases de la boda (feed)
+  const fz=document.getElementById('dsFases');
+  if(fz){
+    fz.innerHTML='';
+    const withTasks=PHASES.filter(p=>phaseCounts(p.k).total>0);
+    if(!withTasks.length){
+      fz.innerHTML='<div class="dtl-empty">Aún no defines tus fases de planeación. <button class="dsec-link" onclick="setView(\'fases\')">Ir a Fases</button></div>';
+    } else {
+      withTasks.forEach(p=>{
+        const c=phaseCounts(p.k); const pc=c.total?Math.round(c.done/c.total*100):0;
+        const row=document.createElement('div'); row.className='dphase'+(pc===100?' done':'');
+        row.innerHTML='<div class="dphase-top"><span class="dphase-n">'+p.t+'</span><span class="dphase-c">'+c.done+' / '+c.total+(pc===100?' ✓':'')+'</span></div>'
+          +'<div class="dphase-bar"><div style="width:'+pc+'%"></div></div>';
+        row.addEventListener('click',()=>{ _selPhase=p.k; setView('fases'); });
+        fz.appendChild(row);
+      });
+    }
   }
   // proveedores
   const pl=document.getElementById('dsProviders');
