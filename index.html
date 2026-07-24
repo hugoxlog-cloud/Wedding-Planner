@@ -1081,6 +1081,44 @@ body.view-dash .dash{display:block}
 .budget-actions button{display:inline-flex;align-items:center;gap:6px}
 .budget-actions .material-symbols-outlined{font-size:18px}
 
+/* ============================================================
+   LOGIN "MOMMENTUM" (sin tarjeta, oscuro y suave)
+   ============================================================ */
+#gate{
+  background:
+    radial-gradient(120% 90% at 15% 10%, rgba(212,175,55,.10) 0%, transparent 45%),
+    radial-gradient(120% 90% at 85% 90%, rgba(123,84,85,.12) 0%, transparent 45%),
+    linear-gradient(160deg,#141414 0%,#1f1c17 55%,#26211a 100%) !important;
+  padding:32px 22px;
+}
+#gate .gate-inner{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;max-width:360px}
+#gate .card{display:none} /* la tarjeta vieja ya no se usa */
+.mm-brand{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:38px}
+.mm-logo{width:112px;height:auto;filter:drop-shadow(0 6px 20px rgba(0,0,0,.5))}
+.mm-word{font-family:"Libre Caslon Text",Georgia,serif;font-weight:700;font-size:32px;letter-spacing:.16em;margin:18px 0 0;padding-left:.16em;
+  background:linear-gradient(180deg,#fdfdfd,#c2c2c9 60%,#9a9aa2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mm-slogan{margin:12px 0 0;font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:#c9b78a}
+.mm-form{display:flex;flex-direction:column;gap:14px;width:100%}
+#gate input{
+  width:100%;box-sizing:border-box;margin:0;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.05);border-radius:14px;padding:15px 16px;font-size:16px;color:#f3f1ec;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+#gate input::placeholder{color:rgba(243,241,236,.45)}
+#gate input:focus{outline:none;border-color:var(--gold);background:rgba(255,255,255,.08);box-shadow:0 0 0 3px rgba(212,175,55,.18)}
+#gate button.go{
+  position:relative;overflow:hidden;width:100%;margin-top:6px;border:none;border-radius:14px;padding:15px;
+  font-family:inherit;font-size:15px;font-weight:700;letter-spacing:.02em;cursor:pointer;
+  background:linear-gradient(135deg,#e9c349,#a07d1e) !important;color:#241a00 !important;
+  box-shadow:0 10px 26px rgba(160,125,30,.38) !important;transition:transform .12s,box-shadow .2s;
+}
+#gate button.go:hover{transform:translateY(-1px);box-shadow:0 14px 32px rgba(160,125,30,.5) !important}
+#gate button.go .veil{position:absolute;top:-80%;left:-45%;width:45%;height:260%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:rotate(18deg);animation:veilshine 3.6s ease-in-out infinite;pointer-events:none}
+#gate .err{color:#ffb4a8;font-size:13px;min-height:16px;text-align:center;margin-top:2px}
+#gate .axol-legend{margin-top:34px;color:rgba(255,255,255,.55);font-size:12px}
+#gate .axol-legend b{color:rgba(255,255,255,.8)}
+@media(max-width:760px){ .mm-word{font-size:27px} .mm-logo{width:96px} }
+
 </style>
 </head>
 <body>
@@ -1113,14 +1151,27 @@ body.view-dash .dash{display:block}
 .ev-logo{height:40px;width:auto;max-width:120px;object-fit:contain;border-radius:8px;margin-right:4px;flex:none}
 </style>
 <div id="gate"><div class="gate-inner">
-  <div class="card">
-    <h1>Planeación de eventos</h1><p>Inicia sesión para gestionar tus eventos.</p>
+  <div class="mm-brand">
+    <svg class="mm-logo" viewBox="0 0 220 240" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="mmSilver" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fdfdfd"/><stop offset="0.45" stop-color="#cfcfd6"/><stop offset="0.7" stop-color="#a6a6ae"/><stop offset="1" stop-color="#e9e9ee"/>
+        </linearGradient>
+      </defs>
+      <path d="M40 66 L110 26 L180 66 L180 150 L145 192 L110 162 L75 192 L40 150 Z" stroke="url(#mmSilver)" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M56 150 L56 96 L110 140 L164 96 L164 150" stroke="url(#mmSilver)" stroke-width="2" stroke-linejoin="round" opacity="0.55"/>
+      <path d="M74 154 L74 78 L110 128 L146 78 L146 154" stroke="url(#mmSilver)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+    <h1 class="mm-word">MOMMENTUM</h1>
+    <p class="mm-slogan">Crafting unforgettable experiences</p>
+  </div>
+  <div class="mm-form">
     <input id="gEmail" type="email" placeholder="Correo" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
     <input id="gPass" type="password" placeholder="Contraseña" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="go" onclick="doLogin()"><span class="veil"></span><span class="ring">💍</span>Entrar</button>
+    <button class="go" onclick="doLogin()"><span class="veil"></span>Entrar</button>
     <div class="err" id="gErr"></div>
   </div>
-  <div class="axol-legend"><svg class="axol-logo" width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="axg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2a9c2"/><stop offset="1" stop-color="#5b8cf0"/></linearGradient></defs><path d="M32 6 L54 18 L54 46 L32 58 L10 46 L10 18 Z" fill="none" stroke="url(#axg)" stroke-width="3"/><circle cx="32" cy="35" r="9.5" fill="url(#axg)"/><path d="M23 31 q-11 -7 -17 -3 q9 2 13 9 M23 39 q-11 4 -16 13 q10 -3 16 -7 M41 31 q11 -7 17 -3 q-9 2 -13 9 M41 39 q11 4 16 13 q-10 -3 -16 -7" fill="none" stroke="url(#axg)" stroke-width="3" stroke-linecap="round"/></svg><span>Powered and developed by <b>Axol Labs</b></span></div>
+  <div class="axol-legend"><svg class="axol-logo" width="24" height="24" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="axg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9c349"/><stop offset="1" stop-color="#8a6a1e"/></linearGradient></defs><path d="M32 6 L54 18 L54 46 L32 58 L10 46 L10 18 Z" fill="none" stroke="url(#axg)" stroke-width="3"/><circle cx="32" cy="35" r="9.5" fill="url(#axg)"/><path d="M23 31 q-11 -7 -17 -3 q9 2 13 9 M23 39 q-11 4 -16 13 q10 -3 16 -7 M41 31 q11 -7 17 -3 q-9 2 -13 9 M41 39 q11 4 16 13 q-10 -3 -16 -7" fill="none" stroke="url(#axg)" stroke-width="3" stroke-linecap="round"/></svg><span>Powered and developed by <b>Axol Labs</b></span></div>
 </div></div>
 <div id="picker"><div class="pcard">
   <h1>Tus eventos</h1><p>Elige un evento para gestionarlo.</p>
