@@ -1217,6 +1217,75 @@ body.view-regalos .regalos{display:block}
 .prov-fields select:focus{border-color:var(--gold)!important;box-shadow:0 0 0 3px rgba(212,175,55,.15)!important}
 @media(max-width:760px){ .reg-summary{grid-template-columns:1fr 1fr} }
 
+/* ============================================================
+   DISEÑO DE INVITACIÓN
+   ============================================================ */
+.invita{display:none;flex:1 1 auto;min-height:0;height:auto!important;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--paper)}
+body.view-invita .invita{display:block}
+.invita-inner{max-width:1100px;margin:0 auto;padding:24px 24px 84px;display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+.invita-tools{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:20px;display:flex;flex-direction:column;gap:4px;position:sticky;top:10px}
+.itools-h{font-size:22px;margin:0 0 12px;color:var(--ink)}
+.invita-tools .il{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);font-weight:700;margin-top:10px}
+.invita-tools input,.invita-tools textarea{border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--paper);font-family:inherit;font-size:14px;width:100%;box-sizing:border-box}
+.invita-tools textarea{resize:vertical}
+.itools-print{margin-top:16px;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.inv-templates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.inv-tpl-sw{border:2px solid var(--line);border-radius:12px;padding:12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;font-family:inherit;transition:box-shadow .15s,border-color .15s}
+.inv-tpl-sw b{font-family:"Libre Caslon Text",Georgia,serif;font-size:19px;line-height:1}
+.inv-tpl-sw span{font-size:10.5px;font-weight:600}
+.inv-tpl-sw:hover{transform:none;box-shadow:var(--shadow)}
+.inv-tpl-sw.sel{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.25)}
+.inv-tpl-sw.inv-tpl-charcoal{background:#1b1c1c;color:#e9c349}
+.inv-tpl-sw.inv-tpl-charcoal span{color:#cdbb86}
+.inv-tpl-sw.inv-tpl-ivory{background:#faf4e6;color:#735c00}
+.inv-tpl-sw.inv-tpl-ivory span{color:#8a7a4a}
+.inv-tpl-sw.inv-tpl-rose{background:linear-gradient(135deg,#f1e4e4,#e7cdcd);color:#7b5455}
+.inv-tpl-sw.inv-tpl-rose span{color:#7b5455}
+.inv-tpl-sw.inv-tpl-minimal{background:#fff;color:#1b1c1c}
+.inv-tpl-sw.inv-tpl-minimal span{color:#5f5f59}
+.invita-preview{display:flex;justify-content:center}
+.inv-canvas{position:relative;width:100%;max-width:440px;aspect-ratio:3/4;border-radius:6px;box-shadow:var(--shadow-lift);display:flex;align-items:center;justify-content:center;padding:44px 34px;text-align:center;overflow:hidden}
+.inv-body{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+.inv-eyebrow{font-family:"Manrope",sans-serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;margin:0 0 18px}
+.inv-title{font-family:"Libre Caslon Text",Georgia,serif;font-size:38px;line-height:1.1;margin:0}
+.inv-rule{width:56px;height:1px;margin:20px 0}
+.inv-date{font-family:"Manrope",sans-serif;font-size:13px;letter-spacing:.16em;text-transform:uppercase;margin:0 0 6px}
+.inv-venue{font-size:14px;margin:0 0 18px;font-style:italic}
+.inv-msg{font-size:13.5px;line-height:1.6;margin:0;max-width:300px}
+.inv-corner{position:absolute;width:44px;height:44px;pointer-events:none}
+.inv-corner.tl{top:20px;left:20px;border-top:2px solid;border-left:2px solid}
+.inv-corner.br{bottom:20px;right:20px;border-bottom:2px solid;border-right:2px solid}
+.inv-tpl-charcoal{background:linear-gradient(155deg,#232323,#141414)}
+.inv-tpl-charcoal .inv-eyebrow{color:#cdbb86}
+.inv-tpl-charcoal .inv-title{background:linear-gradient(135deg,#f6e6a8,#c9a531,#f6e6a8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.inv-tpl-charcoal .inv-rule{background:#c9a531}
+.inv-tpl-charcoal .inv-date,.inv-tpl-charcoal .inv-venue,.inv-tpl-charcoal .inv-msg{color:rgba(255,255,255,.82)}
+.inv-tpl-charcoal .inv-corner{border-color:#c9a531;opacity:.7}
+.inv-tpl-ivory{background:linear-gradient(155deg,#fffdf6,#f3e8cf)}
+.inv-tpl-ivory .inv-eyebrow{color:#8a6a1e}
+.inv-tpl-ivory .inv-title{color:#735c00}
+.inv-tpl-ivory .inv-rule{background:#c9a531}
+.inv-tpl-ivory .inv-date,.inv-tpl-ivory .inv-venue,.inv-tpl-ivory .inv-msg{color:#4d4635}
+.inv-tpl-ivory .inv-corner{border-color:#c9a531;opacity:.6}
+.inv-tpl-rose{background:linear-gradient(155deg,#fbeef0,#f0dada)}
+.inv-tpl-rose .inv-eyebrow{color:#7b5455}
+.inv-tpl-rose .inv-title{color:#7b5455}
+.inv-tpl-rose .inv-rule{background:#b98a8a}
+.inv-tpl-rose .inv-date,.inv-tpl-rose .inv-venue,.inv-tpl-rose .inv-msg{color:#613d3e}
+.inv-tpl-rose .inv-corner{border-color:#b98a8a;opacity:.6}
+.inv-tpl-minimal{background:#fff;border:1px solid var(--line)}
+.inv-tpl-minimal .inv-eyebrow{color:#8a7d84}
+.inv-tpl-minimal .inv-title{color:#1b1c1c}
+.inv-tpl-minimal .inv-rule{background:#1b1c1c}
+.inv-tpl-minimal .inv-date,.inv-tpl-minimal .inv-venue,.inv-tpl-minimal .inv-msg{color:#5f5f59}
+.inv-tpl-minimal .inv-corner{display:none}
+@media(max-width:860px){ .invita-inner{grid-template-columns:1fr} .invita-tools{position:static} }
+
+/* ===== Layout: fluidez de arrastre + gestos ===== */
+.garden-wrap{touch-action:pan-x pan-y}
+.lobj.moving,.table-card.moving{will-change:left,top}
+.lobj,.table-card{will-change:auto}
+
 </style>
 </head>
 <body>
@@ -1348,6 +1417,7 @@ body.view-regalos .regalos{display:block}
   <button class="navlink" data-v="invitados" onclick="setView('invitados')"><span class="material-symbols-outlined">group</span>Invitados</button>
   <button class="navlink" data-v="menu" onclick="setView('menu')"><span class="material-symbols-outlined">restaurant_menu</span>Menú</button>
   <button class="navlink" data-v="regalos" onclick="setView('regalos')"><span class="material-symbols-outlined">card_giftcard</span>Regalos</button>
+  <button class="navlink" data-v="invita" onclick="setView('invita')"><span class="material-symbols-outlined">mail</span>Invitación</button>
   <button class="navlink" data-v="jardin" onclick="setView('jardin')"><span class="material-symbols-outlined">grid_view</span>Layout</button>
   <button class="navlink" data-v="budget" onclick="setView('budget')"><span class="material-symbols-outlined">payments</span>Presupuesto</button>
   <button class="navlink" data-v="proveedores" onclick="setView('proveedores')"><span class="material-symbols-outlined">storefront</span>Proveedores</button>
@@ -1489,7 +1559,7 @@ body.view-regalos .regalos{display:block}
 </div>
     <div id="garden" class="garden">
       
-      <div class="garden-hint">Toma la mesa del centro y arrástrala · ajusta asientos (10–20) con − / + · edita el número de mesa</div>
+      <div class="garden-hint">Arrastra mesas y objetos · Zoom: Ctrl + scroll (o pellizca en móvil) · ajusta asientos con − / +</div>
       
     </div>
   </div>
@@ -1551,6 +1621,44 @@ body.view-regalos .regalos{display:block}
     </div>
     <div class="reg-summary" id="regSummary"></div>
     <div id="regGrid" class="prov-grid"></div>
+  </div>
+</div>
+<div class="invita">
+  <div class="invita-inner">
+    <div class="invita-tools">
+      <h2 class="serif itools-h">Diseño de invitación</h2>
+      <label class="il">Estilo</label>
+      <div class="inv-templates" id="invTemplates">
+        <button class="inv-tpl-sw inv-tpl-charcoal" data-t="charcoal" onclick="setInvTemplate('charcoal')"><b>Aa</b><span>Carbón &amp; Oro</span></button>
+        <button class="inv-tpl-sw inv-tpl-ivory" data-t="ivory" onclick="setInvTemplate('ivory')"><b>Aa</b><span>Marfil</span></button>
+        <button class="inv-tpl-sw inv-tpl-rose" data-t="rose" onclick="setInvTemplate('rose')"><b>Aa</b><span>Rosa</span></button>
+        <button class="inv-tpl-sw inv-tpl-minimal" data-t="minimal" onclick="setInvTemplate('minimal')"><b>Aa</b><span>Minimal</span></button>
+      </div>
+      <label class="il">Nombres</label>
+      <input id="invTitle" type="text" oninput="setInvField('title',this.value)">
+      <label class="il">Encabezado</label>
+      <input id="invEyebrow" type="text" oninput="setInvField('eyebrow',this.value)">
+      <label class="il">Fecha</label>
+      <input id="invDate" type="text" oninput="setInvField('dateText',this.value)">
+      <label class="il">Lugar</label>
+      <input id="invVenue" type="text" oninput="setInvField('venueText',this.value)">
+      <label class="il">Mensaje</label>
+      <textarea id="invMsg" rows="3" oninput="setInvField('message',this.value)"></textarea>
+      <button class="primary itools-print" onclick="window.print()"><span class="material-symbols-outlined">picture_as_pdf</span> Descargar / Imprimir</button>
+    </div>
+    <div class="invita-preview">
+      <div class="inv-canvas inv-tpl-charcoal" id="invCanvas">
+        <span class="inv-corner tl"></span><span class="inv-corner br"></span>
+        <div class="inv-body">
+          <p class="inv-eyebrow" id="pvEyebrow">Te invitamos</p>
+          <h1 class="inv-title" id="pvTitle">Nombres</h1>
+          <div class="inv-rule"></div>
+          <p class="inv-date" id="pvDate">Fecha</p>
+          <p class="inv-venue" id="pvVenue">Lugar</p>
+          <p class="inv-msg" id="pvMsg">Mensaje</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <div class="budget budget-only">
@@ -1681,6 +1789,7 @@ body.view-regalos .regalos{display:block}
   <button class="bnav" data-v="invitados" onclick="setView('invitados')"><span class="material-symbols-outlined">group</span>Invitados</button>
   <button class="bnav" data-v="menu" onclick="setView('menu')"><span class="material-symbols-outlined">restaurant_menu</span>Menú</button>
   <button class="bnav" data-v="regalos" onclick="setView('regalos')"><span class="material-symbols-outlined">card_giftcard</span>Regalos</button>
+  <button class="bnav" data-v="invita" onclick="setView('invita')"><span class="material-symbols-outlined">mail</span>Invita</button>
   <button class="bnav" data-v="jardin" onclick="setView('jardin')"><span class="material-symbols-outlined">grid_view</span>Layout</button>
   <button class="bnav" data-v="budget" onclick="setView('budget')"><span class="material-symbols-outlined">payments</span>Presup.</button>
   <button class="bnav" data-v="proveedores" onclick="setView('proveedores')"><span class="material-symbols-outlined">storefront</span>Prov.</button>
@@ -2103,8 +2212,11 @@ function enableMove(card,t){
     e.preventDefault();
     const startX=e.clientX,startY=e.clientY,ox=t.x,oy=t.y;
     card.classList.add("moving");
-    function mv(ev){ t.x=Math.max(0,ox+(ev.clientX-startX)/zoom); t.y=Math.max(0,oy+(ev.clientY-startY)/zoom); card.style.left=t.x+"px"; card.style.top=t.y+"px"; }
-    function up(){ card.classList.remove("moving"); document.removeEventListener("pointermove",mv); document.removeEventListener("pointerup",up); mark('tables'); }
+    try{ handle.setPointerCapture(e.pointerId); }catch(_){}
+    let raf=null;
+    function paint(){ raf=null; card.style.left=t.x+"px"; card.style.top=t.y+"px"; }
+    function mv(ev){ t.x=Math.max(0,ox+(ev.clientX-startX)/zoom); t.y=Math.max(0,oy+(ev.clientY-startY)/zoom); if(!raf) raf=requestAnimationFrame(paint); }
+    function up(){ if(raf) cancelAnimationFrame(raf); card.style.left=t.x+"px"; card.style.top=t.y+"px"; card.classList.remove("moving"); document.removeEventListener("pointermove",mv); document.removeEventListener("pointerup",up); mark('tables'); }
     document.addEventListener("pointermove",mv);
     document.addEventListener("pointerup",up);
   });
@@ -2138,8 +2250,41 @@ function applyCanvas(){
   applyZoom();
 }
 function applyZoom(){ const g=document.getElementById('garden'); if(g) g.style.zoom=zoom; const z=document.getElementById('zoomLbl'); if(z) z.textContent=Math.round(zoom*100)+'%'; }
-function zoomBy(d){ zoom=Math.max(0.3,Math.min(2.5,Math.round((zoom+d)*100)/100)); applyZoom(); }
-function zoomReset(){ zoom=1; applyZoom(); }
+function zoomAt(nz,cx,cy){
+  const wrap=document.querySelector('.garden-wrap'); if(!wrap) return;
+  nz=Math.max(0.3,Math.min(2.5,Math.round(nz*100)/100));
+  if(nz===zoom) return;
+  const rect=wrap.getBoundingClientRect();
+  const px=(cx==null?wrap.clientWidth/2:cx-rect.left);
+  const py=(cy==null?wrap.clientHeight/2:cy-rect.top);
+  const contentX=(wrap.scrollLeft+px)/zoom;
+  const contentY=(wrap.scrollTop+py)/zoom;
+  zoom=nz; applyZoom();
+  wrap.scrollLeft=contentX*zoom-px;
+  wrap.scrollTop=contentY*zoom-py;
+}
+function zoomBy(d){ zoomAt(zoom+d,null,null); }
+function zoomReset(){ const wrap=document.querySelector('.garden-wrap'); zoom=1; applyZoom(); if(wrap){ wrap.scrollLeft=0; wrap.scrollTop=0; } }
+function initLayoutGestures(){
+  const wrap=document.querySelector('.garden-wrap'); if(!wrap||wrap._gest) return; wrap._gest=true;
+  // Zoom con Ctrl/⌘ + scroll y con pinch de trackpad (el navegador lo manda como ctrl+wheel)
+  wrap.addEventListener('wheel',(e)=>{
+    if(!(e.ctrlKey||e.metaKey)) return;
+    e.preventDefault();
+    zoomAt(zoom*Math.exp(-e.deltaY*0.0012), e.clientX, e.clientY);
+  },{passive:false});
+  // Pellizco en móvil (2 dedos)
+  let pd=0,pz=1;
+  wrap.addEventListener('touchstart',(e)=>{
+    if(e.touches.length===2){ const a=e.touches[0],b=e.touches[1]; pd=Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY); pz=zoom; }
+  },{passive:true});
+  wrap.addEventListener('touchmove',(e)=>{
+    if(e.touches.length===2&&pd>0){ e.preventDefault(); const a=e.touches[0],b=e.touches[1];
+      const d=Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY);
+      zoomAt(pz*(d/pd),(a.clientX+b.clientX)/2,(a.clientY+b.clientY)/2); }
+  },{passive:false});
+  wrap.addEventListener('touchend',(e)=>{ if(e.touches.length<2) pd=0; });
+}
 const snap=v=>Math.round(v/10)*10;
 function selectObj(id){ selectedObj=id; document.querySelectorAll('#garden .lobj').forEach(el=>el.classList.toggle('sel', el.dataset.id===id)); }
 function delObj(id){ state.objects=state.objects.filter(o=>o.id!==id); if(selectedObj===id)selectedObj=null; mark('objects'); renderObjects(); }
@@ -2185,8 +2330,10 @@ function startObjDrag(e,o,el){
   try{ el.setPointerCapture(e.pointerId); }catch(_){}
   const sx=e.clientX,sy=e.clientY,ox=o.x,oy=o.y;
   el.classList.add('moving');
-  function mv(ev){ o.x=Math.max(0,ox+(ev.clientX-sx)/zoom); o.y=Math.max(0,oy+(ev.clientY-sy)/zoom); el.style.left=o.x+'px'; el.style.top=o.y+'px'; }
-  function up(){ o.x=snap(o.x); o.y=snap(o.y); el.style.left=o.x+'px'; el.style.top=o.y+'px'; el.classList.remove('moving'); document.removeEventListener('pointermove',mv); document.removeEventListener('pointerup',up); mark('objects'); }
+  let raf=null;
+  function paint(){ raf=null; el.style.left=o.x+'px'; el.style.top=o.y+'px'; }
+  function mv(ev){ o.x=Math.max(0,ox+(ev.clientX-sx)/zoom); o.y=Math.max(0,oy+(ev.clientY-sy)/zoom); if(!raf) raf=requestAnimationFrame(paint); }
+  function up(){ if(raf) cancelAnimationFrame(raf); o.x=snap(o.x); o.y=snap(o.y); el.style.left=o.x+'px'; el.style.top=o.y+'px'; el.classList.remove('moving'); document.removeEventListener('pointermove',mv); document.removeEventListener('pointerup',up); mark('objects'); }
   document.addEventListener('pointermove',mv); document.addEventListener('pointerup',up);
 }
 function startObjResize(e,o,el){
@@ -2535,16 +2682,17 @@ function renderDash(){
 
 /* ---------------- vistas ---------------- */
 function setView(v){
-  document.body.classList.remove('view-dash','view-invitados','view-menu','view-regalos','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
+  document.body.classList.remove('view-dash','view-invitados','view-menu','view-regalos','view-invita','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
   document.body.classList.add('view-'+v);
   document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
-  const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',regalos:'Mesa de regalos',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
+  const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',regalos:'Mesa de regalos',invita:'Diseño de invitación',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
   const hSub=document.getElementById('hSub'); if(hSub) hSub.textContent=(subs[v]||'')+' · '+eventDateLabel();
   if(v==='dash') renderDash();
   if(v==='invitados') renderInvitados();
   if(v==='menu') renderMenu();
   if(v==='regalos') renderRegistry();
-  if(v==='jardin') paintVenueBar();
+  if(v==='invita') renderInvita();
+  if(v==='jardin'){ paintVenueBar(); initLayoutGestures(); }
   if(v==='budget') renderBudget();
   if(v==='proveedores') renderProviders();
   if(v==='music') renderMusic();
@@ -2552,6 +2700,45 @@ function setView(v){
   if(v==='todo') renderTodos();
 }
 
+/* ---------------- diseño de invitación ---------------- */
+let _invT=null;
+function invDefaults(){
+  const inv=(EVENT&&EVENT.invitation)||{};
+  const has=(k)=>inv[k]!==undefined&&inv[k]!==null;
+  return {
+    template: inv.template||'charcoal',
+    eyebrow: has('eyebrow')?inv.eyebrow:'Te invitamos',
+    title: has('title')?inv.title:((EVENT&&EVENT.couple_names)||'Nombres'),
+    dateText: has('dateText')?inv.dateText:(eventDateLabel()||''),
+    venueText: has('venueText')?inv.venueText:((EVENT&&(EVENT.venue_name||EVENT.venue_location))||''),
+    message: has('message')?inv.message:'Acompáñennos a celebrar este día tan especial.'
+  };
+}
+function saveInvitation(){
+  if(!EVENT||!canEdit('invitados')) return;
+  if(_invT) clearTimeout(_invT);
+  _invT=setTimeout(async()=>{ const {error}=await sb.from('events').update({invitation:EVENT.invitation||{}}).eq('id',EVENT.id); if(error) console.error(error); },500);
+}
+function setInvField(k,v){ if(!EVENT) return; EVENT.invitation=EVENT.invitation||{}; EVENT.invitation[k]=v; saveInvitation(); updateInvPreview(); }
+function setInvTemplate(t){ if(!EVENT) return; EVENT.invitation=EVENT.invitation||{}; EVENT.invitation.template=t; saveInvitation(); renderInvita(); }
+function updateInvPreview(){
+  const d=invDefaults();
+  const cv=document.getElementById('invCanvas');
+  if(cv) cv.className='inv-canvas inv-tpl-'+d.template;
+  const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+  set('pvEyebrow',d.eyebrow); set('pvTitle',d.title||'Nombres'); set('pvDate',d.dateText); set('pvVenue',d.venueText); set('pvMsg',d.message);
+  const show=(id,v)=>{const el=document.getElementById(id); if(el) el.style.display=v?'':'none';};
+  show('pvEyebrow',d.eyebrow); show('pvDate',d.dateText); show('pvVenue',d.venueText); show('pvMsg',d.message);
+}
+function renderInvita(){
+  if(!EVENT) return;
+  const d=invDefaults();
+  const setV=(id,v)=>{const el=document.getElementById(id); if(el) el.value=v;};
+  setV('invTitle',d.title); setV('invEyebrow',d.eyebrow); setV('invDate',d.dateText); setV('invVenue',d.venueText); setV('invMsg',d.message);
+  document.querySelectorAll('#invTemplates .inv-tpl-sw').forEach(b=>b.classList.toggle('sel',b.dataset.t===d.template));
+  updateInvPreview();
+  applyRO();
+}
 /* ---------------- mesa de regalos ---------------- */
 const REG_STATUS={pendiente:{t:'Pendiente',k:'pend'},reservado:{t:'Reservado',k:'res'},comprado:{t:'Comprado',k:'ok'}};
 function addRegistryItem(){ if(!canEdit('invitados')){toast('No tienes permiso');return;} state.registry.push({id:uid(),name:'',store:'',price:0,url:'',status:'pendiente',notes:''}); mark('registry'); renderRegistry(); }
@@ -2852,7 +3039,7 @@ function renderInvitados(){
 }
 
 /* ---------------- permisos: gate visual de pestañas y edición ---------------- */
-const TAB_OF_VIEW={invitados:'invitados',menu:'invitados',regalos:'invitados',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
+const TAB_OF_VIEW={invitados:'invitados',menu:'invitados',regalos:'invitados',invita:'invitados',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
 function applyTabVisibility(){
   document.querySelectorAll('[data-v]').forEach(b=>{
     const view=b.dataset.v;
