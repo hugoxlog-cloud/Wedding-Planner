@@ -1286,6 +1286,81 @@ body.view-invita .invita{display:block}
 .lobj.moving,.table-card.moving{will-change:left,top}
 .lobj,.table-card{will-change:auto}
 
+/* ===== Layout móvil: panel inferior (bottom sheet) + FAB ===== */
+.layout-fab{display:none}
+.lb-handle{display:none}
+body.lb-drawer-open .layout-fab{display:none!important}
+@media(max-width:1024px){
+  .layout-bar{
+    position:fixed;left:0;right:0;bottom:0;top:auto;z-index:70;
+    flex-direction:column;align-items:stretch;gap:12px;
+    max-height:74vh;overflow:auto;-webkit-overflow-scrolling:touch;
+    border:none;border-top:1px solid var(--line);border-radius:20px 20px 0 0;
+    box-shadow:0 -12px 34px rgba(51,51,51,.2);background:#fff!important;
+    padding:4px 16px calc(16px + env(safe-area-inset-bottom));
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+    transform:translateY(106%);transition:transform .32s cubic-bezier(.4,0,.2,1);
+  }
+  .layout-bar.lb-open{transform:translateY(0)}
+  .lb-handle{display:flex;justify-content:center;padding:8px 0 4px;position:sticky;top:0;background:#fff;cursor:pointer}
+  .lb-handle span{width:44px;height:5px;border-radius:999px;background:var(--line)}
+  .layout-bar .lb-group,.layout-bar .lb-palette{width:100%}
+  .lb-palette{flex-wrap:wrap;overflow:visible}
+  .lb-palette .lb-lbl{width:100%}
+  .lb-palette button{flex:0 0 auto}
+  .layout-fab{
+    display:flex;position:fixed;right:16px;bottom:78px;z-index:60;
+    width:56px;height:56px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--gold);color:#3d3100;align-items:center;justify-content:center;
+    box-shadow:0 10px 26px rgba(160,125,30,.42);
+  }
+  body:not(.view-jardin) .layout-fab{display:none}
+  .layout-fab .material-symbols-outlined{font-size:30px}
+}
+
+/* ============================================================
+   FASES DE LA BODA
+   ============================================================ */
+.fases{display:none;flex:1 1 auto;min-height:0;height:auto!important;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--paper)}
+body.view-fases .fases{display:block}
+.fases-inner{max-width:1000px;margin:0 auto;padding:24px 24px 84px}
+.fases-top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.fases-eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-ink);font-weight:700}
+.fases-h{font-size:30px;margin:4px 0 0;color:var(--ink)}
+.fases-prog{display:flex;align-items:center;gap:10px}
+.fases-ring{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:conic-gradient(var(--gold) 0%,var(--sage-soft) 0)}
+.fases-ring-in{width:50px;height:50px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center}
+.fases-ring-in b{font-family:"Libre Caslon Text",Georgia,serif;font-size:16px;color:var(--gold-ink)}
+.fases-prog-lbl{font-size:12px;color:var(--ink-soft)}
+.fases-strip{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 14px;-webkit-overflow-scrolling:touch}
+.phase-card{position:relative;flex:0 0 auto;min-width:150px;border:1px solid var(--line);background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;gap:6px;text-align:left;font-family:inherit;transition:transform .15s,border-color .15s,box-shadow .15s}
+.phase-card:hover{transform:translateY(-2px)}
+.phase-card .pc-lbl{font-family:"Libre Caslon Text",Georgia,serif;font-size:17px;color:var(--ink)}
+.phase-card .pc-count{font-size:12.5px;color:var(--ink-soft);font-weight:600}
+.phase-card.sel{border-color:var(--gold);box-shadow:0 0 0 2px rgba(212,175,55,.3),var(--shadow);background:var(--sage-soft)}
+.phase-card.done .pc-lbl{color:var(--gold-ink)}
+.pc-check{position:absolute;top:-8px;right:12px;width:24px;height:24px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.pc-check .material-symbols-outlined{font-size:15px}
+.fases-tasks{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:20px;margin-top:8px}
+.ft-head{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:6px}
+.ft-head h3{font-size:20px;margin:0;color:var(--ink)}
+.ft-item{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--paper)}
+.ft-check{flex:none;width:26px;height:26px;border-radius:8px;border:1.5px solid var(--line);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.ft-item.done .ft-check{background:var(--ok);border-color:var(--ok)}
+.ft-check .material-symbols-outlined{font-size:17px}
+.ft-text{flex:1;border:1px solid transparent;border-radius:8px;padding:8px 10px;font-family:inherit;font-size:14.5px;background:transparent;color:var(--ink)}
+.ft-text:hover{border-color:var(--line)}
+.ft-text:focus{outline:none;border-color:var(--gold);background:var(--paper)}
+.ft-item.done .ft-text{text-decoration:line-through;color:var(--ink-soft)}
+.ft-del{flex:none;border:none;background:none;color:var(--ink-soft);font-size:19px;cursor:pointer;opacity:.5;padding:0 6px}
+.ft-del:hover{opacity:1;color:var(--full)}
+.ft-add{display:flex;gap:8px;margin-top:14px}
+.ft-add input{flex:1;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-family:inherit;font-size:14px;background:var(--paper)}
+.ft-add button{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.fases-empty{text-align:center;color:var(--ink-soft);padding:22px;font-size:14px}
+.fases-empty button{margin-top:12px;display:inline-flex;align-items:center;gap:6px}
+@media(max-width:760px){ .fases-inner{padding:16px 14px 84px} }
+
 </style>
 </head>
 <body>
@@ -1424,6 +1499,7 @@ body.view-invita .invita{display:block}
   <button class="navlink" data-v="music" onclick="setView('music')"><span class="material-symbols-outlined">music_note</span>Música</button>
   <button class="navlink" data-v="itin" onclick="setView('itin')"><span class="material-symbols-outlined">schedule</span>Itinerario</button>
   <button class="navlink" data-v="todo" onclick="setView('todo')"><span class="material-symbols-outlined">checklist</span>To-Do</button>
+  <button class="navlink" data-v="fases" onclick="setView('fases')"><span class="material-symbols-outlined">flag</span>Fases</button>
   <div class="sn-spacer"></div>
   <div class="sn-foot">
     <button class="navlink um-btn" onclick="openUsers()" style="display:none"><span class="material-symbols-outlined">manage_accounts</span>Usuarios</button>
@@ -1531,6 +1607,7 @@ body.view-invita .invita{display:block}
 
   <div class="garden-wrap">
     <div class="layout-bar">
+  <div class="lb-handle" onclick="toggleLayoutDrawer()"><span></span></div>
   <div class="lb-group"><span class="lb-lbl">Lugar</span>
     <button class="vt-type" data-t="salon" onclick="setVenueType('salon')">Salon</button>
     <button class="vt-type" data-t="jardin" onclick="setVenueType('jardin')">Jardin</button></div>
@@ -1557,8 +1634,9 @@ body.view-invita .invita{display:block}
     <button onclick="addObj('savory')"><span class="material-symbols-outlined">restaurant</span>Salada</button>
     <button onclick="addObj('bathroom')"><span class="material-symbols-outlined">wc</span>Baños</button></div>
 </div>
+    <button id="layoutFab" class="layout-fab" onclick="toggleLayoutDrawer()" aria-label="Agregar elemento"><span class="material-symbols-outlined">add</span></button>
     <div id="garden" class="garden">
-      
+
       <div class="garden-hint">Arrastra mesas y objetos · Zoom: Ctrl + scroll (o pellizca en móvil) · ajusta asientos con − / +</div>
       
     </div>
@@ -1657,6 +1735,29 @@ body.view-invita .invita{display:block}
           <p class="inv-venue" id="pvVenue">Lugar</p>
           <p class="inv-msg" id="pvMsg">Mensaje</p>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="fases">
+  <div class="fases-inner">
+    <div class="fases-top">
+      <div>
+        <span class="fases-eyebrow">Planificación maestra</span>
+        <h2 class="serif fases-h">Fases de la boda</h2>
+      </div>
+      <div class="fases-prog">
+        <div class="fases-ring" id="fasesRing"><div class="fases-ring-in"><b id="fasesPct">0%</b></div></div>
+        <span class="fases-prog-lbl">completado</span>
+      </div>
+    </div>
+    <div class="fases-strip" id="fasesStrip"></div>
+    <div class="fases-tasks">
+      <div class="ft-head"><h3 class="serif" id="fasesTitle">Tareas</h3><span class="stpill st-pend" id="fasesCount"></span></div>
+      <div id="fasesList"></div>
+      <div class="ft-add">
+        <input id="fasesInput" type="text" placeholder="Nueva tarea de esta fase" onkeydown="if(event.key==='Enter')addPhaseTask()">
+        <button class="blush" onclick="addPhaseTask()"><span class="material-symbols-outlined">add</span> Tarea</button>
       </div>
     </div>
   </div>
@@ -1796,6 +1897,7 @@ body.view-invita .invita{display:block}
   <button class="bnav" data-v="music" onclick="setView('music')"><span class="material-symbols-outlined">music_note</span>Música</button>
   <button class="bnav" data-v="itin" onclick="setView('itin')"><span class="material-symbols-outlined">schedule</span>Itin.</button>
   <button class="bnav" data-v="todo" onclick="setView('todo')"><span class="material-symbols-outlined">checklist</span>To-Do</button>
+  <button class="bnav" data-v="fases" onclick="setView('fases')"><span class="material-symbols-outlined">flag</span>Fases</button>
 </nav>
 </div><!--/app-shell-->
 <div id="usersModal" class="um-modal">
@@ -1831,7 +1933,7 @@ const SB_URL="https://pkxkauqcthiqosulmnkx.supabase.co";
 const SB_KEY="sb_publishable_aIykGvvAhE5Yja9SoBipIA_vFCrh5Bb";
 const sb=supabase.createClient(SB_URL,SB_KEY);
 
-let state = { guests:[], tables:[], objects:[], providers:[], budget:{expenses:[]}, payments:[], music:{moments:[],si:[],no:[],notas:""}, itin:[], todos:[], registry:[] };
+let state = { guests:[], tables:[], objects:[], providers:[], budget:{expenses:[]}, payments:[], music:{moments:[],si:[],no:[],notas:""}, itin:[], todos:[], registry:[], phaseTasks:[] };
 let selectedGuest=null;
 let selectedObj=null;
 let _venueT=null;
@@ -1920,6 +2022,10 @@ async function syncRegistry(){
   if(!canEdit('invitados')) return;
   await syncRows('registry_items', state.registry.map((r,i)=>({id:r.id,event_id:EVENT.id,name:r.name||'',store:r.store||'',price:+r.price||0,url:r.url||'',status:r.status||'pendiente',notes:r.notes||'',sort_order:i})));
 }
+async function syncPhases(){
+  if(!canEdit('todo')) return;
+  await syncRows('phase_tasks', state.phaseTasks.map((r,i)=>({id:r.id,event_id:EVENT.id,phase:r.phase||'p12',text:r.text||'',done:!!r.done,sort_order:i})));
+}
 async function flush(){
   if(!EVENT) return;
   const d=_dirty; _dirty=new Set();
@@ -1935,6 +2041,7 @@ async function flush(){
     if(d.has('itin')) await syncItin();
     if(d.has('todos')) await syncTodos();
     if(d.has('registry')) await syncRegistry();
+    if(d.has('phases')) await syncPhases();
     setSaving('Guardado ✓');
     setTimeout(()=>{ if((document.getElementById('saveState')||{}).textContent==='Guardado ✓') setSaving(''); },1500);
   }catch(e){ console.error(e); setSaving('Error al guardar'); }
@@ -1946,7 +2053,7 @@ function save(){ mark('tables','seats'); }
 async function loadEventIntoState(ev){
   EVENT=ev;
   const eid=ev.id;
-  const [g,t,s,ex,pay,mm,ms,mn,it,td,lo,pr,rg] = await Promise.all([
+  const [g,t,s,ex,pay,mm,ms,mn,it,td,lo,pr,rg,pf] = await Promise.all([
     sb.from('guests').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('tables').select('*').eq('event_id',eid).order('num'),
     sb.from('table_seats').select('*').eq('event_id',eid),
@@ -1959,7 +2066,8 @@ async function loadEventIntoState(ev){
     sb.from('todos').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('layout_objects').select('*').eq('event_id',eid),
     sb.from('providers').select('*').eq('event_id',eid).order('sort_order'),
-    sb.from('registry_items').select('*').eq('event_id',eid).order('sort_order')
+    sb.from('registry_items').select('*').eq('event_id',eid).order('sort_order'),
+    sb.from('phase_tasks').select('*').eq('event_id',eid).order('sort_order')
   ]);
   state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||''}));
   const seatsByTable={}; (s.data||[]).forEach(r=>{ (seatsByTable[r.table_id]=seatsByTable[r.table_id]||[]).push(r.guest_id); });
@@ -1976,6 +2084,7 @@ async function loadEventIntoState(ev){
   state.objects=(lo.data||[]).map(r=>({id:r.id,kind:r.kind,label:r.label,x:+r.x,y:+r.y,w:+r.w,h:+r.h,rotation:+r.rotation,z:r.z}));
   state.providers=(pr.data||[]).map(r=>({id:r.id,name:r.name,type:r.type,phone:r.phone,email:r.email,contact_person:r.contact_person,notes:r.notes}));
   state.registry=(rg.data||[]).map(r=>({id:r.id,name:r.name,store:r.store,price:+r.price||0,url:r.url,status:r.status||'pendiente',notes:r.notes}));
+  state.phaseTasks=(pf.data||[]).map(r=>({id:r.id,phase:r.phase||'p12',text:r.text||'',done:!!r.done}));
 }
 
 /* ---------------- helpers ---------------- */
@@ -2265,8 +2374,12 @@ function zoomAt(nz,cx,cy){
 }
 function zoomBy(d){ zoomAt(zoom+d,null,null); }
 function zoomReset(){ const wrap=document.querySelector('.garden-wrap'); zoom=1; applyZoom(); if(wrap){ wrap.scrollLeft=0; wrap.scrollTop=0; } }
+function toggleLayoutDrawer(){ const b=document.querySelector('.layout-bar'); if(!b) return; const open=b.classList.toggle('lb-open'); document.body.classList.toggle('lb-drawer-open',open); }
+function closeLayoutDrawer(){ const b=document.querySelector('.layout-bar'); if(b) b.classList.remove('lb-open'); document.body.classList.remove('lb-drawer-open'); }
 function initLayoutGestures(){
   const wrap=document.querySelector('.garden-wrap'); if(!wrap||wrap._gest) return; wrap._gest=true;
+  const pal=document.querySelector('.lb-palette');
+  if(pal) pal.addEventListener('click',(e)=>{ if(window.innerWidth<=1024 && e.target.closest('button')) setTimeout(closeLayoutDrawer,160); });
   // Zoom con Ctrl/⌘ + scroll y con pinch de trackpad (el navegador lo manda como ctrl+wheel)
   wrap.addEventListener('wheel',(e)=>{
     if(!(e.ctrlKey||e.metaKey)) return;
@@ -2682,16 +2795,17 @@ function renderDash(){
 
 /* ---------------- vistas ---------------- */
 function setView(v){
-  document.body.classList.remove('view-dash','view-invitados','view-menu','view-regalos','view-invita','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
+  document.body.classList.remove('view-dash','view-invitados','view-menu','view-regalos','view-invita','view-fases','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
   document.body.classList.add('view-'+v);
   document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
-  const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',regalos:'Mesa de regalos',invita:'Diseño de invitación',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
+  const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',regalos:'Mesa de regalos',invita:'Diseño de invitación',fases:'Fases de la boda',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
   const hSub=document.getElementById('hSub'); if(hSub) hSub.textContent=(subs[v]||'')+' · '+eventDateLabel();
   if(v==='dash') renderDash();
   if(v==='invitados') renderInvitados();
   if(v==='menu') renderMenu();
   if(v==='regalos') renderRegistry();
   if(v==='invita') renderInvita();
+  if(v==='fases') renderFases();
   if(v==='jardin'){ paintVenueBar(); initLayoutGestures(); }
   if(v==='budget') renderBudget();
   if(v==='proveedores') renderProviders();
@@ -2794,6 +2908,57 @@ function renderRegistry(){
   grid.appendChild(add);
   const el=document.getElementById('regCount'); if(el) el.textContent=all.length+' regalo(s)';
   renderRegSummary();
+  applyRO();
+}
+/* ---------------- fases de la boda ---------------- */
+const PHASES=[{k:'p12',t:'12+ meses'},{k:'p9',t:'9–11 meses'},{k:'p6',t:'6–8 meses'},{k:'p3',t:'3–5 meses'},{k:'p1',t:'1–2 meses'},{k:'week',t:'Semana del evento'}];
+const PHASE_TEMPLATE={
+  p12:['Definir el presupuesto total','Elegir y reservar el lugar','Definir fecha y estilo del evento','Armar lista preliminar de invitados'],
+  p9:['Contratar banquete / catering','Reservar fotógrafo y video','Contratar música / DJ','Elegir vestido y traje'],
+  p6:['Enviar Save the Date','Contratar decoración y flores','Degustación y menú final','Definir hospedaje y transporte'],
+  p3:['Enviar invitaciones','Comprar los anillos','Prueba de vestido','Definir mesa de regalos','Confirmar itinerario'],
+  p1:['Dar seguimiento a confirmaciones (RSVP)','Acomodo de mesas','Últimos pagos a proveedores','Prueba de peinado y maquillaje'],
+  week:['Reconfirmar a todos los proveedores','Entregar itinerario al equipo','Preparar kit de emergencia','Ensayo general']
+};
+let _selPhase='p12';
+function phaseCounts(k){ const it=state.phaseTasks.filter(t=>t.phase===k); return {total:it.length,done:it.filter(t=>t.done).length}; }
+function selectPhase(k){ _selPhase=k; renderFases(); }
+function addPhaseTask(){ if(!canEdit('todo')){toast('No tienes permiso');return;} const inp=document.getElementById('fasesInput'); const v=(inp&&inp.value.trim())||''; state.phaseTasks.push({id:uid(),phase:_selPhase,text:v||'Nueva tarea',done:false}); if(inp) inp.value=''; mark('phases'); renderFases(); }
+function loadPhaseTemplate(){ if(!canEdit('todo')){toast('No tienes permiso');return;} if(state.phaseTasks.length && !confirm('Se agregarán las tareas sugeridas a cada fase. ¿Continuar?')) return; PHASES.forEach(p=>{ (PHASE_TEMPLATE[p.k]||[]).forEach(txt=>state.phaseTasks.push({id:uid(),phase:p.k,text:txt,done:false})); }); mark('phases'); renderFases(); }
+function renderFases(){
+  const strip=document.getElementById('fasesStrip'); if(!strip) return;
+  const total=state.phaseTasks.length, done=state.phaseTasks.filter(t=>t.done).length;
+  const pct=total?Math.round(done/total*100):0;
+  const ring=document.getElementById('fasesRing'); if(ring) ring.style.background='conic-gradient(var(--gold) '+pct+'%, var(--sage-soft) 0)';
+  const pctEl=document.getElementById('fasesPct'); if(pctEl) pctEl.textContent=pct+'%';
+  strip.innerHTML='';
+  PHASES.forEach(p=>{
+    const c=phaseCounts(p.k); const complete=c.total>0&&c.done===c.total;
+    const b=document.createElement('button'); b.className='phase-card'+(p.k===_selPhase?' sel':'')+(complete?' done':'');
+    b.innerHTML='<span class="pc-lbl">'+p.t+'</span><span class="pc-count">'+c.done+' / '+c.total+'</span>'+(complete?'<span class="pc-check"><span class="material-symbols-outlined">check</span></span>':'');
+    b.addEventListener('click',()=>selectPhase(p.k));
+    strip.appendChild(b);
+  });
+  const ph=PHASES.find(p=>p.k===_selPhase)||PHASES[0];
+  const titleEl=document.getElementById('fasesTitle'); if(titleEl) titleEl.textContent='Tareas · '+ph.t;
+  const items=state.phaseTasks.filter(t=>t.phase===_selPhase);
+  const cnt=document.getElementById('fasesCount'); if(cnt) cnt.textContent=items.filter(t=>!t.done).length+' pendientes';
+  const list=document.getElementById('fasesList'); list.innerHTML='';
+  if(!state.phaseTasks.length){
+    list.innerHTML='<div class="fases-empty">Aún no hay tareas.<br><button class="blush" onclick="loadPhaseTemplate()"><span class="material-symbols-outlined">auto_awesome</span> Cargar tareas sugeridas</button></div>';
+  } else if(!items.length){
+    list.innerHTML='<div class="fases-empty">Sin tareas en esta fase. Agrega una abajo.</div>';
+  } else {
+    items.forEach(t=>{
+      const row=document.createElement('div'); row.className='ft-item'+(t.done?' done':'');
+      row.innerHTML='<button class="ft-check">'+(t.done?'<span class="material-symbols-outlined">check</span>':'')+'</button><input class="ft-text" type="text"><button class="ft-del" title="Eliminar">×</button>';
+      row.querySelector('.ft-text').value=t.text||'';
+      row.querySelector('.ft-check').addEventListener('click',()=>{ t.done=!t.done; mark('phases'); renderFases(); });
+      row.querySelector('.ft-text').addEventListener('input',ev=>{ t.text=ev.target.value; mark('phases'); });
+      row.querySelector('.ft-del').addEventListener('click',()=>{ state.phaseTasks=state.phaseTasks.filter(x=>x.id!==t.id); mark('phases'); renderFases(); });
+      list.appendChild(row);
+    });
+  }
   applyRO();
 }
 /* ---------------- menú / platillos ---------------- */
@@ -3039,7 +3204,7 @@ function renderInvitados(){
 }
 
 /* ---------------- permisos: gate visual de pestañas y edición ---------------- */
-const TAB_OF_VIEW={invitados:'invitados',menu:'invitados',regalos:'invitados',invita:'invitados',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
+const TAB_OF_VIEW={invitados:'invitados',menu:'invitados',regalos:'invitados',invita:'invitados',fases:'todo',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
 function applyTabVisibility(){
   document.querySelectorAll('[data-v]').forEach(b=>{
     const view=b.dataset.v;
