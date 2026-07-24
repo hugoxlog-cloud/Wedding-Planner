@@ -911,6 +911,102 @@ body.view-dash .dash{display:block}
 .prov-add-card span{font-size:12.5px;color:var(--ink-soft)}
 @media(max-width:760px){ .prov-inner{padding:16px 14px 84px} .prov-search-wrap{min-width:0;width:100%} .prov-head{align-items:stretch} }
 
+/* ============================================================
+   PRESUPUESTO
+   ============================================================ */
+.budget-inner{padding:24px 24px 84px}
+.bcards{gap:16px;margin-bottom:18px}
+.bcard{padding:16px 20px}
+.bcard span{color:var(--ink-soft);letter-spacing:.08em}
+.bcards .bcard:first-child{border-left:3px solid var(--gold)}
+.bcard.pag{border-left:3px solid var(--ok)}
+.bcard.pend{border-left:3px solid var(--blush)}
+.bcard.pag .bpct{color:var(--ok)}
+.bprogress{height:26px;background:var(--sage-soft);border-radius:999px}
+#bProgFill{background:linear-gradient(90deg,var(--gold),var(--gold-ink))}
+.bprogress span{color:var(--gold-deep)}
+.budget-actions{margin:12px 0 18px}
+.exp-card{border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.exp-head{padding:12px 14px}
+.exp-cn{border:1px solid var(--line);border-radius:10px;background:#fff}
+.exp-prov{border:1px solid var(--line);border-radius:10px;background:#fff}
+.exp-f>span{color:var(--ink-soft)}
+.exp-f b{font-family:"Libre Caslon Text",Georgia,serif;font-size:16px;color:var(--gold-ink)}
+.exp-pend b.neg{color:var(--full)}
+.exp-pay{background:var(--gold);border-color:var(--gold);color:#3d3100;border-radius:10px;font-weight:700}
+.exp-pay:hover{background:#c9a531}
+.exp-body{border-top:1px dashed var(--line);margin-top:2px;padding-top:10px}
+.pay-row input{border:1px solid var(--line);border-radius:10px;background:#fff}
+
+/* ============================================================
+   MÚSICA / ITINERARIO (tablas + secciones)
+   ============================================================ */
+.bsec{font-size:26px;color:var(--ink);margin:26px 0 12px}
+.music .bsec:first-child,.itin .bsec:first-child{margin-top:0}
+.mnotes{border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow)}
+.addrow{border-radius:12px;padding:11px 16px;margin-top:12px}
+.itin-prog .ip-bar{background:var(--sage-soft);height:14px}
+#itinProgFill{background:linear-gradient(90deg,var(--gold),var(--gold-ink))}
+.itin-prog #itinProgTxt{color:var(--ink-soft);font-weight:600}
+.itcheck{border:1.5px solid var(--line);border-radius:9px;color:var(--ok)}
+.itcheck.on{background:var(--ok);border-color:var(--ok)}
+.btable td .cn,.btable td input{border-radius:8px}
+
+/* ============================================================
+   TO-DO
+   ============================================================ */
+.todo-inner{padding:24px 24px 84px}
+.todo-add{border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:12px 14px}
+.todo-add .plus{border:2px solid var(--gold);color:var(--gold-ink)}
+.todo-add .plus:hover{background:var(--gold);color:#3d3100}
+.todo-add .mini{border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.todo-count{color:var(--ink-soft);font-weight:600}
+.todo-sec{color:var(--gold-deep);letter-spacing:.12em}
+.todo-item{border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.tcheck{border:2px solid var(--gold)}
+.todo-item.done .tcheck{background:var(--ok);border-color:var(--ok)}
+.tstar.on{color:var(--gold)}
+.ttitle:focus{border-color:var(--gold);background:var(--paper)}
+
+/* ============================================================
+   MODALES (pago / usuarios)
+   ============================================================ */
+.modal-overlay{background:rgba(27,28,28,.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.modal{border-radius:20px;box-shadow:var(--shadow-lift)}
+.modal h3{color:var(--ink)}
+.modal label{color:var(--ink-soft)}
+.modal select,.modal input{border:1px solid var(--line);border-radius:11px;background:var(--paper)}
+.payinfo{background:var(--sage-soft);border-radius:12px}
+.paynew b{color:var(--blush)}
+.um-modal{background:rgba(27,28,28,.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.um-card{border-radius:20px;box-shadow:var(--shadow-lift)}
+.um-top h2{font-family:"Libre Caslon Text",Georgia,serif;color:var(--gold-ink)}
+.um-section h3{color:var(--gold-deep)}
+.um-form input,.um-form select,.mm-add select,.mm-add input{border:1px solid var(--line);border-radius:11px}
+.uacts button,.member-head button,.mm-add button,.um-form button{border-radius:10px}
+.urow,.member{border:1px solid var(--line);border-radius:12px}
+.perm-slot{border:1.5px dashed var(--line);border-radius:12px}
+.perm-slot.over{border-color:var(--gold);background:var(--sage-soft)}
+
+/* ============================================================
+   LOGIN / SELECTOR / NUEVO EVENTO (detalle)
+   ============================================================ */
+#gate input,#neModal input,#neModal select{border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+#gate input:focus,#neModal input:focus,#neModal select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.18)}
+#gate p,#picker p{color:var(--ink-soft)}
+#gate .err{color:var(--full)}
+.ev-card span{color:var(--ink-soft)}
+.ev-card em{color:var(--gold-ink);font-weight:700}
+.evc-logo{border:1px solid var(--line)}
+.evc-meta{color:var(--ink-soft)}
+.evc-days small{color:var(--ink-soft)}
+.evbadge{color:var(--gold-ink);font-weight:700}
+.ne-lbl{color:var(--ink-soft)}
+.linkbtn{color:var(--ink-soft)}
+.pick-empty{color:var(--ink-soft)}
+#neModal button.go[style]{background:var(--sage-soft)!important;color:var(--ink)!important}
+.axol-logo{filter:none}
+
 </style>
 </head>
 <body>
