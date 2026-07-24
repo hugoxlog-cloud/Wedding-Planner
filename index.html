@@ -1142,6 +1142,69 @@ body.view-jardin .hz-right .stats{display:flex}
 }
 @media(max-width:760px){ #main-col>header #hTitle{font-size:20px} }
 
+/* ===== Borrar evento (tarjeta del selector) ===== */
+.evc-del{flex:none;margin-left:6px;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);background:transparent;cursor:pointer;opacity:.6;transition:opacity .15s,background .15s,color .15s}
+.evc-del:hover{opacity:1;color:var(--full);background:var(--blush-soft)}
+.evc-del .material-symbols-outlined{font-size:20px}
+
+/* ============================================================
+   INVITADOS: estatus + resumen
+   ============================================================ */
+.inv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.istat{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow)}
+.istat .material-symbols-outlined{font-size:26px}
+.istat b{font-family:"Libre Caslon Text",Georgia,serif;font-size:24px;line-height:1;color:var(--ink);display:block}
+.istat span{font-size:12px;color:var(--ink-soft)}
+.istat.st-ok{border-left:4px solid var(--ok)} .istat.st-ok .material-symbols-outlined{color:var(--ok)}
+.istat.st-pend{border-left:4px solid #d4a017} .istat.st-pend .material-symbols-outlined{color:#c99700}
+.istat.st-no{border-left:4px solid var(--full)} .istat.st-no .material-symbols-outlined{color:var(--full)}
+.istat.st-tot{border-left:4px solid var(--gold)} .istat.st-tot .material-symbols-outlined{color:var(--gold-ink)}
+.stpill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.stpill.st-ok{background:#e3f0e6;color:#2f6b41}
+.stpill.st-pend{background:#fbeecb;color:#8a6a1e}
+.stpill.st-no{background:var(--blush-soft);color:#7a4b3b}
+.stpill.st-sin{background:#ece7dd;color:var(--ink-soft)}
+@media(max-width:760px){ .inv-stats{grid-template-columns:1fr 1fr} }
+
+/* ============================================================
+   MENÚ / PLATILLOS
+   ============================================================ */
+.menu{display:none;flex:1 1 auto;min-height:0;height:auto!important;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--paper)}
+body.view-menu .menu{display:block}
+.menu-inner{max-width:1100px;margin:0 auto;padding:24px 24px 84px}
+.menu-config{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px;margin-bottom:18px}
+.mc-row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.mc-courses{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--ink-soft);font-weight:600}
+.mc-courses input{width:90px;border:1px solid var(--line);border-radius:10px;padding:9px}
+.mc-opts-head{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--ink-soft);font-weight:600}
+.mc-opts{display:flex;flex-direction:column;gap:8px}
+.mc-opt{display:flex;align-items:center;gap:10px}
+.mc-opt .material-symbols-outlined{color:var(--gold-ink);font-size:20px;flex:none}
+.mc-opt input{flex:1;border:1px solid var(--line);border-radius:10px;padding:9px 11px;background:var(--paper)}
+.mc-empty{color:var(--ink-soft);font-size:13px;padding:4px 0}
+.menu-summary{margin-bottom:8px}
+.ms-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.ms-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+.ms-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft);font-weight:700;display:block}
+.ms-card b{font-family:"Libre Caslon Text",Georgia,serif;font-size:26px;color:var(--gold-ink);display:block;margin-top:4px}
+.ms-dishes,.ms-allergies{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:16px 18px;margin-bottom:14px}
+.ms-dishes h3,.ms-allergies h3{font-family:"Libre Caslon Text",Georgia,serif;font-size:18px;margin:0 0 12px;color:var(--ink)}
+.ms-dish-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.ms-dish{display:flex;align-items:center;gap:10px;background:var(--sage-soft);border-radius:10px;padding:9px 12px}
+.ms-dish .material-symbols-outlined{color:var(--gold-ink);font-size:18px}
+.ms-dish-n{flex:1;font-size:13.5px}
+.ms-dish b{font-family:"Libre Caslon Text",Georgia,serif;font-size:18px;color:var(--gold-ink)}
+.ms-allergies ul{margin:0;padding-left:18px}
+.ms-allergies li{font-size:14px;margin-bottom:5px}
+.menu-table .menu-sel,.menu-table .menu-diet{border:1px solid var(--line);border-radius:8px;padding:8px;font-size:13.5px;width:100%;box-sizing:border-box;background:#fff}
+@media(max-width:760px){ .ms-cards{grid-template-columns:1fr 1fr} .menu-inner{padding:16px 14px 84px}
+  .menu-table thead{display:none}
+  .menu-table,.menu-table tbody,.menu-table tr,.menu-table td{display:block;width:100%;box-sizing:border-box}
+  .menu-table tr{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;padding:6px 12px;background:#fff}
+  .menu-table td{border:0;padding:8px 2px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .menu-table td::before{content:attr(data-lbl);font-size:11px;text-transform:uppercase;color:var(--ink-soft);font-weight:700}
+  .menu-table td.inv-nm{display:block} }
+
 </style>
 </head>
 <body>
@@ -1271,6 +1334,7 @@ body.view-jardin .hz-right .stats{display:flex}
   <div class="sn-brand"><h1>Acomodo de Mesas</h1><small>Planeación de eventos</small></div>
   <button class="navlink active" data-v="dash" onclick="setView('dash')"><span class="material-symbols-outlined">dashboard</span>Inicio</button>
   <button class="navlink" data-v="invitados" onclick="setView('invitados')"><span class="material-symbols-outlined">group</span>Invitados</button>
+  <button class="navlink" data-v="menu" onclick="setView('menu')"><span class="material-symbols-outlined">restaurant_menu</span>Menú</button>
   <button class="navlink" data-v="jardin" onclick="setView('jardin')"><span class="material-symbols-outlined">grid_view</span>Layout</button>
   <button class="navlink" data-v="budget" onclick="setView('budget')"><span class="material-symbols-outlined">payments</span>Presupuesto</button>
   <button class="navlink" data-v="proveedores" onclick="setView('proveedores')"><span class="material-symbols-outlined">storefront</span>Proveedores</button>
@@ -1420,6 +1484,7 @@ body.view-jardin .hz-right .stats{display:flex}
 
 <div class="invitados">
   <div class="inv-inner">
+    <div class="inv-stats" id="invStats"></div>
     <div class="inv-add">
       <textarea id="invBulk" placeholder="Pega nombres (uno por linea). Escribe (solo) al final para quien va sin acompanante."></textarea>
       <button class="primary" onclick="addGuestsInv()">Agregar a la lista</button>
@@ -1430,8 +1495,31 @@ body.view-jardin .hz-right .stats{display:flex}
     </div>
     <div class="inv-tablewrap">
       <table class="btable inv-table">
-        <thead><tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th></th></tr></thead>
+        <thead><tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Estatus</th><th></th></tr></thead>
         <tbody id="invBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="menu">
+  <div class="menu-inner">
+    <div class="menu-config">
+      <div class="mc-row">
+        <label class="mc-courses"><span>Tiempos del menú</span><input id="menuCourses" type="number" min="1" max="12" oninput="setMenuCourses(this.value)"></label>
+        <div class="mc-opts-head"><span>Opciones de platillo</span><button class="blush" onclick="addMenuOption()"><span class="material-symbols-outlined">add</span> Platillo</button></div>
+      </div>
+      <div id="menuOptions" class="mc-opts"></div>
+    </div>
+    <div class="menu-summary" id="menuSummary"></div>
+    <h2 class="bsec">Selección por invitado</h2>
+    <div class="inv-toolbar">
+      <input id="menuFilter" class="inv-search" placeholder="Buscar invitado..." oninput="renderMenu()">
+      <span class="inv-count" id="menuCount"></span>
+    </div>
+    <div class="inv-tablewrap">
+      <table class="btable menu-table">
+        <thead><tr><th>Invitado</th><th>Estatus</th><th>Platillo</th><th>Alergias / Dieta</th></tr></thead>
+        <tbody id="menuBody"></tbody>
       </table>
     </div>
   </div>
@@ -1562,6 +1650,7 @@ body.view-jardin .hz-right .stats{display:flex}
 <nav id="bottomnav">
   <button class="bnav active" data-v="dash" onclick="setView('dash')"><span class="material-symbols-outlined">dashboard</span>Inicio</button>
   <button class="bnav" data-v="invitados" onclick="setView('invitados')"><span class="material-symbols-outlined">group</span>Invitados</button>
+  <button class="bnav" data-v="menu" onclick="setView('menu')"><span class="material-symbols-outlined">restaurant_menu</span>Menú</button>
   <button class="bnav" data-v="jardin" onclick="setView('jardin')"><span class="material-symbols-outlined">grid_view</span>Layout</button>
   <button class="bnav" data-v="budget" onclick="setView('budget')"><span class="material-symbols-outlined">payments</span>Presup.</button>
   <button class="bnav" data-v="proveedores" onclick="setView('proveedores')"><span class="material-symbols-outlined">storefront</span>Prov.</button>
@@ -1653,7 +1742,7 @@ async function syncGuests(){
   await syncRows('guests', state.guests.map((g,i)=>({
     id:g.id, event_id:EVENT.id, name:g.name, plus_one:!!g.plusOne,
     side:g.side||null, invitation_sent:!!g.invitation_sent, list:g.list||null,
-    attendance:g.attendance||null, sort_order:i })));
+    attendance:g.attendance||null, menu_choice:g.menu_choice||'', dietary:g.dietary||'', sort_order:i })));
 }
 async function syncTables(){
   if(!canEdit('layout')) return;
@@ -1727,7 +1816,7 @@ async function loadEventIntoState(ev){
     sb.from('layout_objects').select('*').eq('event_id',eid),
     sb.from('providers').select('*').eq('event_id',eid).order('sort_order')
   ]);
-  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance}));
+  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||''}));
   const seatsByTable={}; (s.data||[]).forEach(r=>{ (seatsByTable[r.table_id]=seatsByTable[r.table_id]||[]).push(r.guest_id); });
   state.tables=(t.data||[]).map(r=>({id:r.id,num:r.num,name:r.name,cap:r.cap,shape:r.shape,x:+r.x,y:+r.y,novios:r.is_novios,seats:seatsByTable[r.id]||[]}));
   const paidBy={}; (pay.data||[]).forEach(p=>{ paidBy[p.expense_id]=(paidBy[p.expense_id]||0)+(+p.amount||0); });
@@ -2409,13 +2498,14 @@ function renderDash(){
 
 /* ---------------- vistas ---------------- */
 function setView(v){
-  document.body.classList.remove('view-dash','view-invitados','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
+  document.body.classList.remove('view-dash','view-invitados','view-menu','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
   document.body.classList.add('view-'+v);
   document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
-  const subs={dash:'Resumen del evento',invitados:'Invitados',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
+  const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
   const hSub=document.getElementById('hSub'); if(hSub) hSub.textContent=(subs[v]||'')+' · '+eventDateLabel();
   if(v==='dash') renderDash();
   if(v==='invitados') renderInvitados();
+  if(v==='menu') renderMenu();
   if(v==='jardin') paintVenueBar();
   if(v==='budget') renderBudget();
   if(v==='proveedores') renderProviders();
@@ -2424,6 +2514,80 @@ function setView(v){
   if(v==='todo') renderTodos();
 }
 
+/* ---------------- menú / platillos ---------------- */
+let _menuT=null;
+function saveMenuConfig(){
+  if(!EVENT||!canEdit('invitados')) return;
+  if(_menuT) clearTimeout(_menuT);
+  _menuT=setTimeout(async()=>{ const {error}=await sb.from('events').update({menu_courses:EVENT.menu_courses||3,menu_options:EVENT.menu_options||[]}).eq('id',EVENT.id); if(error) console.error(error); },500);
+}
+function setMenuCourses(v){ if(!EVENT) return; EVENT.menu_courses=Math.max(1,Math.min(12,+v||1)); saveMenuConfig(); }
+function addMenuOption(){ if(!canEdit('invitados')){toast('No tienes permiso');return;} EVENT.menu_options=EVENT.menu_options||[]; EVENT.menu_options.push('Platillo '+(EVENT.menu_options.length+1)); saveMenuConfig(); renderMenu(); }
+function editMenuOption(i,v){ if(!EVENT.menu_options) return; EVENT.menu_options[i]=v; saveMenuConfig(); }
+function delMenuOption(i){ if(!canEdit('invitados')){toast('No tienes permiso');return;} EVENT.menu_options.splice(i,1); saveMenuConfig(); renderMenu(); }
+function renderMenu(){
+  if(!EVENT) return;
+  const opts=EVENT.menu_options||[];
+  const cEl=document.getElementById('menuCourses'); if(cEl) cEl.value=EVENT.menu_courses||3;
+  const ob=document.getElementById('menuOptions');
+  if(ob){
+    ob.innerHTML='';
+    if(!opts.length){ ob.innerHTML='<div class="mc-empty">Agrega las opciones de platillo (ej. Salmón, Res, Vegetariano).</div>'; }
+    opts.forEach((o,i)=>{
+      const row=document.createElement('div'); row.className='mc-opt';
+      row.innerHTML='<span class="material-symbols-outlined">restaurant</span><input type="text" placeholder="Nombre del platillo"><button class="brow-del" title="Quitar">×</button>';
+      row.querySelector('input').value=o;
+      row.querySelector('input').addEventListener('input',ev=>editMenuOption(i,ev.target.value));
+      row.querySelector('.brow-del').addEventListener('click',()=>delMenuOption(i));
+      ob.appendChild(row);
+    });
+  }
+  const q=(document.getElementById('menuFilter')?document.getElementById('menuFilter').value:'').toLowerCase();
+  const body=document.getElementById('menuBody'); if(!body) return; body.innerHTML='';
+  const guests=state.guests.filter(g=>g.name.toLowerCase().includes(q));
+  guests.forEach(g=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td class="inv-nm" data-lbl="Invitado"></td>'
+      +'<td class="c" data-lbl="Estatus">'+statusPill(g)+'</td>'
+      +'<td data-lbl="Platillo"><select class="cn menu-sel"></select></td>'
+      +'<td data-lbl="Alergias / Dieta"><input class="cn menu-diet" type="text" placeholder="ej. sin gluten, alergia a nuez"></td>';
+    tr.querySelector('.inv-nm').textContent=g.name;
+    const sel=tr.querySelector('.menu-sel');
+    sel.innerHTML='<option value="">— Sin elegir —</option>'
+      +opts.map(o=>'<option value="'+escH(o)+'"'+(g.menu_choice===o?' selected':'')+'>'+escH(o)+'</option>').join('')
+      +((g.menu_choice&&!opts.includes(g.menu_choice))?'<option value="'+escH(g.menu_choice)+'" selected>'+escH(g.menu_choice)+'</option>':'');
+    sel.addEventListener('change',ev=>{g.menu_choice=ev.target.value;mark('guests');renderMenuSummary();});
+    const diet=tr.querySelector('.menu-diet'); diet.value=g.dietary||'';
+    diet.addEventListener('input',ev=>{g.dietary=ev.target.value;mark('guests');});
+    body.appendChild(tr);
+  });
+  const cnt=document.getElementById('menuCount'); if(cnt) cnt.textContent=guests.length+' invitados';
+  renderMenuSummary();
+  applyRO();
+}
+function renderMenuSummary(){
+  const box=document.getElementById('menuSummary'); if(!box||!EVENT) return;
+  const opts=EVENT.menu_options||[];
+  const conf=state.guests.filter(g=>g.attendance==='si');
+  const counts={}; opts.forEach(o=>counts[o]=0); let sinElegir=0;
+  conf.forEach(g=>{ if(!g.menu_choice){sinElegir++;return;} counts[g.menu_choice]=(counts[g.menu_choice]||0)+1; });
+  const allergies=state.guests.filter(g=>g.dietary&&g.dietary.trim());
+  let html='<div class="ms-cards">'
+    +'<div class="ms-card"><span class="ms-lbl">Tiempos</span><b>'+(EVENT.menu_courses||3)+'</b></div>'
+    +'<div class="ms-card"><span class="ms-lbl">Confirmados</span><b>'+conf.length+'</b></div>'
+    +'<div class="ms-card"><span class="ms-lbl">Con alergia/dieta</span><b>'+allergies.length+'</b></div>'
+    +'<div class="ms-card"><span class="ms-lbl">Sin elegir platillo</span><b>'+sinElegir+'</b></div>'
+    +'</div>';
+  if(opts.length){
+    html+='<div class="ms-dishes"><h3>Platillos elegidos (confirmados)</h3><div class="ms-dish-list">';
+    opts.forEach(o=>{ html+='<div class="ms-dish"><span class="material-symbols-outlined">restaurant</span><span class="ms-dish-n">'+escH(o)+'</span><b>'+(counts[o]||0)+'</b></div>'; });
+    html+='</div></div>';
+  }
+  if(allergies.length){
+    html+='<div class="ms-allergies"><h3>Alergias / dietas</h3><ul>'+allergies.map(g=>'<li><b>'+escH(g.name)+'</b> — '+escH(g.dietary)+'</li>').join('')+'</ul></div>';
+  }
+  box.innerHTML=html;
+}
 /* ---------------- música ---------------- */
 function txtCell(val,on){ const td=document.createElement('td'); const inp=document.createElement('input'); inp.type='text'; inp.value=val||''; inp.addEventListener('input',e=>{on(e.target.value);mark('music');}); td.appendChild(inp); return td; }
 function delCell(fn){ const td=document.createElement('td'); td.style.textAlign='center'; const b=document.createElement('button'); b.className='brow-del'; b.title='Eliminar'; b.textContent='×'; b.addEventListener('click',fn); td.appendChild(b); return td; }
@@ -2538,8 +2702,25 @@ function setAttendance(id,val){
 function invCounts(){
   const G=state.guests;
   return { total:G.length, inv:G.filter(g=>g.invitation_sent).length, si:G.filter(g=>g.attendance==='si').length,
+    no:G.filter(g=>g.attendance==='no').length, pend:G.filter(g=>g.invitation_sent&&!g.attendance).length,
     A:G.filter(g=>g.list==='A').length, B:G.filter(g=>g.list==='B').length,
     novio:G.filter(g=>g.side==='novio').length, novia:G.filter(g=>g.side==='novia').length };
+}
+function guestStatus(g){
+  if(g.attendance==='si') return {k:'ok',t:'Confirmado'};
+  if(g.attendance==='no') return {k:'no',t:'No asistirá'};
+  if(g.invitation_sent) return {k:'pend',t:'Pendiente'};
+  return {k:'sin',t:'Sin invitar'};
+}
+function statusPill(g){ const s=guestStatus(g); return '<span class="stpill st-'+s.k+'">'+s.t+'</span>'; }
+function renderInvStats(){
+  const box=document.getElementById('invStats'); if(!box) return;
+  const c=invCounts();
+  box.innerHTML=
+     '<div class="istat st-ok"><span class="material-symbols-outlined">check_circle</span><div><b>'+c.si+'</b><span>Confirmados</span></div></div>'
+    +'<div class="istat st-pend"><span class="material-symbols-outlined">hourglass_empty</span><div><b>'+c.pend+'</b><span>Pendientes</span></div></div>'
+    +'<div class="istat st-no"><span class="material-symbols-outlined">cancel</span><div><b>'+c.no+'</b><span>No asistirán</span></div></div>'
+    +'<div class="istat st-tot"><span class="material-symbols-outlined">group</span><div><b>'+c.total+'</b><span>Invitados</span></div></div>';
 }
 function renderInvitados(){
   const body=document.getElementById('invBody'); if(!body) return;
@@ -2555,6 +2736,7 @@ function renderInvitados(){
       +'<td class="c" data-lbl="Invitación"><button class="yn '+(invSent?'yes':'')+'">'+(invSent?'Sí':'No')+'</button></td>'
       +'<td class="c" data-lbl="Lista"><span class="ab"><button class="sd a'+(g.list==='A'?' on':'')+'">A</button><button class="sd b'+(g.list==='B'?' on':'')+'">B</button></span></td>'
       +'<td class="c att" data-lbl="Asistencia">'+(invSent?('<span class="ab"><button class="sd si'+(g.attendance==='si'?' on':'')+'">Sí</button><button class="sd no'+(g.attendance==='no'?' on':'')+'">No</button></span>'):'<span class="muted">—</span>')+'</td>'
+      +'<td class="c" data-lbl="Estatus">'+statusPill(g)+'</td>'
       +'<td class="c" data-lbl=""><button class="brow-del" title="Eliminar">×</button></td>';
     const cn=tr.querySelector('.cn'); cn.value=g.name; cn.addEventListener('input',e=>{g.name=e.target.value;mark('guests');renderAll();});
     tr.querySelector('.sd.n').addEventListener('click',()=>setSide(g.id,'novio'));
@@ -2570,11 +2752,12 @@ function renderInvitados(){
   const c=invCounts();
   const el=document.getElementById('invCount');
   if(el) el.textContent=c.total+' invitados · '+c.inv+' con invitación · '+c.si+' asisten · A '+c.A+' / B '+c.B+' · ●'+c.novio+' novio / ●'+c.novia+' novia';
+  renderInvStats();
   applyRO();
 }
 
 /* ---------------- permisos: gate visual de pestañas y edición ---------------- */
-const TAB_OF_VIEW={invitados:'invitados',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
+const TAB_OF_VIEW={invitados:'invitados',menu:'invitados',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
 function applyTabVisibility(){
   document.querySelectorAll('[data-v]').forEach(b=>{
     const view=b.dataset.v;
@@ -2660,6 +2843,13 @@ async function showPicker(){
     else cd.innerHTML='<small>ya pasó</small>';
     dt.textContent=ev.event_date?ev.event_date.split('-').reverse().join('.'):'';
     c.addEventListener('click',()=>openEvent(ev));
+    if(PROFILE && PROFILE.platform_role==='super_admin'){
+      const del=document.createElement('span');
+      del.className='evc-del'; del.title='Borrar evento';
+      del.innerHTML='<span class="material-symbols-outlined">delete</span>';
+      del.addEventListener('click',(e)=>{ e.stopPropagation(); deleteEventFull(ev); });
+      c.appendChild(del);
+    }
     list.appendChild(c);
   });
   if(!data||!data.length){ list.innerHTML='<div class="pick-empty">Aún no tienes eventos. Crea el primero.</div>'; }
@@ -2678,6 +2868,15 @@ async function openEvent(ev){
   setView('dash');
   const umb=document.querySelector('.um-btn'); if(umb) umb.style.display=canManageUsers()?'':'none';
   document.getElementById('app-shell').style.display='';
+}
+async function deleteEventFull(ev){
+  const nm=ev.couple_names||ev.name||'este evento';
+  if(!confirm('¿Borrar "'+nm+'" y TODA su información?\n\nSe eliminarán invitados, mesas y asientos, layout, presupuesto y pagos, proveedores, música, itinerario y pendientes.\n\nEsta acción NO se puede deshacer.')) return;
+  if(!confirm('Confirmación final: se borrará "'+nm+'" de forma permanente. ¿Continuar?')) return;
+  const {error}=await sb.from('events').delete().eq('id',ev.id);
+  if(error){ toast('No se pudo borrar (revisa permisos)'); console.error(error); return; }
+  toast('Evento borrado');
+  showPicker();
 }
 /* nuevo evento */
 function openNewEvent(){
