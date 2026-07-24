@@ -1388,6 +1388,35 @@ body.view-fases .fases{display:block}
 .dphase-bar>div{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-ink))}
 .dphase.done .dphase-bar>div{background:var(--ok)}
 
+/* ===== Fases: stepper numerado + tarjetas de sugerencia ===== */
+.fases-stepper{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding:8px 2px 20px;-webkit-overflow-scrolling:touch}
+.fstep{flex:1 1 0;min-width:80px;display:flex;flex-direction:column;align-items:center;gap:9px;position:relative;background:none;border:none;cursor:pointer;font-family:inherit;padding:0}
+.fstep::before{content:'';position:absolute;top:18px;right:50%;width:100%;height:2px;background:var(--line);z-index:0}
+.fstep:first-child::before{display:none}
+.fstep.past::before{background:var(--gold)}
+.fstep-num{position:relative;z-index:1;width:38px;height:38px;border-radius:50%;border:2px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;font-family:"Libre Caslon Text",Georgia,serif;font-weight:700;font-size:16px;color:var(--ink-soft);transition:background .15s,border-color .15s,color .15s}
+.fstep-num .material-symbols-outlined{font-size:20px}
+.fstep.sel .fstep-num{background:var(--gold);border-color:var(--gold);color:#3d3100;box-shadow:0 0 0 4px rgba(212,175,55,.2)}
+.fstep.done .fstep-num{background:var(--ok);border-color:var(--ok);color:#fff}
+.fstep-lbl{font-size:11.5px;font-weight:600;color:var(--ink-soft);text-align:center;white-space:nowrap}
+.fstep.sel .fstep-lbl{color:var(--gold-ink)}
+.ft-count{font-family:"Libre Caslon Text",Georgia,serif;font-size:18px;color:var(--gold-ink);font-weight:700}
+.fcard{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 14px;margin-bottom:10px;transition:box-shadow .15s}
+.fcard:hover{box-shadow:var(--shadow-lift)}
+.fcard.done{background:var(--sage-soft)}
+.fcard-check{flex:none;width:26px;height:26px;border-radius:50%;border:2px solid #cbbf9f;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;padding:0}
+.fcard.done .fcard-check{background:var(--ok);border-color:var(--ok)}
+.fcard-check .material-symbols-outlined{font-size:17px}
+.fcard-ic{flex:none;width:46px;height:46px;border-radius:12px;background:#eef1f6;color:var(--gold-ink);display:flex;align-items:center;justify-content:center}
+.fcard.done .fcard-ic{background:#fff}
+.fcard-ic .material-symbols-outlined{font-size:24px}
+.fcard-text{flex:1;border:1px solid transparent;border-radius:8px;padding:8px 10px;font-family:inherit;font-size:15px;background:transparent;color:var(--ink);min-width:0}
+.fcard-text:hover{border-color:var(--line)}
+.fcard-text:focus{outline:none;border-color:var(--gold);background:var(--paper)}
+.fcard.done .fcard-text{text-decoration:line-through;color:var(--ink-soft)}
+.fcard-del{flex:none;border:none;background:none;color:var(--ink-soft);font-size:19px;cursor:pointer;opacity:.45;padding:0 6px}
+.fcard-del:hover{opacity:1;color:var(--full)}
+
 </style>
 </head>
 <body>
@@ -1771,9 +1800,9 @@ body.view-fases .fases{display:block}
         <span class="fases-prog-lbl">completado</span>
       </div>
     </div>
-    <div class="fases-strip" id="fasesStrip"></div>
+    <div class="fases-stepper" id="fasesStepper"></div>
     <div class="fases-tasks">
-      <div class="ft-head"><h3 class="serif" id="fasesTitle">Tareas</h3><span class="stpill st-pend" id="fasesCount"></span></div>
+      <div class="ft-head"><h3 class="serif" id="fasesTitle">Tareas</h3><span class="ft-count" id="fasesCount"></span></div>
       <div id="fasesList"></div>
       <div class="ft-add">
         <input id="fasesInput" type="text" placeholder="Nueva tarea de esta fase" onkeydown="if(event.key==='Enter')addPhaseTask()">
@@ -2935,51 +2964,76 @@ function renderRegistry(){
   applyRO();
 }
 /* ---------------- fases de la boda ---------------- */
-const PHASES=[{k:'p12',t:'12+ meses'},{k:'p9',t:'9–11 meses'},{k:'p6',t:'6–8 meses'},{k:'p3',t:'3–5 meses'},{k:'p1',t:'1–2 meses'},{k:'week',t:'Semana del evento'}];
+const PHASES=[{k:'f1',n:'1',t:'12+ meses'},{k:'f2',n:'2',t:'5–10 meses'},{k:'f3',n:'3',t:'3–7 meses'},{k:'f4',n:'4',t:'0–2 meses'}];
 const PHASE_TEMPLATE={
-  p12:['Definir el presupuesto total','Elegir y reservar el lugar','Definir fecha y estilo del evento','Armar lista preliminar de invitados'],
-  p9:['Contratar banquete / catering','Reservar fotógrafo y video','Contratar música / DJ','Elegir vestido y traje'],
-  p6:['Enviar Save the Date','Contratar decoración y flores','Degustación y menú final','Definir hospedaje y transporte'],
-  p3:['Enviar invitaciones','Comprar los anillos','Prueba de vestido','Definir mesa de regalos','Confirmar itinerario'],
-  p1:['Dar seguimiento a confirmaciones (RSVP)','Acomodo de mesas','Últimos pagos a proveedores','Prueba de peinado y maquillaje'],
-  week:['Reconfirmar a todos los proveedores','Entregar itinerario al equipo','Preparar kit de emergencia','Ensayo general']
+  f1:['Definir el presupuesto total','Elegir y reservar el lugar','Definir fecha y estilo del evento','Armar lista preliminar de invitados','Contratar wedding planner'],
+  f2:['Contratar banquete / catering','Reservar fotógrafo y video','Contratar música / DJ','Elegir vestido y traje','Contratar decoración y flores','Reservar hospedaje y transporte'],
+  f3:['Enviar invitaciones','Diseñar la invitación','Comprar los anillos','Prueba de vestido','Definir mesa de regalos','Degustación y menú final','Confirmar itinerario'],
+  f4:['Dar seguimiento a confirmaciones (RSVP)','Acomodo de mesas','Últimos pagos a proveedores','Prueba de peinado y maquillaje','Reconfirmar a todos los proveedores','Preparar kit de emergencia']
 };
-let _selPhase='p12';
+function taskIcon(t){ t=(t||'').toLowerCase();
+  if(/dj|música|music|banda/.test(t))return'music_note';
+  if(/banquete|cater|comida|menú|degust/.test(t))return'restaurant';
+  if(/sitio|web|página/.test(t))return'language';
+  if(/regalo|registry/.test(t))return'card_giftcard';
+  if(/invitac/.test(t))return'mail';
+  if(/flor|decor/.test(t))return'local_florist';
+  if(/foto|video/.test(t))return'photo_camera';
+  if(/vestido|traje|vestu/.test(t))return'checkroom';
+  if(/anillo/.test(t))return'diamond';
+  if(/presupuesto|pago/.test(t))return'payments';
+  if(/lugar|sal|jard|reserv/.test(t))return'location_on';
+  if(/invitad|rsvp|confirm/.test(t))return'group';
+  if(/mesa|acomodo/.test(t))return'grid_view';
+  if(/peinado|maquil|belle/.test(t))return'brush';
+  if(/hospedaje|transporte/.test(t))return'directions_car';
+  if(/planner|itinerario|fecha|estilo/.test(t))return'event';
+  if(/kit|emergencia/.test(t))return'medical_services';
+  return'check_circle';
+}
+function seedPhasesIfEmpty(){ if(!canEdit('todo')) return; const keys=PHASES.map(p=>p.k); if((state.phaseTasks||[]).some(t=>keys.includes(t.phase))) return; PHASES.forEach(p=>(PHASE_TEMPLATE[p.k]||[]).forEach(txt=>state.phaseTasks.push({id:uid(),phase:p.k,text:txt,done:false}))); mark('phases'); }
+let _selPhase='f1';
 function phaseCounts(k){ const it=state.phaseTasks.filter(t=>t.phase===k); return {total:it.length,done:it.filter(t=>t.done).length}; }
 function selectPhase(k){ _selPhase=k; renderFases(); }
 function addPhaseTask(){ if(!canEdit('todo')){toast('No tienes permiso');return;} const inp=document.getElementById('fasesInput'); const v=(inp&&inp.value.trim())||''; state.phaseTasks.push({id:uid(),phase:_selPhase,text:v||'Nueva tarea',done:false}); if(inp) inp.value=''; mark('phases'); renderFases(); }
 function loadPhaseTemplate(){ if(!canEdit('todo')){toast('No tienes permiso');return;} if(state.phaseTasks.length && !confirm('Se agregarán las tareas sugeridas a cada fase. ¿Continuar?')) return; PHASES.forEach(p=>{ (PHASE_TEMPLATE[p.k]||[]).forEach(txt=>state.phaseTasks.push({id:uid(),phase:p.k,text:txt,done:false})); }); mark('phases'); renderFases(); }
 function renderFases(){
-  const strip=document.getElementById('fasesStrip'); if(!strip) return;
+  const stepper=document.getElementById('fasesStepper'); if(!stepper) return;
+  seedPhasesIfEmpty();
+  if(!PHASES.some(p=>p.k===_selPhase)) _selPhase='f1';
   const total=state.phaseTasks.length, done=state.phaseTasks.filter(t=>t.done).length;
   const pct=total?Math.round(done/total*100):0;
   const ring=document.getElementById('fasesRing'); if(ring) ring.style.background='conic-gradient(var(--gold) '+pct+'%, var(--sage-soft) 0)';
-  const pctEl=document.getElementById('fasesPct'); if(pctEl) pctEl.textContent=pct+'%';
-  strip.innerHTML='';
-  PHASES.forEach(p=>{
+  const pctEl=document.getElementById('fasesPct'); if(pctEl) pctEl.textContent=done+'/'+total;
+  // stepper numerado
+  const selIdx=PHASES.findIndex(p=>p.k===_selPhase);
+  stepper.innerHTML='';
+  PHASES.forEach((p,i)=>{
     const c=phaseCounts(p.k); const complete=c.total>0&&c.done===c.total;
-    const b=document.createElement('button'); b.className='phase-card'+(p.k===_selPhase?' sel':'')+(complete?' done':'');
-    b.innerHTML='<span class="pc-lbl">'+p.t+'</span><span class="pc-count">'+c.done+' / '+c.total+'</span>'+(complete?'<span class="pc-check"><span class="material-symbols-outlined">check</span></span>':'');
+    const b=document.createElement('button');
+    b.className='fstep'+(p.k===_selPhase?' sel':'')+(complete?' done':'')+(i<=selIdx?' past':'');
+    b.innerHTML='<span class="fstep-num">'+(complete?'<span class="material-symbols-outlined">check</span>':p.n)+'</span><span class="fstep-lbl">'+p.t+'</span>';
     b.addEventListener('click',()=>selectPhase(p.k));
-    strip.appendChild(b);
+    stepper.appendChild(b);
   });
   const ph=PHASES.find(p=>p.k===_selPhase)||PHASES[0];
-  const titleEl=document.getElementById('fasesTitle'); if(titleEl) titleEl.textContent='Tareas · '+ph.t;
+  const titleEl=document.getElementById('fasesTitle'); if(titleEl) titleEl.textContent=ph.t;
   const items=state.phaseTasks.filter(t=>t.phase===_selPhase);
-  const cnt=document.getElementById('fasesCount'); if(cnt) cnt.textContent=items.filter(t=>!t.done).length+' pendientes';
+  const cc=phaseCounts(_selPhase);
+  const cnt=document.getElementById('fasesCount'); if(cnt) cnt.textContent=cc.done+'/'+cc.total;
   const list=document.getElementById('fasesList'); list.innerHTML='';
-  if(!state.phaseTasks.length){
-    list.innerHTML='<div class="fases-empty">Aún no hay tareas.<br><button class="blush" onclick="loadPhaseTemplate()"><span class="material-symbols-outlined">auto_awesome</span> Cargar tareas sugeridas</button></div>';
-  } else if(!items.length){
+  if(!items.length){
     list.innerHTML='<div class="fases-empty">Sin tareas en esta fase. Agrega una abajo.</div>';
   } else {
     items.forEach(t=>{
-      const row=document.createElement('div'); row.className='ft-item'+(t.done?' done':'');
-      row.innerHTML='<button class="ft-check">'+(t.done?'<span class="material-symbols-outlined">check</span>':'')+'</button><input class="ft-text" type="text"><button class="ft-del" title="Eliminar">×</button>';
-      row.querySelector('.ft-text').value=t.text||'';
-      row.querySelector('.ft-check').addEventListener('click',()=>{ t.done=!t.done; mark('phases'); renderFases(); });
-      row.querySelector('.ft-text').addEventListener('input',ev=>{ t.text=ev.target.value; mark('phases'); });
-      row.querySelector('.ft-del').addEventListener('click',()=>{ state.phaseTasks=state.phaseTasks.filter(x=>x.id!==t.id); mark('phases'); renderFases(); });
+      const row=document.createElement('div'); row.className='fcard'+(t.done?' done':'');
+      row.innerHTML='<button class="fcard-check">'+(t.done?'<span class="material-symbols-outlined">check</span>':'')+'</button>'
+        +'<span class="fcard-ic"><span class="material-symbols-outlined">'+taskIcon(t.text)+'</span></span>'
+        +'<input class="fcard-text" type="text"><button class="fcard-del" title="Eliminar">×</button>';
+      row.querySelector('.fcard-text').value=t.text||'';
+      row.querySelector('.fcard-check').addEventListener('click',()=>{ t.done=!t.done; mark('phases'); renderFases(); });
+      row.querySelector('.fcard-text').addEventListener('input',ev=>{ t.text=ev.target.value; mark('phases'); });
+      row.querySelector('.fcard-del').addEventListener('click',()=>{ state.phaseTasks=state.phaseTasks.filter(x=>x.id!==t.id); mark('phases'); renderFases(); });
       list.appendChild(row);
     });
   }
