@@ -1152,10 +1152,10 @@ body.view-dash .dash{display:block}
       <input id="neLogo" type="file" accept="image/*">
     </div>
     <div class="wiz-actions">
-      <button type="button" class="wiz-back" id="wizBack" onclick="wizBack()">Atrás</button>
+      <button type="button" class="wiz-back" id="wizBackBtn" onclick="wizBack()">Atrás</button>
       <span class="wiz-spacer"></span>
-      <button type="button" class="go wiz-next" id="wizNext" onclick="wizNext()">Continuar</button>
-      <button type="submit" class="go wiz-create" id="wizCreate" style="display:none">Crear evento</button>
+      <button type="button" class="go wiz-next" id="wizNextBtn" onclick="wizNext()">Continuar</button>
+      <button type="submit" class="go wiz-create" id="wizCreateBtn" style="display:none">Crear evento</button>
     </div>
   </form>
 </div></div>
@@ -2530,8 +2530,8 @@ function wizShow(n){
   wizStep=n;
   document.querySelectorAll('#neForm .wiz-step').forEach(s=>s.classList.toggle('active',+s.dataset.step===n));
   document.querySelectorAll('#neModal .wp').forEach(p=>p.classList.toggle('on',+p.dataset.s<=n));
-  const back=document.getElementById('wizBack'); if(back) back.style.visibility=n>1?'visible':'hidden';
-  const next=document.getElementById('wizNext'), create=document.getElementById('wizCreate');
+  const back=document.getElementById('wizBackBtn'); if(back) back.style.visibility=n>1?'visible':'hidden';
+  const next=document.getElementById('wizNextBtn'), create=document.getElementById('wizCreateBtn');
   if(next&&create){ const last=n>=4; next.style.display=last?'none':''; create.style.display=last?'':'none'; }
 }
 function wizNext(){
