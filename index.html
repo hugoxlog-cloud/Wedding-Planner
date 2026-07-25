@@ -1094,7 +1094,9 @@ body.view-dash .dash{display:block}
 #gate .gate-inner{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;max-width:360px}
 #gate .card{display:none} /* la tarjeta vieja ya no se usa */
 .mm-brand{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:38px}
-.mm-logo{width:112px;height:auto;filter:drop-shadow(0 6px 20px rgba(0,0,0,.5))}
+.mm-logo{width:124px;height:auto;filter:drop-shadow(0 0 26px rgba(233,195,73,.28)) drop-shadow(0 10px 22px rgba(0,0,0,.6))}
+#gate .gate-bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#gate .gate-inner{position:relative;z-index:1}
 .mm-word{font-family:"Libre Caslon Text",Georgia,serif;font-weight:700;font-size:32px;letter-spacing:.16em;margin:18px 0 0;padding-left:.16em;
   background:linear-gradient(180deg,#fdfdfd,#c2c2c9 60%,#9a9aa2);-webkit-background-clip:text;background-clip:text;color:transparent}
 .mm-slogan{margin:12px 0 0;font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:#c9b78a}
@@ -1549,17 +1551,42 @@ body.view-fases .fases{display:block}
 .evbadge{font-size:12px;color:#a5566f;font-weight:600;margin-right:6px;align-self:center}
 .ev-logo{height:40px;width:auto;max-width:120px;object-fit:contain;border-radius:8px;margin-right:4px;flex:none}
 </style>
-<div id="gate"><div class="gate-inner">
+<div id="gate"><svg class="gate-bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <radialGradient id="gwarm" cx="34%" cy="40%" r="62%">
+      <stop offset="0" stop-color="#e9c349" stop-opacity=".16"/><stop offset="55%" stop-color="#e9c349" stop-opacity=".035"/><stop offset="100%" stop-color="#e9c349" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g stroke="#000" stroke-opacity=".18" stroke-width="1">
+    <polygon fill="#1a1610" points="-40,-40 340,60 -40,300"/><polygon fill="#201a12" points="340,60 360,240 -40,300"/>
+    <polygon fill="#241d15" points="340,60 720,-30 360,240"/><polygon fill="#1c1710" points="720,-30 700,320 360,240"/>
+    <polygon fill="#171410" points="720,-30 1100,50 700,320"/><polygon fill="#1b1611" points="1100,50 1080,250 700,320"/>
+    <polygon fill="#141109" points="1100,50 1480,-40 1080,250"/><polygon fill="#17140e" points="1480,-40 1480,300 1080,250"/>
+    <polygon fill="#2e2617" points="-40,300 360,240 -40,560"/><polygon fill="#3a2f1c" points="360,240 380,640 -40,560"/>
+    <polygon fill="#342a19" points="360,240 700,320 380,640"/><polygon fill="#2a2216" points="700,320 720,560 380,640"/>
+    <polygon fill="#241d15" points="700,320 1080,250 720,560"/><polygon fill="#201a12" points="1080,250 1100,640 720,560"/>
+    <polygon fill="#1a1610" points="1080,250 1480,300 1100,640"/><polygon fill="#16120d" points="1480,300 1480,560 1100,640"/>
+    <polygon fill="#2a2216" points="-40,560 380,640 -40,940"/><polygon fill="#241d15" points="380,640 340,860 -40,940"/>
+    <polygon fill="#2e2617" points="380,640 720,560 340,860"/><polygon fill="#241d15" points="720,560 760,940 340,860"/>
+    <polygon fill="#1e1811" points="720,560 1100,640 760,940"/><polygon fill="#1a1610" points="1100,640 1080,860 760,940"/>
+    <polygon fill="#16120d" points="1100,640 1480,560 1080,860"/><polygon fill="#131009" points="1480,560 1480,940 1080,860"/>
+  </g>
+  <rect x="0" y="0" width="1440" height="900" fill="url(#gwarm)"/>
+</svg><div class="gate-inner">
   <div class="mm-brand">
     <svg class="mm-logo" viewBox="0 0 220 240" fill="none" aria-hidden="true">
       <defs>
         <linearGradient id="mmSilver" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#fdfdfd"/><stop offset="0.45" stop-color="#cfcfd6"/><stop offset="0.7" stop-color="#a6a6ae"/><stop offset="1" stop-color="#e9e9ee"/>
+          <stop offset="0" stop-color="#ffffff"/><stop offset=".4" stop-color="#dcdce2"/><stop offset=".6" stop-color="#9d9da5"/><stop offset=".8" stop-color="#f1f1f5"/><stop offset="1" stop-color="#bcbcc4"/>
+        </linearGradient>
+        <linearGradient id="mmPlate" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#42424c"/><stop offset="1" stop-color="#131317"/>
         </linearGradient>
       </defs>
-      <path d="M40 66 L110 26 L180 66 L180 150 L145 192 L110 162 L75 192 L40 150 Z" stroke="url(#mmSilver)" stroke-width="2.2" stroke-linejoin="round"/>
-      <path d="M56 150 L56 96 L110 140 L164 96 L164 150" stroke="url(#mmSilver)" stroke-width="2" stroke-linejoin="round" opacity="0.55"/>
-      <path d="M74 154 L74 78 L110 128 L146 78 L146 154" stroke="url(#mmSilver)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M40 66 L110 26 L180 66 L180 150 L145 192 L110 162 L75 192 L40 150 Z" fill="url(#mmPlate)" fill-opacity=".55" stroke="url(#mmSilver)" stroke-width="2.6" stroke-linejoin="round"/>
+      <path d="M56 150 L56 96 L110 140 L164 96 L164 150" stroke="url(#mmSilver)" stroke-width="2" stroke-linejoin="round" opacity="0.5"/>
+      <path d="M74 154 L74 78 L110 128 L146 78 L146 154" stroke="url(#mmSilver)" stroke-width="5.4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M75 92 L75 150" stroke="#ffffff" stroke-opacity=".65" stroke-width="1.3" stroke-linecap="round"/>
     </svg>
     <h1 class="mm-word">MOMMENTUM</h1>
     <p class="mm-slogan">Crafting unforgettable experiences</p>
