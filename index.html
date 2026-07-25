@@ -1243,6 +1243,10 @@ body.view-invita .invita{display:block}
 .inv-tpl-sw.inv-tpl-rose span{color:#7b5455}
 .inv-tpl-sw.inv-tpl-minimal{background:#fff;color:#1b1c1c}
 .inv-tpl-sw.inv-tpl-minimal span{color:#5f5f59}
+.inv-tpl-sw.inv-tpl-romero{background:linear-gradient(135deg,#2f5041,#4a7a5e);color:#eaf3ec}
+.inv-tpl-sw.inv-tpl-romero span{color:#cfe3d4}
+.inv-tpl-sw.inv-tpl-cafe{background:linear-gradient(135deg,#5b4433,#3a2a1e);color:#e7d3ba}
+.inv-tpl-sw.inv-tpl-cafe span{color:#d8c3a5}
 .invita-preview{display:flex;justify-content:center}
 .inv-canvas{position:relative;width:100%;max-width:440px;aspect-ratio:3/4;border-radius:6px;box-shadow:var(--shadow-lift);display:flex;align-items:center;justify-content:center;padding:44px 34px;text-align:center;overflow:hidden}
 .inv-body{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
@@ -1279,6 +1283,30 @@ body.view-invita .invita{display:block}
 .inv-tpl-minimal .inv-rule{background:#1b1c1c}
 .inv-tpl-minimal .inv-date,.inv-tpl-minimal .inv-venue,.inv-tpl-minimal .inv-msg{color:#5f5f59}
 .inv-tpl-minimal .inv-corner{display:none}
+.inv-tpl-romero{background:linear-gradient(155deg,#2c4b3d,#16281f)}
+.inv-tpl-romero .inv-eyebrow{color:#bcd8c2}
+.inv-tpl-romero .inv-title{background:linear-gradient(135deg,#e7f2e9,#a9c9b0,#e7f2e9);-webkit-background-clip:text;background-clip:text;color:transparent}
+.inv-tpl-romero .inv-rule{background:#8fb79a}
+.inv-tpl-romero .inv-date,.inv-tpl-romero .inv-venue,.inv-tpl-romero .inv-msg{color:rgba(255,255,255,.85)}
+.inv-tpl-romero .inv-corner{border-color:#8fb79a;opacity:.7}
+.inv-tpl-cafe{background:linear-gradient(155deg,#5a4331,#2e2016)}
+.inv-tpl-cafe .inv-eyebrow{color:#e0c9a6}
+.inv-tpl-cafe .inv-title{background:linear-gradient(135deg,#f4e4c8,#d4b483,#f4e4c8);-webkit-background-clip:text;background-clip:text;color:transparent}
+.inv-tpl-cafe .inv-rule{background:#c9a877}
+.inv-tpl-cafe .inv-date,.inv-tpl-cafe .inv-venue,.inv-tpl-cafe .inv-msg{color:rgba(255,255,255,.85)}
+.inv-tpl-cafe .inv-corner{border-color:#c9a877;opacity:.7}
+/* ===== Presupuesto: integrar categorías ===== */
+.cat-modal-help{font-size:13px;color:var(--ink-soft,#6b6459);margin:2px 0 12px;line-height:1.5}
+.cat-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;max-height:260px;overflow:auto}
+.cat-chip{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:7px 13px;font:600 12.5px/1 "Manrope",sans-serif;cursor:pointer;transition:border-color .15s,background .15s,color .15s}
+.cat-chip .material-symbols-outlined{font-size:16px;color:var(--gold-ink)}
+.cat-chip em{font-style:normal;opacity:.7;font-weight:500}
+.cat-chip:hover{border-color:var(--gold)}
+.cat-chip.on{background:var(--gold);border-color:var(--gold);color:#3a2f00}
+.cat-chip.on .material-symbols-outlined{color:#5c4a00}
+.cat-chip.locked{cursor:default;opacity:.9}
+.cat-custom-row{display:flex;gap:8px;margin-top:6px}
+.cat-custom-row input{flex:1}
 @media(max-width:860px){ .invita-inner{grid-template-columns:1fr} .invita-tools{position:static} }
 
 /* ===== Layout: fluidez de arrastre + gestos ===== */
@@ -1760,6 +1788,8 @@ body.view-fases .fases{display:block}
         <button class="inv-tpl-sw inv-tpl-ivory" data-t="ivory" onclick="setInvTemplate('ivory')"><b>Aa</b><span>Marfil</span></button>
         <button class="inv-tpl-sw inv-tpl-rose" data-t="rose" onclick="setInvTemplate('rose')"><b>Aa</b><span>Rosa</span></button>
         <button class="inv-tpl-sw inv-tpl-minimal" data-t="minimal" onclick="setInvTemplate('minimal')"><b>Aa</b><span>Minimal</span></button>
+        <button class="inv-tpl-sw inv-tpl-romero" data-t="romero" onclick="setInvTemplate('romero')"><b>Aa</b><span>Verde romero</span></button>
+        <button class="inv-tpl-sw inv-tpl-cafe" data-t="cafe" onclick="setInvTemplate('cafe')"><b>Aa</b><span>Café</span></button>
       </div>
       <label class="il">Nombres</label>
       <input id="invTitle" type="text" oninput="setInvField('title',this.value)">
@@ -1831,6 +1861,7 @@ body.view-fases .fases{display:block}
     <div class="budget-actions">
       <button class="primary" onclick="openPay()"><span class="material-symbols-outlined">payments</span> Registrar pago</button>
       <button class="blush" onclick="addExpense()"><span class="material-symbols-outlined">add</span> Concepto</button>
+      <button class="ghost" onclick="openCatModal()"><span class="material-symbols-outlined">category</span> Categorías</button>
     </div>
     <div id="expList" class="exp-list"></div>
   </div>
@@ -1933,6 +1964,23 @@ body.view-fases .fases{display:block}
   </div>
 </div>
 
+<div id="catModal" class="modal-overlay" onclick="if(event.target===this)closeCatModal()">
+  <div class="modal">
+    <h3>Integrar categorías</h3>
+    <p class="cat-modal-help">Elige las categorías que quieres mostrar. Aparecerán como grupos donde podrás agregar conceptos.</p>
+    <div id="catChips" class="cat-chips"></div>
+    <label>Agregar categoría personalizada
+      <div class="cat-custom-row">
+        <input id="catCustom" type="text" placeholder="ej. Luna de miel" onkeydown="if(event.key==='Enter'){event.preventDefault();addCustomCat()}">
+        <button class="blush" type="button" onclick="addCustomCat()">Agregar</button>
+      </div>
+    </label>
+    <div class="modal-actions">
+      <button class="blush" onclick="closeCatModal()">Listo</button>
+    </div>
+  </div>
+</div>
+
 </div><!-- /main-col -->
 <nav id="bottomnav">
   <button class="bnav active" data-v="dash" onclick="setView('dash')"><span class="material-symbols-outlined">dashboard</span>Inicio</button>
@@ -1982,7 +2030,7 @@ const SB_URL="https://pkxkauqcthiqosulmnkx.supabase.co";
 const SB_KEY="sb_publishable_aIykGvvAhE5Yja9SoBipIA_vFCrh5Bb";
 const sb=supabase.createClient(SB_URL,SB_KEY);
 
-let state = { guests:[], tables:[], objects:[], providers:[], budget:{expenses:[]}, payments:[], music:{moments:[],si:[],no:[],notas:""}, itin:[], todos:[], registry:[], phaseTasks:[] };
+let state = { guests:[], tables:[], objects:[], providers:[], budget:{expenses:[]}, payments:[], music:{moments:[],si:[],no:[],notas:""}, itin:[], todos:[], registry:[], phaseTasks:[], shownCats:[] };
 let selectedGuest=null;
 let selectedObj=null;
 let _venueT=null;
@@ -2134,6 +2182,7 @@ async function loadEventIntoState(ev){
   state.providers=(pr.data||[]).map(r=>({id:r.id,name:r.name,type:r.type,phone:r.phone,email:r.email,contact_person:r.contact_person,notes:r.notes}));
   state.registry=(rg.data||[]).map(r=>({id:r.id,name:r.name,store:r.store,price:+r.price||0,url:r.url,status:r.status||'pendiente',notes:r.notes}));
   state.phaseTasks=(pf.data||[]).map(r=>({id:r.id,phase:r.phase||'p12',text:r.text||'',done:!!r.done}));
+  state.shownCats=[];
 }
 
 /* ---------------- helpers ---------------- */
@@ -2652,9 +2701,11 @@ function renderBudget(){
   const list=document.getElementById('expList'); if(!list) return;
   list.innerHTML='';
   const exps=state.budget.expenses||[];
-  if(!exps.length){ list.innerHTML='<div class="exp-empty" style="padding:22px;text-align:center">Aún no hay conceptos. Agrega el primero con “＋ Concepto”.</div>'; updateBudgetSummary(); applyRO(); return; }
   const groups={};
   exps.forEach(e=>{ const k=e.categoria||''; (groups[k]=groups[k]||[]).push(e); });
+  // categorías integradas por el usuario que aún no tienen conceptos → grupo vacío
+  (state.shownCats||[]).forEach(c=>{ if(c && !(c in groups)) groups[c]=[]; });
+  if(!Object.keys(groups).length){ list.innerHTML='<div class="exp-empty" style="padding:22px;text-align:center">Aún no hay conceptos. Agrega el primero con “＋ Concepto” o integra categorías.</div>'; updateBudgetSummary(); applyRO(); return; }
   const keys=Object.keys(groups).sort((a,b)=>{
     if(a===''&&b!=='')return 1; if(b===''&&a!=='')return -1;
     const ia=EXP_CATS.indexOf(a), ib=EXP_CATS.indexOf(b);
@@ -2684,6 +2735,41 @@ function renderBudget(){
   applyRO();
 }
 function addExpense(cat){ const e={id:uid(),concepto:'',presupuesto:0,provider_id:null,nota:'',categoria:(typeof cat==='string'?cat:'')}; state.budget.expenses.push(e); expandedExp.add(e.id); mark('budget'); renderBudget(); }
+function usedCats(){ const s=new Set(); (state.budget.expenses||[]).forEach(e=>{ if(e.categoria) s.add(e.categoria); }); return s; }
+function openCatModal(){ renderCatChips(); document.getElementById('catModal').classList.add('show'); }
+function closeCatModal(){ document.getElementById('catModal').classList.remove('show'); renderBudget(); }
+function renderCatChips(){
+  const box=document.getElementById('catChips'); if(!box) return;
+  const used=usedCats(); const shown=new Set(state.shownCats||[]);
+  const all=EXP_CATS.slice();
+  [...shown,...used].forEach(c=>{ if(c && !all.includes(c)) all.push(c); });
+  box.innerHTML='';
+  all.forEach(c=>{
+    const has=used.has(c); const on=has||shown.has(c);
+    const b=document.createElement('button'); b.type='button';
+    b.className='cat-chip'+(on?' on':'')+(has?' locked':'');
+    b.innerHTML='<span class="material-symbols-outlined">'+catIcon(c)+'</span>'+escH(c)+(has?' <em>('+[...state.budget.expenses].filter(e=>e.categoria===c).length+')</em>':'');
+    b.addEventListener('click',()=>toggleCat(c));
+    box.appendChild(b);
+  });
+}
+function toggleCat(c){
+  if(!canEdit('budget')){toast('No tienes permiso');return;}
+  const used=usedCats();
+  if(used.has(c)){ toast('Esta categoría ya tiene conceptos'); return; }
+  state.shownCats=state.shownCats||[];
+  const i=state.shownCats.indexOf(c);
+  if(i>=0) state.shownCats.splice(i,1); else state.shownCats.push(c);
+  renderCatChips();
+}
+function addCustomCat(){
+  if(!canEdit('budget')){toast('No tienes permiso');return;}
+  const inp=document.getElementById('catCustom'); const v=(inp&&inp.value.trim())||''; if(!v) return;
+  state.shownCats=state.shownCats||[];
+  if(!state.shownCats.includes(v) && !usedCats().has(v)) state.shownCats.push(v);
+  if(inp) inp.value='';
+  renderCatChips();
+}
 function addPayment(id){ const p={id:uid(),expense_id:id,amount:0,pay_date:todayStr(),note:''}; state.payments.push(p); expandedExp.add(id); mark('payments'); renderBudget(); }
 function openPay(){
   const sel=document.getElementById('paySel'); sel.innerHTML='';
@@ -3000,6 +3086,10 @@ function loadPhaseTemplate(){ if(!canEdit('todo')){toast('No tienes permiso');re
 function renderFases(){
   const stepper=document.getElementById('fasesStepper'); if(!stepper) return;
   seedPhasesIfEmpty();
+  // limpia tareas huérfanas (fases viejas que ya no existen) para que la suma cuadre
+  const pkeys=PHASES.map(p=>p.k);
+  const orphans=(state.phaseTasks||[]).filter(t=>!pkeys.includes(t.phase));
+  if(orphans.length){ state.phaseTasks=state.phaseTasks.filter(t=>pkeys.includes(t.phase)); if(canEdit('todo')) mark('phases'); }
   if(!PHASES.some(p=>p.k===_selPhase)) _selPhase='f1';
   const total=state.phaseTasks.length, done=state.phaseTasks.filter(t=>t.done).length;
   const pct=total?Math.round(done/total*100):0;
