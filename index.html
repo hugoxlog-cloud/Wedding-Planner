@@ -1307,6 +1307,79 @@ body.view-invita .invita{display:block}
 .cat-chip.locked{cursor:default;opacity:.9}
 .cat-custom-row{display:flex;gap:8px;margin-top:6px}
 .cat-custom-row input{flex:1}
+/* ===== Layout: panel resumen (mockup Organizer) ===== */
+.lsum{width:270px;flex:0 0 270px;background:#fff;border-left:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}
+.lsum-rail{display:none}
+.lsum-head{padding:20px 18px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fffdf7,#fff)}
+.lsum-head h2{margin:0;font-size:20px;color:var(--gold-ink);line-height:1.1}
+.lsum-head p{margin:4px 0 0;font-size:12px;color:var(--ink-soft)}
+.lsum-body{padding:16px 18px;display:flex;flex-direction:column;gap:22px}
+.lsum-sec h3{margin:0 0 12px;font:700 11px/1 "Manrope",sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-ink);border-bottom:1px solid var(--line);padding-bottom:8px}
+.lsum-cap-row{display:flex;justify-content:space-between;align-items:flex-end}
+.lsum-cap-row span{font-size:13px;color:var(--ink-soft)}
+.lsum-cap-row b{font-family:"Libre Caslon Text",Georgia,serif;font-size:30px;line-height:.9;color:var(--ink)}
+.lsum-bar{height:5px;border-radius:3px;background:var(--sage-soft);overflow:hidden;margin:10px 0 6px}
+.lsum-bar>div{height:100%;background:var(--gold);width:0}
+.lsum-cap-foot{display:flex;justify-content:space-between;font:600 11px/1 "Manrope",sans-serif;color:var(--ink-soft)}
+.lsum-inv{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+.lsum-inv li{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--ink)}
+.lsum-inv li .li-l{display:flex;align-items:center;gap:8px}
+.lsum-inv li .li-dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.lsum-inv li b{font-weight:700}
+.lsum-actions{display:flex;flex-direction:column;gap:9px;border-top:1px solid var(--line);padding-top:16px}
+@media(max-width:1024px){ .lsum{display:none} }
+/* ===== Reporte final para el cliente (mockup Client Report) ===== */
+.reporte{display:none}
+body.view-reporte .reporte{display:block}
+body.view-reporte .app,body.view-reporte .dash{display:none}
+.rep-inner{max-width:1120px;margin:0 auto;padding:34px 28px 96px}
+.rep-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:30px}
+.rep-eyebrow{margin:0 0 6px;font:700 12px/1 "Manrope",sans-serif;letter-spacing:3px;text-transform:uppercase;color:var(--gold-ink)}
+.rep-head h1{margin:0;font-size:40px;line-height:1.05;color:var(--gold-ink)}
+.rep-actions{display:flex;gap:12px;flex-wrap:wrap}
+.rep-actions button{display:inline-flex;align-items:center;gap:7px;border-radius:8px;padding:11px 18px;font:600 13.5px/1 "Manrope",sans-serif;cursor:pointer;border:1px solid var(--ink)}
+.rep-actions button.ghost{background:#fff;color:var(--ink)}
+.rep-actions button.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.rep-actions button .material-symbols-outlined{font-size:18px}
+.rep-hero{position:relative;height:340px;border-radius:16px;overflow:hidden;margin-bottom:40px;background:linear-gradient(135deg,#2b2b2b,#141414);background-size:cover;background-position:center;box-shadow:var(--shadow-lift)}
+.rep-hero-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45),transparent 55%)}
+.rep-hero-badge{position:absolute;left:26px;bottom:22px;z-index:1;color:#fff;font-family:"Libre Caslon Text",Georgia,serif;font-size:26px;text-shadow:0 2px 12px rgba(0,0,0,.4)}
+.rep-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:44px}
+.rep-mcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;min-height:158px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.rep-mcard-accent::after{content:"";position:absolute;top:-60px;right:-60px;width:130px;height:130px;border-radius:50%;background:rgba(212,175,55,.12)}
+.rep-mtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;position:relative;z-index:1}
+.rep-mtop h3{margin:0;font:600 12px/1.3 "Manrope",sans-serif;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft)}
+.rep-mtop .material-symbols-outlined{color:var(--gold-ink)}
+.rep-mbig{margin:0 0 4px;font-family:"Libre Caslon Text",Georgia,serif;font-size:34px;line-height:1;color:var(--ink);position:relative;z-index:1}
+.rep-mbig span{font-size:22px;color:var(--ink-soft)}
+.rep-msub{margin:0;font-size:13px;color:var(--ink-soft);position:relative;z-index:1}
+.rep-grid{display:grid;grid-template-columns:2fr 1fr;gap:34px;align-items:start}
+.rep-break h2{margin:0 0 22px;font-size:24px;color:var(--ink);border-bottom:1px solid var(--line);padding-bottom:14px}
+.rep-break-list{display:flex;flex-direction:column;gap:12px}
+.rep-brow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 20px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}
+.rep-brow-l{display:flex;align-items:center;gap:16px;min-width:0}
+.rep-brow-ic{width:46px;height:46px;flex:none;border-radius:50%;background:var(--sage-soft);display:flex;align-items:center;justify-content:center}
+.rep-brow-ic .material-symbols-outlined{color:var(--gold-ink)}
+.rep-brow-tx{min-width:0}
+.rep-brow-tx b{display:block;font-size:14.5px;color:var(--ink)}
+.rep-brow-tx span{font-size:12.5px;color:var(--ink-soft)}
+.rep-brow-r{text-align:right;flex:none}
+.rep-chip{display:inline-block;padding:4px 11px;border-radius:12px;font:600 11.5px/1.4 "Manrope",sans-serif}
+.rep-chip.ok{background:rgba(107,143,94,.16);color:#4a6b3e}
+.rep-chip.part{background:rgba(212,175,55,.18);color:var(--gold-deep)}
+.rep-chip.pend{background:var(--surface-variant,#e4e2e1);color:var(--ink-soft)}
+.rep-brow-r span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:5px}
+.rep-note-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:var(--shadow);position:sticky;top:20px}
+.rep-note-card h3{margin:0 0 14px;font-size:21px;color:var(--ink)}
+.rep-note-card textarea{width:100%;min-height:140px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:12px;font:italic 14px/1.6 "Manrope",sans-serif;color:var(--ink);background:#fbf9f8}
+.rep-planner{width:100%;margin-top:14px;border:none;border-bottom:1px solid var(--line);padding:8px 2px;font:700 14px/1 "Manrope",sans-serif;color:var(--gold-ink);background:transparent}
+.rep-note-role{margin:6px 0 0;font:600 11px/1 "Manrope",sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--ink-soft)}
+@media(max-width:860px){ .rep-metrics{grid-template-columns:1fr} .rep-grid{grid-template-columns:1fr} .rep-head h1{font-size:32px} }
+@media print{
+  header,#sidenav,#bottomnav,.rep-actions,.layout-fab{display:none!important}
+  .rep-inner{padding:0;max-width:100%}
+  .rep-note-card{position:static}
+}
 @media(max-width:860px){ .invita-inner{grid-template-columns:1fr} .invita-tools{position:static} }
 
 /* ===== Layout: fluidez de arrastre + gestos ===== */
@@ -1571,7 +1644,7 @@ body.view-fases .fases{display:block}
 </div></div>
 <div id="app-shell" style="display:none">
 <nav id="sidenav">
-  <div class="sn-brand"><h1>Acomodo de Mesas</h1><small>Planeación de eventos</small></div>
+  <div class="sn-brand"><h1>Planeación de Eventos</h1></div>
   <button class="navlink active" data-v="dash" onclick="setView('dash')"><span class="material-symbols-outlined">dashboard</span>Inicio</button>
   <button class="navlink" data-v="invitados" onclick="setView('invitados')"><span class="material-symbols-outlined">group</span>Invitados</button>
   <button class="navlink" data-v="menu" onclick="setView('menu')"><span class="material-symbols-outlined">restaurant_menu</span>Menú</button>
@@ -1584,6 +1657,7 @@ body.view-fases .fases{display:block}
   <button class="navlink" data-v="itin" onclick="setView('itin')"><span class="material-symbols-outlined">schedule</span>Itinerario</button>
   <button class="navlink" data-v="todo" onclick="setView('todo')"><span class="material-symbols-outlined">checklist</span>To-Do</button>
   <button class="navlink" data-v="fases" onclick="setView('fases')"><span class="material-symbols-outlined">flag</span>Fases</button>
+  <button class="navlink" data-v="reporte" onclick="setView('reporte')"><span class="material-symbols-outlined">description</span>Reporte</button>
   <div class="sn-spacer"></div>
   <div class="sn-foot">
     <button class="navlink um-btn" onclick="openUsers()" style="display:none"><span class="material-symbols-outlined">manage_accounts</span>Usuarios</button>
@@ -1715,9 +1789,29 @@ body.view-fases .fases{display:block}
     <div id="garden" class="garden">
 
       <div class="garden-hint">Arrastra mesas y objetos · Zoom: Ctrl + scroll (o pellizca en móvil) · ajusta asientos con − / +</div>
-      
+
     </div>
   </div>
+
+  <aside class="lsum" id="lsum">
+    <div class="lsum-rail" onclick="document.getElementById('lsum').classList.toggle('open')"><span class="material-symbols-outlined">insights</span><span class="lsum-rail-t">Resumen</span></div>
+    <div class="lsum-head"><h2 class="serif" id="lsumVenue">Layout</h2><p>Resumen del acomodo</p></div>
+    <div class="lsum-body">
+      <section class="lsum-sec">
+        <h3>Capacidad</h3>
+        <div class="lsum-cap-row"><span>Invitados sentados</span><b id="lsumSeated">0</b></div>
+        <div class="lsum-bar"><div id="lsumBar"></div></div>
+        <div class="lsum-cap-foot"><span id="lsumSeatedTxt">Ocupados 0</span><span id="lsumCapTxt">Lugares 0</span></div>
+      </section>
+      <section class="lsum-sec">
+        <h3>Inventario</h3>
+        <ul id="lsumInv" class="lsum-inv"></ul>
+      </section>
+      <div class="lsum-actions">
+        <button class="ghost" onclick="exportReportPDF()"><span class="material-symbols-outlined">download</span> Exportar PDF</button>
+      </div>
+    </div>
+  </aside>
 </div>
 
 <div class="invitados">
@@ -1933,6 +2027,53 @@ body.view-fases .fases{display:block}
     <div class="todo-count" id="todoCount"></div>
     <div id="todoPend"></div>
     <div id="todoCompSec"><div class="todo-sec">Completadas</div><div id="todoComp"></div></div>
+  </div>
+</div>
+
+<div class="reporte">
+  <div class="rep-inner" id="repDoc">
+    <header class="rep-head">
+      <div>
+        <p class="rep-eyebrow">Resumen Ejecutivo</p>
+        <h1 class="serif" id="repTitle">Evento</h1>
+      </div>
+      <div class="rep-actions">
+        <button class="ghost" onclick="shareReport()"><span class="material-symbols-outlined">share</span> Compartir</button>
+        <button class="dark" onclick="exportReportPDF()"><span class="material-symbols-outlined">download</span> Descargar PDF</button>
+      </div>
+    </header>
+    <section class="rep-hero" id="repHero"><div class="rep-hero-ov"></div><div class="rep-hero-badge" id="repHeroBadge"></div></section>
+    <section class="rep-metrics">
+      <div class="rep-mcard">
+        <div class="rep-mtop"><h3>Asistencia</h3><span class="material-symbols-outlined">group</span></div>
+        <p class="rep-mbig"><b id="repAtt">0</b><span id="repAttMax">/0</span></p>
+        <p class="rep-msub" id="repAttSub">—</p>
+      </div>
+      <div class="rep-mcard rep-mcard-accent">
+        <div class="rep-mtop"><h3>Uso de presupuesto</h3><span class="material-symbols-outlined">account_balance_wallet</span></div>
+        <p class="rep-mbig"><b id="repBud">0%</b></p>
+        <p class="rep-msub" id="repBudSub">—</p>
+      </div>
+      <div class="rep-mcard">
+        <div class="rep-mtop"><h3>Avance de pendientes</h3><span class="material-symbols-outlined">task_alt</span></div>
+        <p class="rep-mbig"><b id="repTasks">0%</b></p>
+        <p class="rep-msub" id="repTasksSub">—</p>
+      </div>
+    </section>
+    <div class="rep-grid">
+      <div class="rep-break">
+        <h2 class="serif">Desglose del evento</h2>
+        <div id="repBreak" class="rep-break-list"></div>
+      </div>
+      <aside class="rep-note">
+        <div class="rep-note-card">
+          <h3 class="serif">Una nota de tu planner</h3>
+          <textarea id="repNote" placeholder="Escribe aquí unas palabras para los clientes…" oninput="setReportField('note',this.value)"></textarea>
+          <input id="repPlanner" class="rep-planner" placeholder="Nombre del planner / coordinación" oninput="setReportField('planner',this.value)">
+          <p class="rep-note-role">Coordinación del evento</p>
+        </div>
+      </aside>
+    </div>
   </div>
 </div>
 
@@ -2428,7 +2569,7 @@ function enableMove(card,t){
     document.addEventListener("pointerup",up);
   });
 }
-function renderAll(){ applyCanvas(); renderObjects(); renderPool(); renderTables(); renderStats(); }
+function renderAll(){ applyCanvas(); renderObjects(); renderPool(); renderTables(); renderStats(); if(document.getElementById('lsum')) renderLayoutSummary(); }
 
 /* ---------------- Editor de Layout (Hito 3) ---------------- */
 const SCALE=30;
@@ -2932,12 +3073,84 @@ function renderDash(){
   }
 }
 
+/* ---------------- panel resumen del layout ---------------- */
+function renderLayoutSummary(){
+  const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+  const venue=(EVENT&&EVENT.venue_name)||(EVENT&&EVENT.venue_type==='jardin'?'Jardín':(EVENT&&EVENT.venue_type==='salon'?'Salón':'Layout'));
+  set('lsumVenue',venue||'Layout');
+  const tables=state.tables||[];
+  const seated=tables.reduce((a,t)=>a+((t.seats||[]).filter(Boolean).length),0);
+  const cap=tables.reduce((a,t)=>a+(+t.cap||0),0);
+  set('lsumSeated',seated);
+  const bar=document.getElementById('lsumBar'); if(bar) bar.style.width=(cap>0?Math.min(100,Math.round(seated/cap*100)):0)+'%';
+  set('lsumSeatedTxt','Ocupados '+seated);
+  set('lsumCapTxt','Lugares '+cap);
+  const round=tables.filter(t=>!t.novios&&(t.shape||'round')==='round').length;
+  const square=tables.filter(t=>!t.novios&&t.shape==='square').length;
+  const novios=tables.filter(t=>t.novios).length;
+  const objs={}; (state.objects||[]).forEach(o=>{ objs[o.kind]=(objs[o.kind]||0)+1; });
+  const rows=[];
+  if(round) rows.push(['Mesas redondas',round]);
+  if(square) rows.push(['Mesas cuadradas',square]);
+  if(novios) rows.push(['Mesa de novios',novios]);
+  rows.push(['Lugares totales',cap]);
+  Object.keys(objs).forEach(k=>{ const lbl=(OBJ_KINDS[k]&&OBJ_KINDS[k].label)||(k==='tree'?'Árboles':k); rows.push([lbl,objs[k]]); });
+  const ul=document.getElementById('lsumInv');
+  if(ul){ ul.innerHTML=''; rows.forEach(([l,n])=>{ const li=document.createElement('li'); li.innerHTML='<span class="li-l"><span class="li-dot"></span>'+escH(l)+'</span><b>'+n+'</b>'; ul.appendChild(li); }); }
+}
+/* ---------------- reporte final para el cliente ---------------- */
+let _repT=null;
+function reportData(){ return (EVENT&&EVENT.report)||{}; }
+function renderReporte(){
+  if(!EVENT) return;
+  const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
+  set('repTitle',(EVENT.couple_names)||'Evento');
+  const hero=document.getElementById('repHero'); if(hero) hero.style.backgroundImage=EVENT.logo_url?('url("'+EVENT.logo_url+'")'):'';
+  const badge=document.getElementById('repHeroBadge'); if(badge) badge.textContent=eventDateLabel()||'';
+  const c=invCounts(); const base=c.inv||c.total||0;
+  set('repAtt',c.si); set('repAttMax','/'+base);
+  set('repAttSub',(base>0?Math.round(c.si/base*100):0)+'% de confirmación · '+c.pend+' pendientes');
+  const t=budgetTotals(); const bpct=t.pres>0?Math.round(t.pag/t.pres*100):0;
+  set('repBud',bpct+'%'); set('repBudSub',fmtMXN(t.pag)+' de '+fmtMXN(t.pres));
+  const td=state.todos||[]; const tdone=td.filter(x=>x.done).length; const tpct=td.length?Math.round(tdone/td.length*100):0;
+  set('repTasks',tpct+'%'); set('repTasksSub',tdone+' de '+td.length+' tareas completadas');
+  const box=document.getElementById('repBreak');
+  if(box){ box.innerHTML='';
+    const groups={}; (state.budget.expenses||[]).forEach(e=>{ const k=e.categoria||'Otros'; (groups[k]=groups[k]||[]).push(e); });
+    const keys=Object.keys(groups).sort((a,b)=>{ const ia=EXP_CATS.indexOf(a),ib=EXP_CATS.indexOf(b); return (ia<0?99:ia)-(ib<0?99:ib); });
+    if(!keys.length){ box.innerHTML='<div class="dprov-empty" style="padding:18px">Aún no hay conceptos de presupuesto para desglosar.</div>'; }
+    else keys.forEach(k=>{
+      const items=groups[k];
+      const sB=items.reduce((a,e)=>a+(+e.presupuesto||0),0);
+      const sP=items.reduce((a,e)=>a+paidOf(e.id),0);
+      let chip='pend',ctxt='Pendiente';
+      if(sB>0&&sP>=sB){ chip='ok'; ctxt='Pagado'; } else if(sP>0){ chip='part'; ctxt='Parcial'; }
+      const row=document.createElement('div'); row.className='rep-brow';
+      row.innerHTML='<div class="rep-brow-l"><div class="rep-brow-ic"><span class="material-symbols-outlined">'+catIcon(k)+'</span></div>'
+        +'<div class="rep-brow-tx"><b>'+escH(k)+'</b><span>'+items.length+' concepto(s) · '+fmtMXN(sP)+' de '+fmtMXN(sB)+'</span></div></div>'
+        +'<div class="rep-brow-r"><span class="rep-chip '+chip+'">'+ctxt+'</span></div>';
+      box.appendChild(row);
+    });
+  }
+  const rd=reportData();
+  const note=document.getElementById('repNote'); if(note) note.value=rd.note||'';
+  const pln=document.getElementById('repPlanner'); if(pln) pln.value=rd.planner||'';
+}
+function setReportField(k,v){ if(!EVENT) return; EVENT.report=EVENT.report||{}; EVENT.report[k]=v; saveReport(); }
+function saveReport(){ if(!EVENT) return; if(_repT) clearTimeout(_repT); _repT=setTimeout(async()=>{ const {error}=await sb.from('events').update({report:EVENT.report||{}}).eq('id',EVENT.id); if(error) console.error(error); },500); }
+function exportReportPDF(){ window.print(); }
+function shareReport(){
+  const url=location.href;
+  if(navigator.share){ navigator.share({title:(EVENT&&EVENT.couple_names)||'Reporte',url}).catch(()=>{}); }
+  else if(navigator.clipboard){ navigator.clipboard.writeText(url).then(()=>toast('Enlace copiado')).catch(()=>toast('Copia el enlace del navegador')); }
+  else toast('Copia el enlace del navegador');
+}
 /* ---------------- vistas ---------------- */
 function setView(v){
-  document.body.classList.remove('view-dash','view-invitados','view-menu','view-regalos','view-invita','view-fases','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo');
+  document.body.classList.remove('view-dash','view-invitados','view-menu','view-regalos','view-invita','view-fases','view-jardin','view-budget','view-proveedores','view-music','view-itin','view-todo','view-reporte');
   document.body.classList.add('view-'+v);
   document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
-  const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',regalos:'Mesa de regalos',invita:'Diseño de invitación',fases:'Fases de la boda',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)'};
+  const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',regalos:'Mesa de regalos',invita:'Diseño de invitación',fases:'Fases de la boda',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)',reporte:'Reporte final para el cliente'};
   const hSub=document.getElementById('hSub'); if(hSub) hSub.textContent=(subs[v]||'')+' · '+eventDateLabel();
   if(v==='dash') renderDash();
   if(v==='invitados') renderInvitados();
@@ -2945,12 +3158,13 @@ function setView(v){
   if(v==='regalos') renderRegistry();
   if(v==='invita') renderInvita();
   if(v==='fases') renderFases();
-  if(v==='jardin'){ paintVenueBar(); initLayoutGestures(); }
+  if(v==='jardin'){ paintVenueBar(); initLayoutGestures(); renderLayoutSummary(); }
   if(v==='budget') renderBudget();
   if(v==='proveedores') renderProviders();
   if(v==='music') renderMusic();
   if(v==='itin') renderItin();
   if(v==='todo') renderTodos();
+  if(v==='reporte') renderReporte();
 }
 
 /* ---------------- diseño de invitación ---------------- */
@@ -3376,7 +3590,7 @@ const TAB_OF_VIEW={invitados:'invitados',menu:'invitados',regalos:'invitados',in
 function applyTabVisibility(){
   document.querySelectorAll('[data-v]').forEach(b=>{
     const view=b.dataset.v;
-    if(view==='dash'){ b.style.display=''; return; }
+    if(view==='dash'||view==='reporte'){ b.style.display=''; return; }
     const tab=TAB_OF_VIEW[view];
     const vis = view==='jardin' ? (canRead('layout')||canRead('invitados')) : canRead(tab);
     b.style.display=vis?'':'none';
