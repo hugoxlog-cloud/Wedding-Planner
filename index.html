@@ -1410,6 +1410,65 @@ body.view-reporte .app,body.view-reporte .dash{display:none}
   .rep-inner{padding:0;max-width:100%}
   .rep-note-card{position:static}
 }
+/* ===== Estética dorada 3D (mockups Stitch) ===== */
+/* Chips dorados de estadísticas */
+#main-col>header .stat{
+  background:linear-gradient(180deg,#fdf6df 0%,#f1e0ad 55%,#e6cf93 100%);
+  border:1px solid #d3b871;border-radius:15px;padding:8px 16px;min-width:84px;
+  box-shadow:0 3px 0 #bd9c48,0 8px 16px rgba(120,92,0,.18),inset 0 1px 0 rgba(255,255,255,.85);
+}
+#main-col>header .stat b{font-family:"Libre Caslon Text",Georgia,serif;font-size:25px;color:#6b5300;text-shadow:0 1px 0 rgba(255,255,255,.55)}
+#main-col>header .stat span{font-size:9.5px;letter-spacing:1.3px;color:#8a7333;font-weight:700}
+/* Mesa: superficie crema con canto dorado y sombra 3D */
+.garden .tabletop{
+  width:172px;height:172px;
+  background:radial-gradient(circle at 40% 32%,#fffdf7 0%,#f7f0dd 58%,#ece0c4 100%);
+  border:5px solid #d9c185;
+  box-shadow:0 16px 26px rgba(90,70,20,.22),inset 0 3px 7px rgba(255,255,255,.85),inset 0 -9px 18px rgba(150,120,50,.16);
+}
+.garden .tabletop .num{color:#5f4a12}
+.garden .tabletop .lbl{color:#9a824a}
+.garden .tabletop .cnt{background:#efe1bd;color:#6b5300}
+.garden .ring{filter:drop-shadow(0 12px 14px rgba(80,60,15,.14))}
+/* Asientos como cojines crema con borde dorado */
+.garden .chair .seatpad{
+  background:linear-gradient(180deg,#fffdf6,#efe4c8);
+  border:1px solid #d9c185;border-radius:13px;color:#5b4a2e;
+  box-shadow:0 3px 5px rgba(90,70,20,.18),inset 0 1px 0 rgba(255,255,255,.7);
+}
+.garden .chair.empty .seatpad{background:rgba(255,253,246,.4);border-style:dashed;border-color:#d0bd8e;color:#a08f63}
+.garden .chair.plus .seatpad{background:linear-gradient(180deg,#f6ecd6,#e9d9b3);border-color:#d9c185;color:#6b5330}
+/* ===== Invitados: tarjetas + asignación rápida (mockup 2) ===== */
+.inv-modes{display:inline-flex;background:var(--sage-soft);border-radius:9px;padding:3px;gap:2px}
+.inv-mode{display:inline-flex;align-items:center;gap:5px;border:0;background:transparent;padding:7px 13px;border-radius:7px;font-weight:700;color:var(--ink-soft);font-family:inherit;font-size:13px;cursor:pointer}
+.inv-mode .material-symbols-outlined{font-size:17px}
+.inv-mode.on{background:#fff;color:var(--ink);box-shadow:var(--shadow)}
+.inv-assign{display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start}
+.inv-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px;align-content:start}
+.icard{background:linear-gradient(180deg,#fffdf7,#f6efdd);border:1px solid #e2d3a9;border-radius:16px;padding:15px 17px;box-shadow:0 3px 0 rgba(200,175,110,.30),0 8px 18px rgba(120,92,0,.10)}
+.icard-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:11px}
+.icard-top b{font-family:"Libre Caslon Text",Georgia,serif;font-size:18px;color:var(--ink);line-height:1.15}
+.icard-side{font:700 11px/1 "Manrope",sans-serif;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.icard-side.side-novio{background:#e6effa;color:#3b6ea5}
+.icard-side.side-novia{background:var(--blush-soft);color:#7a4b3b}
+.icard-rows{display:flex;flex-direction:column;gap:8px;font-size:13px}
+.icard-rows>div{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.icard-rows span{color:var(--ink-soft)}
+.icard-rows>div>b{color:var(--ink);font-weight:700}
+.icard .est-ok{color:#4a6b3e}
+.icard .est-no{color:var(--blush)}
+.icard select{border:1px solid #d9c185;border-radius:9px;padding:5px 8px;background:#fffdf6;font-family:inherit;font-size:12.5px;color:var(--ink);max-width:135px}
+.icard-foot{margin-top:12px}
+.inv-quick{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);position:sticky;top:8px}
+.iq-eyebrow{font:700 10.5px/1 "Manrope",sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--gold-ink)}
+.iq-head h3{margin:5px 0 13px;font-size:18px;color:var(--ink)}
+.iq-list{display:flex;flex-direction:column;gap:9px;max-height:62vh;overflow:auto}
+.iq-item{border:1px solid #e2d3a9;border-radius:12px;padding:10px 12px;background:linear-gradient(180deg,#fffdf7,#f6efdd)}
+.iq-item b{display:block;font-size:14px;color:var(--ink)}
+.iq-item .iq-sub{display:block;font-size:11.5px;color:var(--blush);margin:2px 0 7px}
+.iq-item select{width:100%;border:1px solid #d9c185;border-radius:8px;padding:6px;background:#fffdf6;font-family:inherit;font-size:12.5px;color:var(--ink)}
+.iq-empty{color:var(--ink-soft);font-size:13px;padding:10px;text-align:center}
+@media(max-width:860px){ .inv-assign{grid-template-columns:1fr} .inv-quick{position:static} }
 @media(max-width:860px){ .invita-inner{grid-template-columns:1fr} .invita-tools{position:static} }
 
 /* ===== Layout: fluidez de arrastre + gestos ===== */
@@ -1879,9 +1938,20 @@ body.view-fases .fases{display:block}
     </div>
     <div class="inv-toolbar">
       <input id="invFilter" class="inv-search" placeholder="Buscar invitado..." oninput="renderInvitados()">
+      <div class="inv-modes">
+        <button id="invModeCards" class="inv-mode on" onclick="setInvMode('cards')"><span class="material-symbols-outlined">grid_view</span>Tarjetas</button>
+        <button id="invModeList" class="inv-mode" onclick="setInvMode('list')"><span class="material-symbols-outlined">table_rows</span>Lista</button>
+      </div>
       <span class="inv-count" id="invCount"></span>
     </div>
-    <div class="inv-tablewrap">
+    <div id="invCardsWrap" class="inv-assign">
+      <div id="invCards" class="inv-cards"></div>
+      <aside class="inv-quick">
+        <div class="iq-head"><span class="iq-eyebrow">Asignación rápida</span><h3 class="serif">Confirmados sin lugar</h3></div>
+        <div id="invQuick" class="iq-list"></div>
+      </aside>
+    </div>
+    <div class="inv-tablewrap" id="invListWrap" style="display:none">
       <table class="btable inv-table">
         <thead><tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Estatus</th><th></th></tr></thead>
         <tbody id="invBody"></tbody>
@@ -3716,7 +3786,55 @@ function renderInvitados(){
   const el=document.getElementById('invCount');
   if(el) el.textContent=c.total+' invitados · '+c.inv+' con invitación · '+c.si+' asisten · A '+c.A+' / B '+c.B+' · ●'+c.novio+' novio / ●'+c.novia+' novia';
   renderInvStats();
+  if(_invMode==='cards'){ renderInvCards(q); renderInvQuick(); }
   applyRO();
+}
+let _invMode='cards';
+function setInvMode(m){
+  _invMode=m;
+  const cB=document.getElementById('invModeCards'), lB=document.getElementById('invModeList');
+  if(cB) cB.classList.toggle('on',m==='cards'); if(lB) lB.classList.toggle('on',m==='list');
+  const cw=document.getElementById('invCardsWrap'), lw=document.getElementById('invListWrap');
+  if(cw) cw.style.display=(m==='cards')?'':'none'; if(lw) lw.style.display=(m==='list')?'':'none';
+  renderInvitados();
+}
+function tableLabel(t){ return t.novios?'Mesa de novios':('Mesa '+t.num); }
+function assignFromCard(gid,val){ if(val) assign(gid,val); else unassign(gid); renderInvitados(); }
+function renderInvCards(q){
+  const box=document.getElementById('invCards'); if(!box) return;
+  box.innerHTML='';
+  const list=state.guests.filter(g=>g.name.toLowerCase().includes(q||''));
+  if(!list.length){ box.innerHTML='<div class="iq-empty" style="grid-column:1/-1">Sin invitados. Agrégalos arriba.</div>'; return; }
+  list.forEach(g=>{
+    const t=tableOf(g.id); const seated=!!t; const personas=weight(g);
+    let opts='<option value="">— Sin lugar —</option>';
+    state.tables.forEach(tb=>{ opts+='<option value="'+tb.id+'"'+(t&&t.id===tb.id?' selected':'')+'>'+escH(tableLabel(tb))+'</option>'; });
+    const card=document.createElement('div'); card.className='icard';
+    card.innerHTML='<div class="icard-top"><b>'+escH(g.name)+'</b>'+(g.side?'<span class="icard-side side-'+g.side+'">'+(g.side==='novio'?'Novio':'Novia')+'</span>':'')+'</div>'
+      +'<div class="icard-rows">'
+        +'<div><span>Personas</span><b>'+personas+'</b></div>'
+        +'<div><span>Estado</span><b class="'+(seated?'est-ok':'est-no')+'">'+(seated?'Sentado':'Sin lugar')+'</b></div>'
+        +'<div><span>Asignado a</span><select class="icard-sel">'+opts+'</select></div>'
+      +'</div>'
+      +'<div class="icard-foot">'+statusPill(g)+'</div>';
+    card.querySelector('.icard-sel').addEventListener('change',e=>assignFromCard(g.id,e.target.value));
+    box.appendChild(card);
+  });
+}
+function renderInvQuick(){
+  const box=document.getElementById('invQuick'); if(!box) return;
+  box.innerHTML='';
+  const pend=state.guests.filter(g=>g.attendance==='si' && !tableOf(g.id));
+  if(!pend.length){ box.innerHTML='<div class="iq-empty">¡Todos los confirmados tienen lugar! 🎉</div>'; return; }
+  pend.forEach(g=>{
+    const w=weight(g);
+    let opts='<option value="">Asignar a…</option>';
+    state.tables.forEach(tb=>{ const free=tb.cap-tableLoad(tb); opts+='<option value="'+tb.id+'"'+(free<w?' disabled':'')+'>'+escH(tableLabel(tb))+' ('+free+' libre'+(free===1?'':'s')+')</option>'; });
+    const it=document.createElement('div'); it.className='iq-item';
+    it.innerHTML='<b>'+escH(g.name)+'</b><span class="iq-sub">'+w+' persona'+(w>1?'s':'')+' · Sin lugar</span><select>'+opts+'</select>';
+    it.querySelector('select').addEventListener('change',e=>{ if(e.target.value) assignFromCard(g.id,e.target.value); });
+    box.appendChild(it);
+  });
 }
 
 /* ---------------- permisos: gate visual de pestañas y edición ---------------- */
