@@ -1152,7 +1152,8 @@ body.view-jardin .hz-right .stats{display:flex}
 /* ============================================================
    INVITADOS: estatus + resumen
    ============================================================ */
-.inv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.inv-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-bottom:16px}
+.inv-stats .ist-sep{grid-column:1/-1;margin:4px 0 -4px;font:700 11px/1 "Manrope",sans-serif;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-ink)}
 .istat{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--shadow)}
 .istat .material-symbols-outlined{font-size:26px}
 .istat b{font-family:"Libre Caslon Text",Georgia,serif;font-size:24px;line-height:1;color:var(--ink);display:block}
@@ -1161,6 +1162,13 @@ body.view-jardin .hz-right .stats{display:flex}
 .istat.st-pend{border-left:4px solid #d4a017} .istat.st-pend .material-symbols-outlined{color:#c99700}
 .istat.st-no{border-left:4px solid var(--full)} .istat.st-no .material-symbols-outlined{color:var(--full)}
 .istat.st-tot{border-left:4px solid var(--gold)} .istat.st-tot .material-symbols-outlined{color:var(--gold-ink)}
+.istat.st-inv{border-left:4px solid var(--gold-ink)} .istat.st-inv .material-symbols-outlined{color:var(--gold-ink)}
+.istat.st-per{border-left:4px solid var(--gold)} .istat.st-per .material-symbols-outlined{color:var(--gold-ink)}
+.istat.st-seat{border-left:4px solid var(--ok)} .istat.st-seat .material-symbols-outlined{color:var(--ok)}
+.istat.st-pool{border-left:4px solid var(--blush)} .istat.st-pool .material-symbols-outlined{color:var(--blush)}
+.istat.st-mesa{border-left:4px solid #8a7a4a} .istat.st-mesa .material-symbols-outlined{color:#8a7a4a}
+.istat.st-solo{border-left:4px solid #7f8b74} .istat.st-solo .material-symbols-outlined{color:#5f6b54}
+.istat.st-acomp{border-left:4px solid var(--gold)} .istat.st-acomp .material-symbols-outlined{color:var(--gold-ink)}
 .stpill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap}
 .stpill.st-ok{background:#e3f0e6;color:#2f6b41}
 .stpill.st-pend{background:#fbeecb;color:#8a6a1e}
@@ -3655,11 +3663,27 @@ function statusPill(g){ const s=guestStatus(g); return '<span class="stpill st-'
 function renderInvStats(){
   const box=document.getElementById('invStats'); if(!box) return;
   const c=invCounts();
+  const g=state.guests;
+  const invitaciones=g.length;
+  const personas=g.reduce((a,x)=>a+weight(x),0);
+  const seated=state.tables.reduce((a,t)=>a+tableLoad(t),0);
+  const sinLugar=Math.max(0,personas-seated);
+  const mesas=state.tables.length;
+  const solos=g.filter(x=>!x.plusOne).length;
+  const acomp=g.filter(x=>x.plusOne).length;
+  const card=(cls,ic,n,lbl)=>'<div class="istat '+cls+'"><span class="material-symbols-outlined">'+ic+'</span><div><b>'+n+'</b><span>'+lbl+'</span></div></div>';
   box.innerHTML=
-     '<div class="istat st-ok"><span class="material-symbols-outlined">check_circle</span><div><b>'+c.si+'</b><span>Confirmados</span></div></div>'
-    +'<div class="istat st-pend"><span class="material-symbols-outlined">hourglass_empty</span><div><b>'+c.pend+'</b><span>Pendientes</span></div></div>'
-    +'<div class="istat st-no"><span class="material-symbols-outlined">cancel</span><div><b>'+c.no+'</b><span>No asistirán</span></div></div>'
-    +'<div class="istat st-tot"><span class="material-symbols-outlined">group</span><div><b>'+c.total+'</b><span>Invitados</span></div></div>';
+     card('st-inv','mail',invitaciones,'Invitaciones')
+    +card('st-per','groups',personas,'Personas')
+    +card('st-seat','event_seat',seated,'Sentadas')
+    +card('st-pool','chair_alt',sinLugar,'Sin lugar')
+    +card('st-mesa','table_restaurant',mesas,'Mesas')
+    +'<div class="ist-sep">Desglose de invitados</div>'
+    +card('st-ok','check_circle',c.si,'Confirmados')
+    +card('st-pend','hourglass_empty',c.pend,'Pendientes')
+    +card('st-no','cancel',c.no,'No asistirán')
+    +card('st-solo','person',solos,'Van solos')
+    +card('st-acomp','group_add',acomp,'Van acompañados (+1)');
 }
 function renderInvitados(){
   const body=document.getElementById('invBody'); if(!body) return;
