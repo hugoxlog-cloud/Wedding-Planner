@@ -1800,6 +1800,7 @@ body.view-fases .fases{display:block}
   <div class="sn-spacer"></div>
   <div class="sn-foot">
     <button class="navlink um-btn" onclick="openUsers()" style="display:none"><span class="material-symbols-outlined">manage_accounts</span>Usuarios</button>
+    <button class="navlink" onclick="toggleLang()" title="Idioma / Language"><span class="material-symbols-outlined">translate</span><span id="langLbl">English</span></button>
     <button class="navlink" onclick="backToEvents()"><span class="material-symbols-outlined">event</span>Eventos</button>
     <button class="navlink" onclick="logout()"><span class="material-symbols-outlined">logout</span>Salir</button>
   </div>
@@ -2776,6 +2777,66 @@ function initPanelDefaults(){ try{
 }catch(e){ document.body.classList.add('nav-collapsed'); document.body.classList.add('lsum-collapsed'); } }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initPanelDefaults); else initPanelDefaults();
 
+/* ---------------- idioma ES / EN ---------------- */
+const T_EN={
+"Planeación de Eventos":"Event Planning","Inicio":"Home","Invitados":"Guests","Menú":"Menu","Regalos":"Gifts","Invitación":"Invitation","Invita":"Invite","Layout":"Layout","Presupuesto":"Budget","Presup.":"Budget","Proveedores":"Vendors","Prov.":"Vendors","Música":"Music","Música / DJ":"Music / DJ","Itinerario":"Timeline","Itin.":"Timeline","To-Do":"To-Do","Fases":"Phases","Reporte":"Report","Usuarios":"Users","Eventos":"Events","Salir":"Log out",
+"Nombres":"Names","Invitaciones":"Invitations","Personas":"People","Sentadas":"Seated","Sin lugar":"Unseated","Mesas":"Tables","Guardar archivo":"Save file","Abrir archivo":"Open file","Imprimir":"Print",
+"Correo":"Email","Contraseña":"Password","Entrar":"Sign in",
+"Elige un evento para gestionarlo.":"Choose an event to manage.","Nuevo evento":"New event","Cerrar sesion":"Log out","Aún no tienes eventos. Crea el primero.":"You have no events yet. Create the first one.","Tus eventos":"Your events",
+"Comencemos a conocernos":"Let’s get to know each other","Tipo de evento":"Event type","Boda":"Wedding","XV años":"Quinceañera","Fiesta":"Party","Compromiso":"Engagement","Graduación":"Graduation","Cumpleaños":"Birthday","Continuar":"Continue","Atrás":"Back","Crear evento":"Create event","Últimos detalles":"Final details","Fecha del evento":"Event date","Tipo de lugar":"Venue type","Ubicación":"Location","Aún no comprometidos":"Not engaged yet","Explorando ideas":"Exploring ideas","Recién comprometidos":"Recently engaged","Listos para empezar":"Ready to start","Ya reservamos lugar":"Venue booked","Buscando proveedores":"Finding vendors","Invitaciones enviadas":"Invitations sent","Afinando detalles":"Finalizing details","Logo de los novios o del evento (opcional)":"Couple or event logo (optional)","Fecha, lugar y logo. Todo opcional.":"Date, venue and logo. All optional.",
+"Acciones rápidas":"Quick actions","Registrar pago":"Record payment","Ver layout":"View layout","Fases de la boda":"Wedding phases","Ver fases":"View phases","Ir a Fases":"Go to Phases","Planificación maestra":"Master plan",
+"Agregar a la lista":"Add to list","Tarjetas":"Cards","Lista":"List","Nombre":"Name","Lado":"Side","Acompanante":"Companion","Invitacion":"Invitation","Asistencia":"Attendance","Mesa":"Table","Civil":"Civil","Estatus":"Status","Estado":"Status","Novio":"Groom","Novia":"Bride","Solo":"Alone","Sí":"Yes","No":"No",
+"Confirmados":"Confirmed","Pendientes":"Pending","No asistirán":"Not attending","Van solos":"Coming alone","Van acompañados (+1)":"Coming with +1","Desglose de invitados":"Guest breakdown","Civil (personas)":"Civil (people)","Confirmados sin lugar":"Confirmed without a seat","Asignación rápida":"Quick assign","Asignado a":"Assigned to","Sentado":"Seated","Sin invitados. Agrégalos arriba.":"No guests. Add them above.",
+"Agregar":"Add","Mesa 10":"Table 10","Mesa 12":"Table 12","Novios":"Couple","Árbol":"Tree","Fuente":"Fountain","Lago":"Lake","Pista":"Dance floor","Barra":"Bar","Escenario":"Stage","Arco":"Arch","Elotes":"Corn","Hot dogs":"Hot dogs","Postres":"Desserts","Salada":"Savory","Baños":"Restrooms","Jardín":"Garden","Salón":"Hall","Lugar":"Venue","Lista de invitados":"Guest list","Resumen":"Summary","Resumen del acomodo":"Seating summary","Capacidad":"Capacity","Inventario":"Inventory","Invitados sentados":"Seated guests","Mesas redondas":"Round tables","Mesas cuadradas":"Square tables","Mesa de novios":"Head table","Lugares totales":"Total seats","Exportar PDF":"Export PDF",
+"Concepto":"Item","Categorías":"Categories","Integrar categorías":"Add categories","Pagado":"Paid","Pendiente":"Pending","Nuevo pendiente":"New balance","Agregar pago":"Add payment","Pagado hasta ahora":"Paid so far","Pendiente actual":"Current balance","Nota (fecha pago total)":"Note (full payment date)","Sin categoría":"Uncategorized","Otros":"Other",
+"Directorio de proveedores":"Vendor directory","Agregar proveedor":"Add vendor","Contacto":"Contact","Teléfono":"Phone","Notas":"Notes",
+"Opciones de platillo":"Dish options","Platillo":"Dish","Selección por invitado":"Selection per guest","Alergias / Dieta":"Allergies / Diet","Alergias / dietas":"Allergies / diets","Platillos elegidos (confirmados)":"Chosen dishes (confirmed)","Sin elegir platillo":"No dish chosen","Con alergia/dieta":"With allergy/diet",
+"Mesa de regalos":"Gift registry","Agregar regalo":"Add gift","Comprado":"Purchased","Comprados":"Purchased","Reservado":"Reserved","Producto, precio y estado":"Product, price and status",
+"Diseño de invitación":"Invitation design","Encabezado":"Header","Mensaje":"Message","Estilo":"Style","Carbón & Oro":"Charcoal & Gold","Marfil":"Ivory","Rosa":"Rose","Minimal":"Minimal","Café":"Coffee","Verde romero":"Rosemary green","Fecha":"Date",
+"Música por momento":"Music by moment","Momento":"Moment","Canción":"Song","Artista":"Artist","Géneros y notas para el DJ":"Genres and notes for the DJ","No tocar":"Do not play",
+"Itinerario del evento":"Event timeline","Hora":"Time","Actividad":"Activity","Hecho":"Done",
+"Completadas":"Completed","Responsable":"Responsible",
+"Resumen Ejecutivo":"Executive Summary","Desglose del evento":"Event breakdown","Una nota de tu planner":"A note from your planner","Coordinación del evento":"Event coordination","Compartir":"Share","Descargar PDF":"Download PDF","Uso de presupuesto":"Budget usage","Avance de pendientes":"Task progress",
+"Crear usuario":"Create user","Administrador":"Admin","Miembros de este evento":"Members of this event","Aún no hay miembros en este evento.":"No members in this event yet.","Lectura":"Read","Edicion":"Edit","Por rol":"By role","Quitar":"Remove","Eliminar":"Delete","Borrar":"Delete","Cancelar":"Cancel","Crear":"Create","Listo":"Done","Reset":"Reset","Invitado":"Guest","Asignar":"Assign",
+"Agregar una tarea":"Add a task","Buscar invitado...":"Search guest...","Buscar invitado…":"Search guest…","Buscar por nombre o tipo…":"Search by name or type…","Buscar regalo…":"Search gift…","Contrasena (min 6)":"Password (min 6)","Ej. Ana & Luis":"E.g. Ana & Luis","Escribe aquí unas palabras para los clientes…":"Write a few words for the clients…","Géneros preferidos, volumen, indicaciones especiales, horarios de bloques, etc.":"Preferred genres, volume, special notes, block schedules, etc.","Link (opcional)":"Link (optional)","Monto":"Amount","Nombre del planner / coordinación":"Planner / coordination name","Nombre del platillo":"Dish name","Nombre del proveedor":"Vendor name","Nombre del salón / jardín":"Hall / garden name","Nota del pago":"Payment note","Nueva tarea de esta fase":"New task for this phase","Precio":"Price","Regalo":"Gift","Tienda / marca":"Store / brand","Tipo (ej. Banquete)":"Type (e.g. Catering)","ej. Luna de miel":"e.g. Honeymoon","ej. liquidar 30 ago":"e.g. pay off Aug 30","ej. sin gluten, alergia a nuez":"e.g. gluten-free, nut allergy","ej. transferencia, anticipo":"e.g. transfer, deposit","Pega nombres (uno por linea). Escribe (solo) al final para quien va sin acompanante.":"Paste names (one per line). Write (solo) at the end for anyone without a companion.","Fotógrafo, banquete, DJ, flores…":"Photographer, catering, DJ, flowers…","Tipo de lugar...":"Venue type...","Nota (opcional)":"Note (optional)",
+"Faltan":"Countdown","Resumen del evento":"Event summary","Menú / Platillos":"Menu / Dishes","Layout / Acomodo de mesas":"Layout / Seating","Formato de música (DJ)":"Music format (DJ)","Lista de pendientes (To Do)":"To-Do list","Reporte final para el cliente":"Final client report","Parcial":"Partial","Pendiente":"Pending","Pagado":"Paid","Aún no hay conceptos de presupuesto para desglosar.":"No budget items to break down yet.","¡Todos los confirmados tienen lugar! 🎉":"All confirmed guests are seated! 🎉","Confirmado":"Confirmed","No asistirá":"Not attending","Sin invitar":"Not invited","— Sin lugar —":"— Unseated —","Asignar a…":"Assign to…","Sin proveedores todavía.":"No vendors yet.",
+"Banquete":"Catering","Bebidas":"Drinks","Fotografía y Video":"Photography & Video","Flores y Decoración":"Flowers & Decor","Vestuario":"Attire","Belleza":"Beauty","Papelería":"Stationery","Pastel":"Cake","Transporte":"Transport","Fotografía":"Photography","Maquillaje":"Makeup","Pastelería":"Bakery","Sin categoría":"Uncategorized","Nueva tarea":"New task","Sin nombre":"No name","(sin nombre)":"(no name)","Proveedor":"Vendor"
+};
+let LANG='es', _langObs=null;
+function _langSkip(el){ return el && (el.tagName==='SCRIPT'||el.tagName==='STYLE'||(el.classList&&el.classList.contains('material-symbols-outlined'))); }
+function _trText(node){ const s=node.nodeValue, k=s.trim(); if(!k) return; const rep=T_EN[k]; if(rep!==undefined){ node.__es=s; node.nodeValue=s.replace(k,rep); } }
+function _unTrText(node){ if(node.__es!==undefined){ node.nodeValue=node.__es; delete node.__es; } }
+function _walkText(root, fn){
+  if(root.nodeType===3){ fn(root); return; }
+  const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){ return _langSkip(n.parentElement)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT; }});
+  const arr=[]; let n; while(n=tw.nextNode()) arr.push(n); arr.forEach(fn);
+}
+function _trAttrs(root){ if(root.nodeType!==1&&!root.querySelectorAll) return; (root.querySelectorAll?root.querySelectorAll('[placeholder],[title]'):[]).forEach(el=>{ ['placeholder','title'].forEach(a=>{ if(!el.hasAttribute(a))return; const v=el.getAttribute(a), k=v.trim(), rep=T_EN[k]; if(rep!==undefined){ el.__a=el.__a||{}; if(el.__a[a]===undefined) el.__a[a]=v; el.setAttribute(a,v.replace(k,rep)); } }); }); }
+function _unTrAttrs(root){ (root.querySelectorAll?root.querySelectorAll('[placeholder],[title]'):[]).forEach(el=>{ if(el.__a){ Object.keys(el.__a).forEach(a=>el.setAttribute(a,el.__a[a])); delete el.__a; } }); }
+function applyLangTo(node){ if(LANG!=='en') return; if(node.nodeType===3){ if(!_langSkip(node.parentElement)) _trText(node); } else if(node.nodeType===1){ _walkText(node,_trText); _trAttrs(node); } }
+function setLang(l){
+  if(l===LANG){ updateLangUI(); return; }
+  LANG=l; try{localStorage.setItem('acomodo_lang',l);}catch(e){}
+  if(l==='en'){ _walkText(document.body,_trText); _trAttrs(document.body); }
+  else { _walkText(document.body,_unTrText); _unTrAttrs(document.body); }
+  document.documentElement.lang=l;
+  updateLangUI();
+  if(typeof EVENT!=='undefined'&&EVENT){ try{ paintHeader(); setView(currentView()); }catch(e){ console.error(e); } }
+}
+function toggleLang(){ setLang(LANG==='es'?'en':'es'); }
+function updateLangUI(){ const el=document.getElementById('langLbl'); if(el) el.textContent=(LANG==='es'?'English':'Español'); }
+function t(s){ return (LANG==='en'&&T_EN[s]!==undefined)?T_EN[s]:s; }
+function t_cat(s){ return t(s); }
+function currentView(){ const m=document.body.className.match(/view-(\w+)/); return m?m[1]:'dash'; }
+function plural(n,en1,enN,es1,esN){ return LANG==='en'?(n===1?en1:enN):(n===1?es1:esN); }
+function initLang(){
+  try{ LANG=localStorage.getItem('acomodo_lang')||'es'; }catch(e){ LANG='es'; }
+  if(!_langObs){ _langObs=new MutationObserver(ms=>{ if(LANG!=='en') return; ms.forEach(m=>m.addedNodes.forEach(applyLangTo)); }); _langObs.observe(document.body,{childList:true,subtree:true}); }
+  if(LANG==='en'){ _walkText(document.body,_trText); _trAttrs(document.body); document.documentElement.lang='en'; }
+  updateLangUI();
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initLang); else initLang();
+
 /* ---------------- edición en tiempo real (Supabase Realtime) ---------------- */
 let _rtChannel=null, _rtTimer=null, _lastLocalWrite=0, _dragging=false;
 const RT_TABLES=['guests','tables','table_seats','budget_expenses','payments','music_moments','music_si','music_no','itinerary','todos','layout_objects','providers','registry_items','phase_tasks'];
@@ -2968,7 +3029,7 @@ function updateBudgetSummary(){
   set('bPres',fmtMXN(t.pres)); set('bPag',fmtMXN(t.pag)); set('bPagPct',(t.pres>0?pct+'%':''));
   set('bPend',fmtMXN(t.pend)); set('bPendPct',(t.pres>0?pendPct+'%':''));
   const f=document.getElementById('bProgFill'); if(f) f.style.width=Math.max(0,Math.min(100,pct))+'%';
-  const x=document.getElementById('bProgTxt'); if(x) x.textContent='Pagado '+pct+'% del presupuesto';
+  const x=document.getElementById('bProgTxt'); if(x) x.textContent=LANG==='en'?(pct+'% of budget paid'):('Pagado '+pct+'% del presupuesto');
   // dona
   const d=document.getElementById('bDonut');
   if(d){ const C=2*Math.PI*52; d.style.strokeDasharray=C.toFixed(1); d.style.strokeDashoffset=(C*(1-Math.max(0,Math.min(100,pct))/100)).toFixed(1); }
@@ -3220,27 +3281,30 @@ function provIcon(t){ t=(t||'').toLowerCase();
 function renderDash(){
   const setT=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
   // hero
-  setT('dsHello','Hola, '+((EVENT&&EVENT.couple_names)||'bienvenidos'));
-  const WELCOME={exploring:'Explorando ideas y soñando con el gran día. Vayan capturando todo aquí.',engaged:'¡Felicidades por el compromiso! Empecemos a organizar los primeros detalles.',venue_booked:'Con el lugar reservado, es momento de definir proveedores y el acomodo.',invitations_sent:'Invitaciones enviadas: a afinar confirmaciones y últimos detalles.'};
+  const EN=LANG==='en';
+  setT('dsHello',(EN?'Hello, ':'Hola, ')+((EVENT&&EVENT.couple_names)||(EN?'welcome':'bienvenidos')));
+  const WELCOME=EN
+    ?{exploring:'Exploring ideas and dreaming about the big day. Capture everything here.',engaged:'Congrats on the engagement! Let’s start organizing the first details.',venue_booked:'With the venue booked, it’s time to define vendors and the layout.',invitations_sent:'Invitations sent: time to confirm RSVPs and final details.'}
+    :{exploring:'Explorando ideas y soñando con el gran día. Vayan capturando todo aquí.',engaged:'¡Felicidades por el compromiso! Empecemos a organizar los primeros detalles.',venue_booked:'Con el lugar reservado, es momento de definir proveedores y el acomodo.',invitations_sent:'Invitaciones enviadas: a afinar confirmaciones y últimos detalles.'};
   const w=EVENT&&EVENT.planning_stage&&WELCOME[EVENT.planning_stage];
-  setT('dsWelcome',w||'Bienvenidos a su planificador. Aquí organizan cada detalle de su día especial con elegancia y precisión.');
+  setT('dsWelcome',w||(EN?'Welcome to your planner. Organize every detail of your special day with elegance and precision.':'Bienvenidos a su planificador. Aquí organizan cada detalle de su día especial con elegancia y precisión.'));
   // countdown
   const d=daysToEvent();
   if(d===null){ setT('dsDays','—'); setT('dsDaysLbl',''); }
-  else if(d>0){ setT('dsDays',d); setT('dsDaysLbl',d===1?'día':'días'); }
-  else if(d===0){ setT('dsDays','¡Hoy!'); setT('dsDaysLbl',''); }
-  else { setT('dsDays',Math.abs(d)); setT('dsDaysLbl',Math.abs(d)===1?'día atrás':'días atrás'); }
-  setT('dsEventName',(EVENT&&EVENT.couple_names)||'Tu evento');
+  else if(d>0){ setT('dsDays',d); setT('dsDaysLbl',EN?(d===1?'day':'days'):(d===1?'día':'días')); }
+  else if(d===0){ setT('dsDays',EN?'Today!':'¡Hoy!'); setT('dsDaysLbl',''); }
+  else { setT('dsDays',Math.abs(d)); setT('dsDaysLbl',EN?(Math.abs(d)===1?'day ago':'days ago'):(Math.abs(d)===1?'día atrás':'días atrás')); }
+  setT('dsEventName',(EVENT&&EVENT.couple_names)||(EN?'Your event':'Tu evento'));
   // invitados
   const c=invCounts();
   setT('dsGuests',c.total);
-  setT('dsGuestsSub',c.si+' confirmados · '+c.inv+' con invitación');
+  setT('dsGuestsSub',EN?(c.si+' confirmed · '+c.inv+' invited'):(c.si+' confirmados · '+c.inv+' con invitación'));
   // presupuesto
   const t=budgetTotals();
   const pct=t.pres>0?Math.round(t.pag/t.pres*100):0;
   setT('dsBudget',fmtMXN(t.pres));
   const bar=document.getElementById('dsBudgetBar'); if(bar) bar.style.width=Math.max(0,Math.min(100,pct))+'%';
-  setT('dsBudgetSub',fmtMXN(t.pag)+' pagado ('+pct+'%) · '+fmtMXN(t.pend)+' pendiente');
+  setT('dsBudgetSub',EN?(fmtMXN(t.pag)+' paid ('+pct+'%) · '+fmtMXN(t.pend)+' pending'):(fmtMXN(t.pag)+' pagado ('+pct+'%) · '+fmtMXN(t.pend)+' pendiente'));
   // fases de la boda (feed)
   const fz=document.getElementById('dsFases');
   if(fz){
@@ -3295,8 +3359,8 @@ function renderLayoutSummary(){
   const cap=tables.reduce((a,t)=>a+(+t.cap||0),0);
   set('lsumSeated',seated);
   const bar=document.getElementById('lsumBar'); if(bar) bar.style.width=(cap>0?Math.min(100,Math.round(seated/cap*100)):0)+'%';
-  set('lsumSeatedTxt','Ocupados '+seated);
-  set('lsumCapTxt','Lugares '+cap);
+  set('lsumSeatedTxt',(LANG==='en'?'Occupied ':'Ocupados ')+seated);
+  set('lsumCapTxt',(LANG==='en'?'Seats ':'Lugares ')+cap);
   const round=tables.filter(t=>!t.novios&&(t.shape||'round')==='round').length;
   const square=tables.filter(t=>!t.novios&&t.shape==='square').length;
   const novios=tables.filter(t=>t.novios).length;
@@ -3319,27 +3383,28 @@ function renderReporte(){
   set('repTitle',(EVENT.couple_names)||'Evento');
   const hero=document.getElementById('repHero'); if(hero) hero.style.backgroundImage=EVENT.logo_url?('url("'+EVENT.logo_url+'")'):'';
   const badge=document.getElementById('repHeroBadge'); if(badge) badge.textContent=eventDateLabel()||'';
+  const EN=LANG==='en';
   const c=invCounts(); const base=c.inv||c.total||0;
   set('repAtt',c.si); set('repAttMax','/'+base);
-  set('repAttSub',(base>0?Math.round(c.si/base*100):0)+'% de confirmación · '+c.pend+' pendientes');
+  set('repAttSub',(base>0?Math.round(c.si/base*100):0)+(EN?('% confirmed · '+c.pend+' pending'):('% de confirmación · '+c.pend+' pendientes')));
   const t=budgetTotals(); const bpct=t.pres>0?Math.round(t.pag/t.pres*100):0;
-  set('repBud',bpct+'%'); set('repBudSub',fmtMXN(t.pag)+' de '+fmtMXN(t.pres));
+  set('repBud',bpct+'%'); set('repBudSub',fmtMXN(t.pag)+(EN?' of ':' de ')+fmtMXN(t.pres));
   const td=state.todos||[]; const tdone=td.filter(x=>x.done).length; const tpct=td.length?Math.round(tdone/td.length*100):0;
-  set('repTasks',tpct+'%'); set('repTasksSub',tdone+' de '+td.length+' tareas completadas');
+  set('repTasks',tpct+'%'); set('repTasksSub',tdone+(EN?(' of '+td.length+' tasks completed'):(' de '+td.length+' tareas completadas')));
   const box=document.getElementById('repBreak');
   if(box){ box.innerHTML='';
     const groups={}; (state.budget.expenses||[]).forEach(e=>{ const k=e.categoria||'Otros'; (groups[k]=groups[k]||[]).push(e); });
     const keys=Object.keys(groups).sort((a,b)=>{ const ia=EXP_CATS.indexOf(a),ib=EXP_CATS.indexOf(b); return (ia<0?99:ia)-(ib<0?99:ib); });
-    if(!keys.length){ box.innerHTML='<div class="dprov-empty" style="padding:18px">Aún no hay conceptos de presupuesto para desglosar.</div>'; }
+    if(!keys.length){ box.innerHTML='<div class="dprov-empty" style="padding:18px">'+(EN?'No budget items to break down yet.':'Aún no hay conceptos de presupuesto para desglosar.')+'</div>'; }
     else keys.forEach(k=>{
       const items=groups[k];
       const sB=items.reduce((a,e)=>a+(+e.presupuesto||0),0);
       const sP=items.reduce((a,e)=>a+paidOf(e.id),0);
-      let chip='pend',ctxt='Pendiente';
-      if(sB>0&&sP>=sB){ chip='ok'; ctxt='Pagado'; } else if(sP>0){ chip='part'; ctxt='Parcial'; }
+      let chip='pend',ctxt=EN?'Pending':'Pendiente';
+      if(sB>0&&sP>=sB){ chip='ok'; ctxt=EN?'Paid':'Pagado'; } else if(sP>0){ chip='part'; ctxt=EN?'Partial':'Parcial'; }
       const row=document.createElement('div'); row.className='rep-brow';
       row.innerHTML='<div class="rep-brow-l"><div class="rep-brow-ic"><span class="material-symbols-outlined">'+catIcon(k)+'</span></div>'
-        +'<div class="rep-brow-tx"><b>'+escH(k)+'</b><span>'+items.length+' concepto(s) · '+fmtMXN(sP)+' de '+fmtMXN(sB)+'</span></div></div>'
+        +'<div class="rep-brow-tx"><b>'+escH(t_cat(k))+'</b><span>'+items.length+(EN?' item(s) · ':' concepto(s) · ')+fmtMXN(sP)+(EN?' of ':' de ')+fmtMXN(sB)+'</span></div></div>'
         +'<div class="rep-brow-r"><span class="rep-chip '+chip+'">'+ctxt+'</span></div>';
       box.appendChild(row);
     });
@@ -3363,7 +3428,7 @@ function setView(v){
   document.body.classList.add('view-'+v);
   document.querySelectorAll('[data-v]').forEach(b=>b.classList.toggle('active',b.dataset.v===v));
   const subs={dash:'Resumen del evento',invitados:'Invitados',menu:'Menú / Platillos',regalos:'Mesa de regalos',invita:'Diseño de invitación',fases:'Fases de la boda',jardin:'Layout / Acomodo de mesas',budget:'Presupuesto',proveedores:'Proveedores',music:'Formato de música (DJ)',itin:'Itinerario',todo:'Lista de pendientes (To Do)',reporte:'Reporte final para el cliente'};
-  const hSub=document.getElementById('hSub'); if(hSub) hSub.textContent=(subs[v]||'')+' · '+eventDateLabel();
+  const hSub=document.getElementById('hSub'); if(hSub) hSub.textContent=(t(subs[v]||'')||'')+' · '+eventDateLabel();
   if(v==='dash') renderDash();
   if(v==='invitados') renderInvitados();
   if(v==='menu') renderMenu();
@@ -3773,7 +3838,7 @@ function renderInvStats(){
     +card('st-seat','event_seat',seated,'Sentadas')
     +card('st-pool','chair_alt',sinLugar,'Sin lugar')
     +card('st-mesa','table_restaurant',mesas,'Mesas')
-    +card('st-civil','gavel',c.civil,'Civil (Sí)')
+    +card('st-civil','gavel',c.civilPer,'Civil (personas)')
     +'<div class="ist-sep">Desglose de invitados</div>'
     +card('st-ok','check_circle',c.si,'Confirmados')
     +card('st-pend','hourglass_empty',c.pend,'Pendientes')
@@ -3814,7 +3879,9 @@ function renderInvitados(){
   });
   const c=invCounts();
   const el=document.getElementById('invCount');
-  if(el) el.textContent=c.total+' invitados · '+c.inv+' con invitación · '+c.si+' asisten · A '+c.A+' / B '+c.B+' · ●'+c.novio+' novio / ●'+c.novia+' novia';
+  if(el) el.textContent=LANG==='en'
+    ? (c.total+' guests · '+c.inv+' invited · '+c.si+' attending · A '+c.A+' / B '+c.B+' · ●'+c.novio+' groom / ●'+c.novia+' bride')
+    : (c.total+' invitados · '+c.inv+' con invitación · '+c.si+' asisten · A '+c.A+' / B '+c.B+' · ●'+c.novio+' novio / ●'+c.novia+' novia');
   renderInvStats();
   if(_invMode==='cards'){ renderInvCards(q); renderInvQuick(); }
   applyRO();
@@ -3828,7 +3895,7 @@ function setInvMode(m){
   if(cw) cw.style.display=(m==='cards')?'':'none'; if(lw) lw.style.display=(m==='list')?'':'none';
   renderInvitados();
 }
-function tableLabel(t){ return t.novios?'Mesa de novios':('Mesa '+t.num); }
+function tableLabel(t){ return t.novios?(LANG==='en'?'Head table':'Mesa de novios'):((LANG==='en'?'Table ':'Mesa ')+t.num); }
 function mesaOptions(gid){ const t=tableOf(gid); let o='<option value="">— Sin lugar —</option>'; state.tables.forEach(tb=>{ o+='<option value="'+tb.id+'"'+(t&&t.id===tb.id?' selected':'')+'>'+escH(tableLabel(tb))+'</option>'; }); return o; }
 function toggleCivil(id){ const g=guestById(id); if(!g) return; g.civil=!g.civil; mark('guests'); renderInvitados(); }
 function assignFromCard(gid,val){ if(val) assign(gid,val); else unassign(gid); renderInvitados(); }
@@ -3857,13 +3924,14 @@ function renderInvQuick(){
   const box=document.getElementById('invQuick'); if(!box) return;
   box.innerHTML='';
   const pend=state.guests.filter(g=>g.attendance==='si' && !tableOf(g.id));
-  if(!pend.length){ box.innerHTML='<div class="iq-empty">¡Todos los confirmados tienen lugar! 🎉</div>'; return; }
+  const EN=LANG==='en';
+  if(!pend.length){ box.innerHTML='<div class="iq-empty">'+(EN?'All confirmed guests are seated! 🎉':'¡Todos los confirmados tienen lugar! 🎉')+'</div>'; return; }
   pend.forEach(g=>{
     const w=weight(g);
-    let opts='<option value="">Asignar a…</option>';
-    state.tables.forEach(tb=>{ const free=tb.cap-tableLoad(tb); opts+='<option value="'+tb.id+'"'+(free<w?' disabled':'')+'>'+escH(tableLabel(tb))+' ('+free+' libre'+(free===1?'':'s')+')</option>'; });
+    let opts='<option value="">'+(EN?'Assign to…':'Asignar a…')+'</option>';
+    state.tables.forEach(tb=>{ const free=tb.cap-tableLoad(tb); opts+='<option value="'+tb.id+'"'+(free<w?' disabled':'')+'>'+escH(tableLabel(tb))+' ('+free+(EN?(' free'):(' libre'+(free===1?'':'s')))+')</option>'; });
     const it=document.createElement('div'); it.className='iq-item';
-    it.innerHTML='<b>'+escH(g.name)+'</b><span class="iq-sub">'+w+' persona'+(w>1?'s':'')+' · Sin lugar</span><select>'+opts+'</select>';
+    it.innerHTML='<b>'+escH(g.name)+'</b><span class="iq-sub">'+w+(EN?(' person'+(w>1?'s':'')+' · Unseated'):(' persona'+(w>1?'s':'')+' · Sin lugar'))+'</span><select>'+opts+'</select>';
     it.querySelector('select').addEventListener('change',e=>{ if(e.target.value) assignFromCard(g.id,e.target.value); });
     box.appendChild(it);
   });
@@ -3917,7 +3985,9 @@ function paintHeader(){
   if(lg){ if(EVENT&&EVENT.logo_url){ lg.src=EVENT.logo_url; lg.style.display=''; } else { lg.style.display='none'; } }
   const dd=daysToEvent();
   const cd=document.getElementById('countdown');
-  if(cd) cd.textContent = dd===null?'' : (dd>0?('Faltan '+dd+' días'):(dd===0?'¡Hoy es el día!':('Hace '+(-dd)+' días')));
+  if(cd) cd.textContent = dd===null?'' : (LANG==='en'
+      ? (dd>0?(dd+' day'+(dd===1?'':'s')+' to go'):(dd===0?'Today is the day!':((-dd)+' day'+(dd===-1?'':'s')+' ago')))
+      : (dd>0?('Faltan '+dd+' día'+(dd===1?'':'s')):(dd===0?'¡Hoy es el día!':('Hace '+(-dd)+' día'+(dd===-1?'':'s')))));
 }
 
 /* ---------------- login + selector de eventos ---------------- */
