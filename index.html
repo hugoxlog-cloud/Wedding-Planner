@@ -1310,8 +1310,28 @@ body.view-invita .invita{display:block}
 .cat-custom-row{display:flex;gap:8px;margin-top:6px}
 .cat-custom-row input{flex:1}
 /* ===== Layout: panel resumen (mockup Organizer) ===== */
-.lsum{width:270px;flex:0 0 270px;background:#fff;border-left:1px solid var(--line);display:flex;flex-direction:column;overflow:auto}
-.lsum-rail{display:none}
+.lsum{width:270px;flex:0 0 270px;background:#fff;border-left:1px solid var(--line);display:flex;flex-direction:column;overflow:auto;transition:flex-basis .18s,width .18s}
+.lsum-rail{display:none;flex-direction:column;align-items:center;gap:12px;padding:16px 0;cursor:pointer;color:var(--gold-ink);height:100%}
+.lsum-rail .material-symbols-outlined{font-size:22px}
+.lsum-rail .lsum-rail-t{writing-mode:vertical-rl;transform:rotate(180deg);font:700 11px/1 "Manrope",sans-serif;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink-soft)}
+.lsum-rail:hover{background:#fffdf7}
+.lsum-close{position:absolute;top:14px;right:12px;width:28px;height:28px;border:none;background:var(--sage-soft);color:var(--gold-ink);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lsum-close .material-symbols-outlined{font-size:18px}
+.lsum-close:hover{background:var(--gold);color:#3d3100}
+.lsum-head{position:relative}
+body.lsum-collapsed .lsum{flex-basis:44px;width:44px;overflow:hidden}
+body.lsum-collapsed .lsum .lsum-head,body.lsum-collapsed .lsum .lsum-body{display:none}
+body.lsum-collapsed .lsum .lsum-rail{display:flex}
+/* --- menú lateral colapsable --- */
+.sn-toggle{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border:none;background:var(--sage-soft);color:var(--gold-ink);border-radius:11px;cursor:pointer;margin:0 0 14px}
+.sn-toggle:hover{background:var(--gold);color:#3d3100}
+#sidenav{transition:width .18s,padding .18s}
+body.nav-collapsed #sidenav{width:72px;padding:22px 12px}
+body.nav-collapsed #sidenav .sn-brand{display:none}
+body.nav-collapsed #sidenav .sn-toggle{margin-left:auto;margin-right:auto}
+body.nav-collapsed #sidenav .navlink{justify-content:center;gap:0;padding:12px 0;font-size:0;overflow:hidden;white-space:nowrap}
+body.nav-collapsed #sidenav .navlink .material-symbols-outlined{font-size:22px}
+body.nav-collapsed #sidenav .sn-foot .navlink{padding:11px 0}
 .lsum-head{padding:20px 18px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fffdf7,#fff)}
 .lsum-head h2{margin:0;font-size:20px;color:var(--gold-ink);line-height:1.1}
 .lsum-head p{margin:4px 0 0;font-size:12px;color:var(--ink-soft)}
@@ -1671,6 +1691,7 @@ body.view-fases .fases{display:block}
 </div></div>
 <div id="app-shell" style="display:none">
 <nav id="sidenav">
+  <button class="sn-toggle" onclick="toggleNav()" title="Mostrar / ocultar menú" aria-label="Menú"><span class="material-symbols-outlined">menu</span></button>
   <div class="sn-brand"><h1>Planeación de Eventos</h1></div>
   <button class="navlink active" data-v="dash" onclick="setView('dash')"><span class="material-symbols-outlined">dashboard</span>Inicio</button>
   <button class="navlink" data-v="invitados" onclick="setView('invitados')"><span class="material-symbols-outlined">group</span>Invitados</button>
@@ -1704,7 +1725,7 @@ body.view-fases .fases{display:block}
   </div>
   <div class="hz-right">
     <div class="stats">
-      <div class="stat"><b id="stNames">0</b><span>Nombres</span></div>
+      <div class="stat"><b id="stNames">0</b><span>Invitaciones</span></div>
       <div class="stat"><b id="stTotal">0</b><span>Personas</span></div>
       <div class="stat"><b id="stSeated">0</b><span>Sentadas</span></div>
       <div class="stat"><b id="stPool">0</b><span>Sin lugar</span></div>
@@ -1821,8 +1842,8 @@ body.view-fases .fases{display:block}
   </div>
 
   <aside class="lsum" id="lsum">
-    <div class="lsum-rail" onclick="document.getElementById('lsum').classList.toggle('open')"><span class="material-symbols-outlined">insights</span><span class="lsum-rail-t">Resumen</span></div>
-    <div class="lsum-head"><h2 class="serif" id="lsumVenue">Layout</h2><p>Resumen del acomodo</p></div>
+    <div class="lsum-rail" onclick="toggleLsum()" title="Mostrar resumen"><span class="material-symbols-outlined">insights</span><span class="lsum-rail-t">Resumen</span></div>
+    <div class="lsum-head"><button class="lsum-close" onclick="toggleLsum()" title="Ocultar" aria-label="Ocultar resumen"><span class="material-symbols-outlined">chevron_right</span></button><h2 class="serif" id="lsumVenue">Layout</h2><p>Resumen del acomodo</p></div>
     <div class="lsum-body">
       <section class="lsum-sec">
         <h3>Capacidad</h3>
@@ -2307,6 +2328,7 @@ async function flush(){
     if(d.has('todos')) await syncTodos();
     if(d.has('registry')) await syncRegistry();
     if(d.has('phases')) await syncPhases();
+    _lastLocalWrite=Date.now();
     setSaving('Guardado ✓');
     setTimeout(()=>{ if((document.getElementById('saveState')||{}).textContent==='Guardado ✓') setSaving(''); },1500);
   }catch(e){ console.error(e); setSaving('Error al guardar'); }
@@ -2625,9 +2647,10 @@ function applyCanvas(){
   applyZoom();
 }
 function applyZoom(){ const g=document.getElementById('garden'); if(g) g.style.zoom=zoom; const z=document.getElementById('zoomLbl'); if(z) z.textContent=Math.round(zoom*100)+'%'; }
+function fitZoom(){ const wrap=document.querySelector('.garden-wrap'); if(!wrap) return 0.3; const fw=(wrap.clientWidth-24)/(canvasW()||1), fh=(wrap.clientHeight-24)/(canvasH()||1); return Math.max(0.08,Math.min(1,Math.min(fw,fh))); }
 function zoomAt(nz,cx,cy){
   const wrap=document.querySelector('.garden-wrap'); if(!wrap) return;
-  nz=Math.max(0.3,Math.min(2.5,Math.round(nz*100)/100));
+  nz=Math.max(fitZoom(),Math.min(2.5,Math.round(nz*100)/100));
   if(nz===zoom) return;
   const rect=wrap.getBoundingClientRect();
   const px=(cx==null?wrap.clientWidth/2:cx-rect.left);
@@ -2642,8 +2665,68 @@ function zoomBy(d){ zoomAt(zoom+d,null,null); }
 function zoomReset(){ const wrap=document.querySelector('.garden-wrap'); zoom=1; applyZoom(); if(wrap){ wrap.scrollLeft=0; wrap.scrollTop=0; } }
 function toggleLayoutDrawer(){ const b=document.querySelector('.layout-bar'); if(!b) return; const open=b.classList.toggle('lb-open'); document.body.classList.toggle('lb-drawer-open',open); }
 function closeLayoutDrawer(){ const b=document.querySelector('.layout-bar'); if(b) b.classList.remove('lb-open'); document.body.classList.remove('lb-drawer-open'); }
+/* ---------------- menús colapsables ---------------- */
+function toggleNav(){ const on=document.body.classList.toggle('nav-collapsed'); try{localStorage.setItem('acomodo_navcol', on?'1':'0');}catch(e){} }
+function toggleLsum(){ const on=document.body.classList.toggle('lsum-collapsed'); try{localStorage.setItem('acomodo_lsumcol', on?'1':'0');}catch(e){} }
+function initPanelDefaults(){ try{
+  const nv=localStorage.getItem('acomodo_navcol'); if(nv===null||nv==='1') document.body.classList.add('nav-collapsed');
+  const ls=localStorage.getItem('acomodo_lsumcol'); if(ls===null||ls==='1') document.body.classList.add('lsum-collapsed');
+}catch(e){ document.body.classList.add('nav-collapsed'); document.body.classList.add('lsum-collapsed'); } }
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initPanelDefaults); else initPanelDefaults();
+
+/* ---------------- edición en tiempo real (Supabase Realtime) ---------------- */
+let _rtChannel=null, _rtTimer=null, _lastLocalWrite=0, _dragging=false;
+const RT_TABLES=['guests','tables','table_seats','budget_expenses','payments','music_moments','music_si','music_no','itinerary','todos','layout_objects','providers','registry_items','phase_tasks'];
+function subscribeRealtime(){
+  unsubscribeRealtime();
+  if(!EVENT||typeof sb==='undefined'||!sb.channel) return;
+  const eid=EVENT.id;
+  let ch=sb.channel('evt-'+eid);
+  RT_TABLES.forEach(tb=>{ ch=ch.on('postgres_changes',{event:'*',schema:'public',table:tb,filter:'event_id=eq.'+eid},scheduleLiveRefresh); });
+  ch=ch.on('postgres_changes',{event:'UPDATE',schema:'public',table:'events',filter:'id=eq.'+eid},scheduleLiveRefresh);
+  ch.subscribe();
+  _rtChannel=ch;
+}
+function unsubscribeRealtime(){ if(_rtChannel){ try{ sb.removeChannel(_rtChannel); }catch(e){} _rtChannel=null; } clearTimeout(_rtTimer); }
+function scheduleLiveRefresh(){ clearTimeout(_rtTimer); _rtTimer=setTimeout(liveRefresh,500); }
+async function liveRefresh(){
+  if(!EVENT) return;
+  const ae=document.activeElement, typing=ae&&(ae.tagName==='INPUT'||ae.tagName==='TEXTAREA'||ae.isContentEditable);
+  if(_dragging||typing||_dirty.size>0){ scheduleLiveRefresh(); return; } // no pisar edición local en curso
+  if(Date.now()-_lastLocalWrite<1800) return;                            // ignora el eco de mi propio guardado
+  const wrap=document.querySelector('.garden-wrap'); const sx=wrap?wrap.scrollLeft:0, sy=wrap?wrap.scrollTop:0;
+  try{
+    const {data}=await sb.from('events').select('*').eq('id',EVENT.id).maybeSingle();
+    await loadEventIntoState(data||EVENT);
+    rerenderCurrentView();
+    if(wrap){ wrap.scrollLeft=sx; wrap.scrollTop=sy; }
+    setSaving('Actualizado en vivo');
+    setTimeout(()=>{ const el=document.getElementById('saveState'); if(el&&el.textContent==='Actualizado en vivo') setSaving(''); },1200);
+  }catch(e){ console.error('liveRefresh',e); }
+}
+function rerenderCurrentView(){
+  const b=document.body.classList;
+  renderAll();
+  if(b.contains('view-dash')) renderDash();
+  if(b.contains('view-invitados')) renderInvitados();
+  if(b.contains('view-menu')) renderMenu();
+  if(b.contains('view-regalos')) renderRegistry();
+  if(b.contains('view-invita')) renderInvita();
+  if(b.contains('view-fases')) renderFases();
+  if(b.contains('view-jardin')) renderLayoutSummary();
+  if(b.contains('view-budget')) renderBudget();
+  if(b.contains('view-proveedores')) renderProviders();
+  if(b.contains('view-music')) renderMusic();
+  if(b.contains('view-itin')) renderItin();
+  if(b.contains('view-todo')) renderTodos();
+  if(b.contains('view-reporte')) renderReporte();
+}
 function initLayoutGestures(){
   const wrap=document.querySelector('.garden-wrap'); if(!wrap||wrap._gest) return; wrap._gest=true;
+  // marca de arrastre (para no refrescar en vivo mientras mueves algo)
+  wrap.addEventListener('pointerdown',()=>{_dragging=true;},true);
+  window.addEventListener('pointerup',()=>{_dragging=false;},true);
+  window.addEventListener('pointercancel',()=>{_dragging=false;},true);
   const pal=document.querySelector('.lb-palette');
   if(pal) pal.addEventListener('click',(e)=>{ if(window.innerWidth<=1024 && e.target.closest('button')) setTimeout(closeLayoutDrawer,160); });
   // Zoom con Ctrl/⌘ + scroll y con pinch de trackpad (el navegador lo manda como ctrl+wheel)
@@ -3674,7 +3757,7 @@ async function doLogin(){
   await afterLogin();
 }
 async function logout(){ await sb.auth.signOut(); location.reload(); }
-function backToEvents(){ if(_timer){ clearTimeout(_timer); flush(); } document.getElementById('app-shell').style.display='none'; showPicker(); }
+function backToEvents(){ if(_timer){ clearTimeout(_timer); flush(); } unsubscribeRealtime(); document.getElementById('app-shell').style.display='none'; showPicker(); }
 async function afterLogin(){
   const {data:{user}}=await sb.auth.getUser(); ME={id:user.id,email:user.email};
   const p=await sb.from('profiles').select('platform_role').eq('id',ME.id).maybeSingle();
@@ -3724,6 +3807,7 @@ async function openEvent(ev){
   setView('dash');
   const umb=document.querySelector('.um-btn'); if(umb) umb.style.display=canManageUsers()?'':'none';
   document.getElementById('app-shell').style.display='';
+  subscribeRealtime();
 }
 async function deleteEventFull(ev){
   const nm=ev.couple_names||ev.name||'este evento';
