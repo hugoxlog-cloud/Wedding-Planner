@@ -1169,6 +1169,7 @@ body.view-jardin .hz-right .stats{display:flex}
 .istat.st-mesa{border-left:4px solid #8a7a4a} .istat.st-mesa .material-symbols-outlined{color:#8a7a4a}
 .istat.st-solo{border-left:4px solid #7f8b74} .istat.st-solo .material-symbols-outlined{color:#5f6b54}
 .istat.st-acomp{border-left:4px solid var(--gold)} .istat.st-acomp .material-symbols-outlined{color:var(--gold-ink)}
+.istat.st-civil{border-left:4px solid #6f7b95} .istat.st-civil .material-symbols-outlined{color:#54607d}
 .stpill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap}
 .stpill.st-ok{background:#e3f0e6;color:#2f6b41}
 .stpill.st-pend{background:#fbeecb;color:#8a6a1e}
@@ -1953,7 +1954,7 @@ body.view-fases .fases{display:block}
     </div>
     <div class="inv-tablewrap" id="invListWrap" style="display:none">
       <table class="btable inv-table">
-        <thead><tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Estatus</th><th></th></tr></thead>
+        <thead><tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Mesa</th><th>Civil</th><th>Estatus</th><th></th></tr></thead>
         <tbody id="invBody"></tbody>
       </table>
     </div>
@@ -2347,7 +2348,7 @@ async function syncGuests(){
   await syncRows('guests', state.guests.map((g,i)=>({
     id:g.id, event_id:EVENT.id, name:g.name, plus_one:!!g.plusOne,
     side:g.side||null, invitation_sent:!!g.invitation_sent, list:g.list||null,
-    attendance:g.attendance||null, menu_choice:g.menu_choice||'', dietary:g.dietary||'', sort_order:i })));
+    attendance:g.attendance||null, menu_choice:g.menu_choice||'', dietary:g.dietary||'', civil:!!g.civil, sort_order:i })));
 }
 async function syncTables(){
   if(!canEdit('layout')) return;
@@ -2434,7 +2435,7 @@ async function loadEventIntoState(ev){
     sb.from('registry_items').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('phase_tasks').select('*').eq('event_id',eid).order('sort_order')
   ]);
-  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||''}));
+  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||'',civil:!!r.civil}));
   const seatsByTable={}; (s.data||[]).forEach(r=>{ (seatsByTable[r.table_id]=seatsByTable[r.table_id]||[]).push(r.guest_id); });
   state.tables=(t.data||[]).map(r=>({id:r.id,num:r.num,name:r.name,cap:r.cap,shape:r.shape,x:+r.x,y:+r.y,novios:r.is_novios,seats:seatsByTable[r.id]||[]}));
   const paidBy={}; (pay.data||[]).forEach(p=>{ paidBy[p.expense_id]=(paidBy[p.expense_id]||0)+(+p.amount||0); });
@@ -3721,6 +3722,7 @@ function invCounts(){
   return { total:G.length, inv:G.filter(g=>g.invitation_sent).length, si:G.filter(g=>g.attendance==='si').length,
     no:G.filter(g=>g.attendance==='no').length, pend:G.filter(g=>g.invitation_sent&&!g.attendance).length,
     A:G.filter(g=>g.list==='A').length, B:G.filter(g=>g.list==='B').length,
+    civil:G.filter(g=>g.civil).length, civilPer:G.filter(g=>g.civil).reduce((a,g)=>a+weight(g),0),
     novio:G.filter(g=>g.side==='novio').length, novia:G.filter(g=>g.side==='novia').length };
 }
 function guestStatus(g){
@@ -3748,6 +3750,7 @@ function renderInvStats(){
     +card('st-seat','event_seat',seated,'Sentadas')
     +card('st-pool','chair_alt',sinLugar,'Sin lugar')
     +card('st-mesa','table_restaurant',mesas,'Mesas')
+    +card('st-civil','gavel',c.civil,'Civil (Sí)')
     +'<div class="ist-sep">Desglose de invitados</div>'
     +card('st-ok','check_circle',c.si,'Confirmados')
     +card('st-pend','hourglass_empty',c.pend,'Pendientes')
@@ -3769,9 +3772,13 @@ function renderInvitados(){
       +'<td class="c" data-lbl="Invitación"><button class="yn '+(invSent?'yes':'')+'">'+(invSent?'Sí':'No')+'</button></td>'
       +'<td class="c" data-lbl="Lista"><span class="ab"><button class="sd a'+(g.list==='A'?' on':'')+'">A</button><button class="sd b'+(g.list==='B'?' on':'')+'">B</button></span></td>'
       +'<td class="c att" data-lbl="Asistencia">'+(invSent?('<span class="ab"><button class="sd si'+(g.attendance==='si'?' on':'')+'">Sí</button><button class="sd no'+(g.attendance==='no'?' on':'')+'">No</button></span>'):'<span class="muted">—</span>')+'</td>'
+      +'<td class="c" data-lbl="Mesa"><select class="mesa-sel">'+mesaOptions(g.id)+'</select></td>'
+      +'<td class="c" data-lbl="Civil"><button class="yn '+(g.civil?'yes':'')+'">'+(g.civil?'Sí':'No')+'</button></td>'
       +'<td class="c" data-lbl="Estatus">'+statusPill(g)+'</td>'
       +'<td class="c" data-lbl=""><button class="brow-del" title="Eliminar">×</button></td>';
     const cn=tr.querySelector('.cn'); cn.value=g.name; cn.addEventListener('input',e=>{g.name=e.target.value;mark('guests');renderAll();});
+    tr.querySelector('.mesa-sel').addEventListener('change',e=>assignFromCard(g.id,e.target.value));
+    tr.querySelectorAll('.yn')[1].addEventListener('click',()=>toggleCivil(g.id));
     tr.querySelector('.sd.n').addEventListener('click',()=>setSide(g.id,'novio'));
     tr.querySelector('.sd.v').addEventListener('click',()=>setSide(g.id,'novia'));
     tr.querySelector('.pill').addEventListener('click',()=>togglePlusOne(g.id));
@@ -3799,6 +3806,8 @@ function setInvMode(m){
   renderInvitados();
 }
 function tableLabel(t){ return t.novios?'Mesa de novios':('Mesa '+t.num); }
+function mesaOptions(gid){ const t=tableOf(gid); let o='<option value="">— Sin lugar —</option>'; state.tables.forEach(tb=>{ o+='<option value="'+tb.id+'"'+(t&&t.id===tb.id?' selected':'')+'>'+escH(tableLabel(tb))+'</option>'; }); return o; }
+function toggleCivil(id){ const g=guestById(id); if(!g) return; g.civil=!g.civil; mark('guests'); renderInvitados(); }
 function assignFromCard(gid,val){ if(val) assign(gid,val); else unassign(gid); renderInvitados(); }
 function renderInvCards(q){
   const box=document.getElementById('invCards'); if(!box) return;
