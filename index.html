@@ -1596,6 +1596,33 @@ body.view-fases .fases{display:block}
   .aside-collapse:hover{background:var(--gold);color:#3d3100}
   .aside-collapse .material-symbols-outlined{font-size:20px}
 }
+/* ===== Botón de idioma compacto (visible solo en móvil, el sidenav se oculta) ===== */
+.lang-mini{display:none}
+.lang-mini .material-symbols-outlined{font-size:18px}
+.lang-mini #langLblMini{font-weight:700;font-size:12px;margin-left:3px}
+@media(max-width:760px){ .lang-mini{display:inline-flex;align-items:center;gap:2px} }
+/* ===== Teléfono: layout de solo lectura + lista de invitados plegable con toque ===== */
+.layout-ro-note{display:none}
+@media(max-width:760px){
+  /* bloquear edición del acomodo en teléfono */
+  .layout-bar,.layout-fab{display:none!important}
+  body.view-jardin .t-tools{display:none!important}
+  body.view-jardin .chair .x,body.view-jardin .chair .ptog{display:none!important}
+  .garden-hint{display:none!important}
+  body.view-jardin .layout-ro-note{display:flex;align-items:center;gap:8px;position:sticky;top:0;left:0;right:0;z-index:6;
+    background:linear-gradient(180deg,#fff8e6,#f3e6bf);color:#6b5300;border-bottom:1px solid #e0cd93;
+    font:600 12.5px/1.35 "Manrope",sans-serif;padding:9px 14px}
+  .layout-ro-note .material-symbols-outlined{font-size:18px;color:var(--gold-ink)}
+  /* lista de invitados: plegable con toque */
+  .app aside{width:auto}
+  .aside-head{cursor:pointer;position:relative}
+  .aside-collapse{display:inline-flex;position:absolute;top:12px;right:12px;width:32px;height:32px;align-items:center;justify-content:center;border:none;background:var(--sage-soft);color:var(--gold-ink);border-radius:9px;padding:0}
+  .aside-collapse .material-symbols-outlined{font-size:22px;transition:transform .2s}
+  .app aside:not(.open) .aside-collapse .material-symbols-outlined{transform:rotate(-90deg)}
+  .app aside:not(.open) .add-box,
+  .app aside:not(.open) .search,
+  .app aside:not(.open) #pool{display:none}
+}
 
 /* ===== Fases en el feed del Inicio ===== */
 .ds-fases{display:flex;flex-direction:column;gap:12px}
@@ -1834,6 +1861,7 @@ body.view-fases .fases{display:block}
     <span class="tb-itin"><button class="primary" onclick="window.print()"><span class="material-symbols-outlined">picture_as_pdf</span> PDF</button></span>
     <span class="tb-todo"><button class="primary" onclick="window.print()"><span class="material-symbols-outlined">picture_as_pdf</span> PDF</button></span>
     <button class="ghost um-btn" onclick="openUsers()" style="display:none">Usuarios</button>
+    <button class="ghost lang-mini" onclick="toggleLang()" title="Idioma / Language" aria-label="Idioma"><span class="material-symbols-outlined">translate</span><span id="langLblMini">EN</span></button>
     <button class="ghost" onclick="backToEvents()">Eventos</button>
     <button class="ghost" onclick="logout()">Salir</button>
     <button class="ghost tb-extra" onclick="exportJSON()">Guardar archivo</button>
@@ -1900,7 +1928,7 @@ body.view-fases .fases{display:block}
 <div class="app">
   <aside>
     <div class="aside-rail" onclick="toggleGuestPanel(true)" title="Mostrar lista de invitados"><span class="material-symbols-outlined">group</span><span class="aside-rail-t">Lista de invitados</span><span class="material-symbols-outlined aside-rail-chev">chevron_right</span></div>
-    <div class="aside-head"><h2>Lista de invitados</h2><button class="aside-collapse" onclick="toggleGuestPanel(false)" title="Ocultar" aria-label="Ocultar lista"><span class="material-symbols-outlined">chevron_left</span></button></div>
+    <div class="aside-head" onclick="if(isPhone())toggleGuestPanel()"><h2>Lista de invitados</h2><button class="aside-collapse" onclick="event.stopPropagation();toggleGuestPanel()" title="Mostrar / ocultar" aria-label="Mostrar u ocultar lista"><span class="material-symbols-outlined">chevron_left</span></button></div>
     <div class="add-box">
       <textarea id="bulk" placeholder="Pega aquí los nombres (uno por línea)…&#10;Cada uno cuenta con acompañante (2 personas).&#10;Para quien va solo, escribe (solo) al final.&#10;Ej:&#10;María González&#10;Juan Pérez (solo)"></textarea>
       <button class="primary" onclick="addBulk()">Agregar a la lista</button>
@@ -1933,6 +1961,7 @@ body.view-fases .fases{display:block}
     <button onclick="addObj('bathroom')"><span class="material-symbols-outlined">wc</span>Baños</button></div>
 </div>
     <button id="layoutFab" class="layout-fab" onclick="toggleLayoutDrawer()" aria-label="Agregar elemento"><span class="material-symbols-outlined">add</span></button>
+    <div class="layout-ro-note"><span class="material-symbols-outlined">lock</span>Vista de solo lectura. Edita el acomodo desde una tablet o computadora.</div>
     <div id="garden" class="garden">
 
       <div class="garden-hint">Arrastra mesas y objetos · Zoom: Ctrl + scroll (o pellizca en móvil) · ajusta asientos con − / +</div>
@@ -2601,6 +2630,7 @@ function renderStats(){
   document.getElementById("stPool").textContent=headTotal-seated;
   document.getElementById("stTables").textContent=state.tables.length;
 }
+function isPhone(){ return window.matchMedia('(max-width:760px)').matches; }
 function renderPool(){
   const pool=document.getElementById("pool");
   const q=(document.getElementById("filter").value||"").toLowerCase();
@@ -2613,7 +2643,7 @@ function renderPool(){
   unseated.forEach(g=>{
     const el=document.createElement("div");
     el.className="chip"+(selectedGuest===g.id?" selected":"");
-    el.draggable=true; el.dataset.id=g.id;
+    el.draggable=!isPhone(); el.dataset.id=g.id;
     el.innerHTML='<span class="dot"></span><span class="name"></span><button class="pill"></button><button class="x" title="Eliminar">×</button>';
     el.querySelector(".name").textContent=g.name;
     const dot=el.querySelector('.dot'); if(g.side) dot.classList.add('side-'+g.side);
@@ -2626,6 +2656,7 @@ function renderPool(){
     el.addEventListener("dragend",()=>el.classList.remove("dragging"));
     el.addEventListener("click",e=>{
       if(e.target.classList.contains("x")||e.target.classList.contains("pill")) return;
+      if(isPhone()){ toast('Para sentar invitados usa un tablet o computadora, o la pestaña Invitados'); return; }
       selectedGuest = selectedGuest===g.id ? null : g.id;
       renderPool();
       if(selectedGuest) toast("Toca una mesa para sentar a "+g.name);
@@ -2668,7 +2699,7 @@ function renderTables(){
       const o=occ[i];
       if(o && o.role==="main"){
         chair.classList.add("taken");
-        chair.draggable=true; chair.dataset.id=o.gid;
+        chair.draggable=!isPhone(); chair.dataset.id=o.gid;
         chair.innerHTML='<div class="seatpad"><span class="nm"></span><button class="ptog" title="Acompañante sí/no">'+(o.plusOne?"+1":"1")+'</button><button class="x" title="Quitar de la mesa">×</button></div>';
         const nm=chair.querySelector(".nm"); nm.textContent=o.label; nm.title=o.label; if(o.side) nm.classList.add('side-'+o.side);
         chair.querySelector(".ptog").addEventListener("click",e=>{e.stopPropagation();togglePlusOne(o.gid);});
@@ -2705,8 +2736,8 @@ function renderTables(){
     }
     ring.addEventListener("dragover",e=>{e.preventDefault();card.classList.add("dragover")});
     ring.addEventListener("dragleave",()=>card.classList.remove("dragover"));
-    ring.addEventListener("drop",e=>{ e.preventDefault();card.classList.remove("dragover"); const gid=e.dataTransfer.getData("text/plain"); if(gid) assign(gid,t.id); });
-    ring.addEventListener("click",e=>{ if(e.target.closest(".chair.taken")||e.target.closest("button")||e.target.closest("[data-handle]")) return; if(selectedGuest) assign(selectedGuest,t.id); });
+    ring.addEventListener("drop",e=>{ e.preventDefault();card.classList.remove("dragover"); if(isPhone())return; const gid=e.dataTransfer.getData("text/plain"); if(gid) assign(gid,t.id); });
+    ring.addEventListener("click",e=>{ if(isPhone())return; if(e.target.closest(".chair.taken")||e.target.closest("button")||e.target.closest("[data-handle]")) return; if(selectedGuest) assign(selectedGuest,t.id); });
     enableMove(card,t);
     garden.appendChild(card);
   });
@@ -2717,7 +2748,7 @@ function enableMove(card,t){
   handle.addEventListener("pointerdown",e=>{
     if(e.button!==0) return;
     if(e.target.closest("button")||e.target.closest("input")) return;
-    if(!canEdit('layout')) return;
+    if(!canEdit('layout')||isPhone()) return;
     e.preventDefault();
     const startX=e.clientX,startY=e.clientY,ox=t.x,oy=t.y;
     card.classList.add("moving");
@@ -2780,6 +2811,8 @@ function closeLayoutDrawer(){ const b=document.querySelector('.layout-bar'); if(
 /* ---------------- menús colapsables ---------------- */
 function toggleNav(){ const on=document.body.classList.toggle('nav-collapsed'); try{localStorage.setItem('acomodo_navcol', on?'1':'0');}catch(e){} }
 function toggleGuestPanel(force){ const a=document.querySelector('.app aside'); if(!a) return; const open=(force===undefined)?!a.classList.contains('open'):!!force; a.classList.toggle('open',open); try{localStorage.setItem('acomodo_guestpanel',open?'1':'0');}catch(e){} }
+let _rzT=null, _wasPhone=null;
+window.addEventListener('resize',()=>{ clearTimeout(_rzT); _rzT=setTimeout(()=>{ const p=isPhone(); if(p!==_wasPhone){ _wasPhone=p; if(typeof EVENT!=='undefined'&&EVENT&&document.body.classList.contains('view-jardin')) renderAll(); } },250); });
 function toggleLsum(){ const on=document.body.classList.toggle('lsum-collapsed'); try{localStorage.setItem('acomodo_lsumcol', on?'1':'0');}catch(e){} }
 function initPanelDefaults(){ try{
   const nv=localStorage.getItem('acomodo_navcol'); if(nv===null||nv==='1') document.body.classList.add('nav-collapsed');
@@ -2835,7 +2868,7 @@ function setLang(l){
   if(typeof EVENT!=='undefined'&&EVENT){ try{ paintHeader(); setView(currentView()); }catch(e){ console.error(e); } }
 }
 function toggleLang(){ setLang(LANG==='es'?'en':'es'); }
-function updateLangUI(){ const el=document.getElementById('langLbl'); if(el) el.textContent=(LANG==='es'?'English':'Español'); }
+function updateLangUI(){ const el=document.getElementById('langLbl'); if(el) el.textContent=(LANG==='es'?'English':'Español'); const m=document.getElementById('langLblMini'); if(m) m.textContent=(LANG==='es'?'EN':'ES'); }
 function t(s){ return (LANG==='en'&&T_EN[s]!==undefined)?T_EN[s]:s; }
 function t_cat(s){ return t(s); }
 function currentView(){ const m=document.body.className.match(/view-(\w+)/); return m?m[1]:'dash'; }
@@ -2936,7 +2969,7 @@ function addObj(kind){
 function renderObjects(){
   const garden=document.getElementById('garden'); if(!garden) return;
   [...garden.querySelectorAll('.lobj')].forEach(n=>n.remove());
-  const editable=canEdit('layout');
+  const editable=canEdit('layout') && !isPhone();
   (state.objects||[]).forEach(o=>{
     const k=OBJ_KINDS[o.kind]||{icon:''};
     const el=document.createElement('div');
@@ -2962,6 +2995,7 @@ function renderObjects(){
 }
 function startObjDrag(e,o,el){
   if(e.button!==undefined && e.button!==0) return;
+  if(isPhone()) return;
   e.preventDefault();
   try{ el.setPointerCapture(e.pointerId); }catch(_){}
   const sx=e.clientX,sy=e.clientY,ox=o.x,oy=o.y;
