@@ -2521,7 +2521,7 @@ function uid(){ return crypto.randomUUID(); }
 function guestById(id){ return state.guests.find(g=>g.id===id); }
 function tableOf(id){ return state.tables.find(t=>t.seats.includes(id)); }
 function isSeated(id){ return !!tableOf(id); }
-function weight(g){ return g && g.plusOne ? 2 : 1; }
+function weight(g){ return g ? (g.plusOne?2:1) : 0; }
 function tableLoad(t){ return t.seats.reduce((s,id)=>{const g=guestById(id);return s+weight(g);},0); }
 function toast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove("show"),1800); }
 
@@ -2903,8 +2903,10 @@ async function liveRefresh(){
   if(Date.now()-_lastLocalWrite<2500) return;                            // ignora el eco de mi propio guardado
   const wrap=document.querySelector('.garden-wrap'); const sx=wrap?wrap.scrollLeft:0, sy=wrap?wrap.scrollTop:0;
   try{
+    const keepCats=(state.shownCats||[]).slice();   // categorías integradas sin conceptos (solo cliente)
     const {data}=await sb.from('events').select('*').eq('id',EVENT.id).maybeSingle();
     await loadEventIntoState(data||EVENT);
+    state.shownCats=keepCats;
     rerenderCurrentView();
     if(wrap){ wrap.scrollLeft=sx; wrap.scrollTop=sy; }
     setSaving('Actualizado en vivo');
