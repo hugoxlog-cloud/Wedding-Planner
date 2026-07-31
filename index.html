@@ -1576,19 +1576,25 @@ body.view-fases .fases{display:block}
 .fases-empty button{margin-top:12px;display:inline-flex;align-items:center;gap:6px}
 @media(max-width:760px){ .fases-inner{padding:16px 14px 84px} }
 
-/* ===== Panel de invitados colapsable (Layout) — se despliega al pasar el apuntador ===== */
+/* ===== Panel de invitados colapsable (Layout) — se abre/cierra con click ===== */
 .aside-rail{display:none}
-@media (hover:hover) and (min-width:761px){
+.aside-collapse{display:none}
+@media (min-width:761px){
   .app aside{width:56px;transition:width .24s cubic-bezier(.4,0,.2,1);overflow:hidden;position:relative;z-index:5}
-  .app aside:hover{width:300px;box-shadow:12px 0 30px rgba(51,51,51,.10)}
+  .app aside.open{width:300px;box-shadow:12px 0 30px rgba(51,51,51,.10)}
   .app aside .aside-rail{
     display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:14px;
     position:absolute;inset:0;z-index:3;background:#fff;padding-top:18px;cursor:pointer;
   }
-  .app aside:hover .aside-rail{display:none}
+  .app aside.open .aside-rail{display:none}
   .aside-rail .material-symbols-outlined{color:var(--gold-ink);font-size:24px}
   .aside-rail .aside-rail-chev{color:var(--ink-soft);font-size:20px;margin-top:auto;margin-bottom:14px}
   .aside-rail .aside-rail-t{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:12px;color:var(--ink-soft);white-space:nowrap}
+  .app aside.open .aside-collapse{display:inline-flex}
+  .aside-head{position:relative}
+  .aside-collapse{position:absolute;top:14px;right:12px;width:30px;height:30px;align-items:center;justify-content:center;border:none;background:var(--sage-soft);color:var(--gold-ink);border-radius:9px;cursor:pointer;padding:0}
+  .aside-collapse:hover{background:var(--gold);color:#3d3100}
+  .aside-collapse .material-symbols-outlined{font-size:20px}
 }
 
 /* ===== Fases en el feed del Inicio ===== */
@@ -1893,8 +1899,8 @@ body.view-fases .fases{display:block}
 
 <div class="app">
   <aside>
-    <div class="aside-rail"><span class="material-symbols-outlined">group</span><span class="aside-rail-t">Lista de invitados</span><span class="material-symbols-outlined aside-rail-chev">chevron_right</span></div>
-    <div class="aside-head"><h2>Lista de invitados</h2></div>
+    <div class="aside-rail" onclick="toggleGuestPanel(true)" title="Mostrar lista de invitados"><span class="material-symbols-outlined">group</span><span class="aside-rail-t">Lista de invitados</span><span class="material-symbols-outlined aside-rail-chev">chevron_right</span></div>
+    <div class="aside-head"><h2>Lista de invitados</h2><button class="aside-collapse" onclick="toggleGuestPanel(false)" title="Ocultar" aria-label="Ocultar lista"><span class="material-symbols-outlined">chevron_left</span></button></div>
     <div class="add-box">
       <textarea id="bulk" placeholder="Pega aquí los nombres (uno por línea)…&#10;Cada uno cuenta con acompañante (2 personas).&#10;Para quien va solo, escribe (solo) al final.&#10;Ej:&#10;María González&#10;Juan Pérez (solo)"></textarea>
       <button class="primary" onclick="addBulk()">Agregar a la lista</button>
@@ -2418,6 +2424,8 @@ async function syncPhases(){
 }
 async function flush(){
   if(!EVENT) return;
+  if(_flushing){ clearTimeout(_timer); _timer=setTimeout(flush,250); return; } // no solapar guardados
+  _flushing=true; _lastLocalWrite=Date.now();            // bloquea liveRefresh durante toda la escritura
   const d=_dirty; _dirty=new Set();
   try{
     if(d.has('guests')) await syncGuests();
@@ -2432,10 +2440,10 @@ async function flush(){
     if(d.has('todos')) await syncTodos();
     if(d.has('registry')) await syncRegistry();
     if(d.has('phases')) await syncPhases();
-    _lastLocalWrite=Date.now();
     setSaving('Guardado ✓');
     setTimeout(()=>{ if((document.getElementById('saveState')||{}).textContent==='Guardado ✓') setSaving(''); },1500);
   }catch(e){ console.error(e); setSaving('Error al guardar'); }
+  finally{ _lastLocalWrite=Date.now(); _flushing=false; }
 }
 // alias por compatibilidad (mover mesa, etc.)
 function save(){ mark('tables','seats'); }
@@ -2771,10 +2779,12 @@ function toggleLayoutDrawer(){ const b=document.querySelector('.layout-bar'); if
 function closeLayoutDrawer(){ const b=document.querySelector('.layout-bar'); if(b) b.classList.remove('lb-open'); document.body.classList.remove('lb-drawer-open'); }
 /* ---------------- menús colapsables ---------------- */
 function toggleNav(){ const on=document.body.classList.toggle('nav-collapsed'); try{localStorage.setItem('acomodo_navcol', on?'1':'0');}catch(e){} }
+function toggleGuestPanel(force){ const a=document.querySelector('.app aside'); if(!a) return; const open=(force===undefined)?!a.classList.contains('open'):!!force; a.classList.toggle('open',open); try{localStorage.setItem('acomodo_guestpanel',open?'1':'0');}catch(e){} }
 function toggleLsum(){ const on=document.body.classList.toggle('lsum-collapsed'); try{localStorage.setItem('acomodo_lsumcol', on?'1':'0');}catch(e){} }
 function initPanelDefaults(){ try{
   const nv=localStorage.getItem('acomodo_navcol'); if(nv===null||nv==='1') document.body.classList.add('nav-collapsed');
   const ls=localStorage.getItem('acomodo_lsumcol'); if(ls===null||ls==='1') document.body.classList.add('lsum-collapsed');
+  const gp=localStorage.getItem('acomodo_guestpanel'); const a=document.querySelector('.app aside'); if(a && gp!=='0') a.classList.add('open');
 }catch(e){ document.body.classList.add('nav-collapsed'); document.body.classList.add('lsum-collapsed'); } }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initPanelDefaults); else initPanelDefaults();
 
@@ -2839,7 +2849,7 @@ function initLang(){
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initLang); else initLang();
 
 /* ---------------- edición en tiempo real (Supabase Realtime) ---------------- */
-let _rtChannel=null, _rtTimer=null, _lastLocalWrite=0, _dragging=false;
+let _rtChannel=null, _rtTimer=null, _lastLocalWrite=0, _dragging=false, _flushing=false;
 const RT_TABLES=['guests','tables','table_seats','budget_expenses','payments','music_moments','music_si','music_no','itinerary','todos','layout_objects','providers','registry_items','phase_tasks'];
 function subscribeRealtime(){
   unsubscribeRealtime();
@@ -2856,8 +2866,8 @@ function scheduleLiveRefresh(){ clearTimeout(_rtTimer); _rtTimer=setTimeout(live
 async function liveRefresh(){
   if(!EVENT) return;
   const ae=document.activeElement, typing=ae&&(ae.tagName==='INPUT'||ae.tagName==='TEXTAREA'||ae.isContentEditable);
-  if(_dragging||typing||_dirty.size>0){ scheduleLiveRefresh(); return; } // no pisar edición local en curso
-  if(Date.now()-_lastLocalWrite<1800) return;                            // ignora el eco de mi propio guardado
+  if(_dragging||typing||_dirty.size>0||_flushing){ scheduleLiveRefresh(); return; } // no pisar edición/guardado local en curso
+  if(Date.now()-_lastLocalWrite<2500) return;                            // ignora el eco de mi propio guardado
   const wrap=document.querySelector('.garden-wrap'); const sx=wrap?wrap.scrollLeft:0, sy=wrap?wrap.scrollTop:0;
   try{
     const {data}=await sb.from('events').select('*').eq('id',EVENT.id).maybeSingle();
