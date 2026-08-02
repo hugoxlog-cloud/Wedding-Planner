@@ -1475,7 +1475,9 @@ body.view-reporte .app,body.view-reporte .dash{display:none}
 @media(min-width:761px){
   .inv-tablewrap{overflow-x:visible}
   .inv-table{table-layout:fixed;width:100%}
-  .inv-table th,.inv-table td{padding:6px 7px;font-size:12.5px;overflow:hidden}
+  .inv-table th,.inv-table td{padding:6px 6px;overflow:hidden}
+  .inv-table td{font-size:12.5px}
+  .inv-table th{font-size:10.5px;letter-spacing:.01em;white-space:nowrap;padding:8px 5px}
   .inv-table td.inv-nm{min-width:0}
   .inv-table .cn{padding:5px 7px;font-size:12.5px}
   .inv-table td.c{white-space:normal;text-overflow:ellipsis}
@@ -1483,18 +1485,18 @@ body.view-reporte .app,body.view-reporte .dash{display:none}
   .inv-table .sd,.inv-table .yn,.inv-table .pill{padding:4px 7px;font-size:11px}
   .inv-table .mesa-sel{width:100%;max-width:100%;padding:4px;font-size:11.5px}
   .inv-table .stpill{font-size:10px;padding:3px 6px;white-space:normal}
-  .inv-table th:nth-child(1),.inv-table td:nth-child(1){width:15%}
+  .inv-table th:nth-child(1),.inv-table td:nth-child(1){width:13%}
   .inv-table th:nth-child(2),.inv-table td:nth-child(2){width:8%}
-  .inv-table th:nth-child(3),.inv-table td:nth-child(3){width:7%}
-  .inv-table th:nth-child(4),.inv-table td:nth-child(4){width:6%}
-  .inv-table th:nth-child(5),.inv-table td:nth-child(5){width:6%}
+  .inv-table th:nth-child(3),.inv-table td:nth-child(3){width:8%}
+  .inv-table th:nth-child(4),.inv-table td:nth-child(4){width:7%}
+  .inv-table th:nth-child(5),.inv-table td:nth-child(5){width:7%}
   .inv-table th:nth-child(6),.inv-table td:nth-child(6){width:8%}
-  .inv-table th:nth-child(7),.inv-table td:nth-child(7){width:10%}
-  .inv-table th:nth-child(8),.inv-table td:nth-child(8){width:6%}
-  .inv-table th:nth-child(9),.inv-table td:nth-child(9){width:6%}
-  .inv-table th:nth-child(10),.inv-table td:nth-child(10){width:8%}
-  .inv-table th:nth-child(11),.inv-table td:nth-child(11){width:14%}
-  .inv-table th:nth-child(12),.inv-table td:nth-child(12){width:6%}
+  .inv-table th:nth-child(7),.inv-table td:nth-child(7){width:9%}
+  .inv-table th:nth-child(8),.inv-table td:nth-child(8){width:7%}
+  .inv-table th:nth-child(9),.inv-table td:nth-child(9){width:7%}
+  .inv-table th:nth-child(10),.inv-table td:nth-child(10){width:9%}
+  .inv-table th:nth-child(11),.inv-table td:nth-child(11){width:12%}
+  .inv-table th:nth-child(12),.inv-table td:nth-child(12){width:5%}
 }
 @media(max-width:860px){ .invita-inner{grid-template-columns:1fr} .invita-tools{position:static} }
 
@@ -1770,8 +1772,10 @@ body.no-money #budgetWP{display:block}
 .itin .btable textarea:focus{outline:none;border-color:var(--sage);background:var(--paper)}
 
 /* filtros interactivos de invitados */
-.inv-filter-row th{background:var(--paper);padding:8px 5px;border-top:1px solid var(--line);vertical-align:middle}
-.fcol{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:7px 8px;font-family:inherit;font-size:12.5px;line-height:1.35;background:#fff;color:var(--ink);min-height:32px}
+.inv-filter-row th{background:var(--paper);padding:7px 4px;border-top:1px solid var(--line);vertical-align:middle}
+.fcol{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;padding:6px 19px 6px 8px;font-family:inherit;font-size:11px;line-height:1.3;background:#fff;color:var(--ink);min-height:30px;text-overflow:ellipsis;
+  -webkit-appearance:none;-moz-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%23999' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;background-size:9px 6px}
 .fclear{border:1px solid var(--line);background:#fff;color:var(--ink-soft);border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:16px;line-height:1;padding:0}
 .fclear:hover{color:var(--full);border-color:var(--full)}
 .istat.clickable{cursor:pointer}
@@ -1804,8 +1808,8 @@ body.no-money #budgetWP{display:block}
 /* tablet: la tabla de invitados puede desplazarse si no cabe */
 @media (min-width:761px) and (max-width:1024px){
   .inv-tablewrap{overflow-x:auto}
-  .inv-table{min-width:960px}
-  .fcol{font-size:12px;padding:6px 7px}
+  .inv-table{min-width:980px}
+  .fcol{font-size:11.5px}
 }
 
 </style>
@@ -2164,7 +2168,7 @@ body.no-money #budgetWP{display:block}
     <div class="inv-tablewrap" id="invListWrap" style="display:none">
       <table class="btable inv-table">
         <thead>
-          <tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Mesa</th><th>Civil</th><th>Hotel</th><th>Estatus</th><th>Teléfono</th><th></th></tr>
+          <tr><th>Nombre</th><th>Lado</th><th>Acomp.</th><th>Invit.</th><th>Lista</th><th>Asist.</th><th>Mesa</th><th>Civil</th><th>Hotel</th><th>Estatus</th><th>Tel.</th><th></th></tr>
           <tr class="inv-filter-row">
             <th class="fnamecol"></th>
             <th><select class="fcol" onchange="setInvFilter('side',this.value)"><option value="">Lado</option><option value="novio">Novio</option><option value="novia">Novia</option></select></th>
@@ -3041,7 +3045,7 @@ const T_EN={
 "Estatus de invitados":"Guest status","Por confirmar":"To confirm","personas":"people","Pendientes por completar":"Tasks to complete","Ver To-Do":"View To-Do","Avance de pago":"Payment progress","Wedding Planner":"Wedding Planner","Planner":"Planner",
 "Dinámica":"Activity","Entró":"Arrived","Ya entró":"Checked in","Último minuto":"Last minute","+ Último minuto":"+ Last minute","Nombre del invitado":"Guest name","Confirmación":"Confirmation",
 "Pagar en":"Pay on","¿Cuándo se paga?":"When is it paid?","Día del evento":"Event day","1 semana antes":"1 week before","1 mes antes":"1 month before","Por pagar el día del evento":"To pay on event day","Marca como pagado cada concepto al liquidarlo el día del evento.":"Check each item as paid when settled on the event day.","Sin conceptos por pagar el día del evento.":"No items to pay on the event day.","Personas":"People",
-"Teléfono":"Phone","Todos":"All","Sin coincidencias con el filtro.":"No matches for the filter.","Limpiar filtros":"Clear filters","Llamar":"Call","Hotel":"Hotel"
+"Teléfono":"Phone","Todos":"All","Sin coincidencias con el filtro.":"No matches for the filter.","Limpiar filtros":"Clear filters","Llamar":"Call","Hotel":"Hotel","Acomp.":"Comp.","Invit.":"Invite","Asist.":"RSVP","Tel.":"Phone"
 };
 let LANG='es', _langObs=null;
 function _langSkip(el){ return el && (el.tagName==='SCRIPT'||el.tagName==='STYLE'||(el.classList&&el.classList.contains('material-symbols-outlined'))); }
