@@ -1048,6 +1048,63 @@ body.view-dash .dash{display:block}
 .wiz-next,.wiz-create{width:auto!important;padding:12px 26px!important}
 @media(max-width:520px){ .wiz-svcs{grid-template-columns:repeat(2,1fr)} .ne-wizard{max-width:100%} }
 
+/* ============ Momentum · rediseño "Personaliza tu evento" ============ */
+#neModal{background:rgba(30,26,20,.55);backdrop-filter:blur(8px)}
+#neModal .card.ne-wizard{
+  position:relative;max-width:600px;padding:38px 44px 34px;
+  background:linear-gradient(135deg,#FDFCF9 0%,#EBE7DC 100%);
+  border:1px solid rgba(255,255,255,.6);border-radius:40px;
+  box-shadow:0 30px 60px -15px rgba(0,0,0,.30);
+  overflow-x:hidden;overflow-y:auto;
+}
+.wiz-wm-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;border-radius:40px}
+.wiz-wm{position:absolute;font-family:"Libre Caslon Text",Georgia,serif;font-weight:700;line-height:.8;
+  color:rgba(184,160,120,.09);letter-spacing:-2px;white-space:nowrap;text-transform:uppercase}
+.wiz-wm.a{top:-24px;right:-40px;font-size:150px}
+.wiz-wm.b{bottom:-60px;left:-70px;font-size:150px;transform:rotate(90deg);transform-origin:left bottom}
+#neModal .wiz-top,#neModal #neForm{position:relative;z-index:1}
+#neModal .wiz-top h1{font-family:"Libre Caslon Text",Georgia,serif;font-size:19px;font-weight:700;color:#9a8a5f;letter-spacing:.02em;margin:0}
+#neModal .wiz-x{color:#b3a884}
+#neModal .wiz-x:hover{color:#4A4A4A}
+.wiz-bar{position:relative;z-index:1;height:14px;border-radius:999px;background:#E6E1D4;overflow:hidden;margin:14px 0 26px;box-shadow:inset 0 1px 3px rgba(0,0,0,.14)}
+.wiz-bar-fill{height:100%;border-radius:999px;transition:width .4s cubic-bezier(.4,0,.2,1);
+  background:linear-gradient(90deg,#a67c00 0%,#bf953f 20%,#fcf6ba 40%,#b38728 60%,#fbf5b7 80%,#aa771c 100%);
+  box-shadow:inset 0 2px 4px rgba(255,255,255,.6),inset 0 -2px 4px rgba(0,0,0,.28),0 2px 5px rgba(0,0,0,.18)}
+#neModal .wiz-q{font-family:"Libre Caslon Text",Georgia,serif;font-size:33px;font-weight:700;color:#4A4A4A;line-height:1.08;margin:0 0 8px}
+#neModal .wiz-sub{color:#7c7566;font-size:16.5px;margin:0 0 26px}
+#neModal .ne-lbl{display:block;color:#8a8172;font-size:15px;margin:2px 0 8px}
+#neModal input[type=text],#neModal input[type=date]{
+  width:100%;height:58px;padding:0 20px;border-radius:18px;border:none;color:#5b564c;font-size:17px;font-family:inherit;
+  background:#F0EDE4;box-shadow:inset 5px 5px 10px #dcd8ce,inset -5px -5px 10px #ffffff;margin-bottom:18px}
+#neModal input[type=text]::placeholder{color:#b3ac9e}
+#neModal input[type=text]:focus,#neModal input[type=date]:focus{outline:none;
+  box-shadow:inset 4px 4px 8px #dcd8ce,inset -4px -4px 8px #ffffff,0 0 0 2px rgba(197,160,89,.55)}
+#neModal .ne-wizard select{
+  width:100%;height:58px;padding:0 46px 0 20px;border-radius:18px;font-size:17px;color:#5b564c;font-family:inherit;cursor:pointer;margin-bottom:18px;
+  background:rgba(255,255,255,.55);border:1.5px solid #D4AF37;
+  -webkit-appearance:none;-moz-appearance:none;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath fill='none' stroke='%234A4A4A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M1 1l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 18px center;background-size:14px 9px;
+  box-shadow:0 4px 15px rgba(212,175,55,.15)}
+#neModal .ne-wizard select:focus{outline:none;border-color:#C5A059;box-shadow:0 0 0 2px rgba(197,160,89,.35)}
+#neModal input[type=file]{width:100%;font-size:14px;color:#7c7566;margin-bottom:6px}
+#neModal .wiz-opt,#neModal .wiz-svc{background:rgba(255,255,255,.6);border-radius:18px}
+#neModal .wiz-opt.sel{background:rgba(197,160,89,.16);border-color:#C5A059}
+#neModal .wiz-svc.sel{background:linear-gradient(180deg,#d4af37,#b9932e);border-color:#C5A059;color:#3d3100}
+.wiz-actions{margin-top:30px}
+#neModal .ne-wizard .go{border:none;color:#fff;font-weight:600;font-size:18px;padding:15px 40px!important;border-radius:999px;cursor:pointer;
+  background:linear-gradient(180deg,#d4af37 0%,#997a15 100%);
+  box-shadow:0 10px 24px -6px rgba(170,138,46,.6),0 0 18px rgba(212,175,55,.35);transition:transform .2s,box-shadow .2s}
+#neModal .ne-wizard .go:hover{transform:translateY(-1px);box-shadow:0 14px 28px -6px rgba(170,138,46,.72),0 0 24px rgba(212,175,55,.5)}
+#neModal .wiz-back{background:rgba(255,255,255,.55);border:1px solid #D9D2C4;color:#8a8172;border-radius:999px;padding:13px 26px}
+#neModal .wiz-back:hover{border-color:#C5A059;color:#4A4A4A}
+@media(max-width:520px){
+  #neModal .card.ne-wizard{padding:28px 22px;border-radius:30px}
+  .wiz-wm-layer{border-radius:30px}
+  #neModal .wiz-q{font-size:27px}
+  #neModal input[type=text],#neModal input[type=date],#neModal select{height:54px;font-size:16px}
+}
+
 /* ============================================================
    PRESUPUESTO: dona + resumen bento + categorías
    ============================================================ */
@@ -1900,11 +1957,12 @@ body.no-money #budgetWP{display:block}
   </div>
 </div></div>
 <div id="neModal"><div class="card ne-wizard">
+  <div class="wiz-wm-layer" aria-hidden="true"><span class="wiz-wm a">Momentum</span><span class="wiz-wm b">Momentum</span></div>
   <div class="wiz-top">
     <h1 id="wizTitle">Nuevo evento</h1>
     <button type="button" class="wiz-x" onclick="closeNewEvent()" title="Cerrar">×</button>
   </div>
-  <div class="wiz-prog"><span class="wp on" data-s="1"></span><span class="wp" data-s="2"></span><span class="wp" data-s="3"></span><span class="wp" data-s="4"></span></div>
+  <div class="wiz-bar"><div class="wiz-bar-fill" id="wizBarFill" style="width:25%"></div></div>
   <form id="neForm" onsubmit="submitNewEvent(event)">
     <div class="wiz-step active" data-step="1">
       <h2 class="serif wiz-q">Comencemos a conocernos</h2>
@@ -4567,7 +4625,7 @@ let wizStep=1;
 function wizShow(n){
   wizStep=n;
   document.querySelectorAll('#neForm .wiz-step').forEach(s=>s.classList.toggle('active',+s.dataset.step===n));
-  document.querySelectorAll('#neModal .wp').forEach(p=>p.classList.toggle('on',+p.dataset.s<=n));
+  const bf=document.getElementById('wizBarFill'); if(bf) bf.style.width=Math.round(n/4*100)+'%';
   const back=document.getElementById('wizBackBtn'); if(back) back.style.visibility=n>1?'visible':'hidden';
   const next=document.getElementById('wizNextBtn'), create=document.getElementById('wizCreateBtn');
   if(next&&create){ const last=n>=4; next.style.display=last?'none':''; create.style.display=last?'':'none'; }
