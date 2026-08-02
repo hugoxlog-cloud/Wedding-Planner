@@ -1483,16 +1483,17 @@ body.view-reporte .app,body.view-reporte .dash{display:none}
   .inv-table .sd,.inv-table .yn,.inv-table .pill{padding:4px 7px;font-size:11px}
   .inv-table .mesa-sel{width:100%;max-width:100%;padding:4px;font-size:11.5px}
   .inv-table .stpill{font-size:10px;padding:3px 6px;white-space:normal}
-  .inv-table th:nth-child(1),.inv-table td:nth-child(1){width:19%}
+  .inv-table th:nth-child(1),.inv-table td:nth-child(1){width:16%}
   .inv-table th:nth-child(2),.inv-table td:nth-child(2){width:9%}
-  .inv-table th:nth-child(3),.inv-table td:nth-child(3){width:9%}
-  .inv-table th:nth-child(4),.inv-table td:nth-child(4){width:7%}
-  .inv-table th:nth-child(5),.inv-table td:nth-child(5){width:7%}
+  .inv-table th:nth-child(3),.inv-table td:nth-child(3){width:8%}
+  .inv-table th:nth-child(4),.inv-table td:nth-child(4){width:6%}
+  .inv-table th:nth-child(5),.inv-table td:nth-child(5){width:6%}
   .inv-table th:nth-child(6),.inv-table td:nth-child(6){width:9%}
-  .inv-table th:nth-child(7),.inv-table td:nth-child(7){width:13%}
-  .inv-table th:nth-child(8),.inv-table td:nth-child(8){width:7%}
-  .inv-table th:nth-child(9),.inv-table td:nth-child(9){width:11%}
-  .inv-table th:nth-child(10),.inv-table td:nth-child(10){width:5%}
+  .inv-table th:nth-child(7),.inv-table td:nth-child(7){width:11%}
+  .inv-table th:nth-child(8),.inv-table td:nth-child(8){width:6%}
+  .inv-table th:nth-child(9),.inv-table td:nth-child(9){width:9%}
+  .inv-table th:nth-child(10),.inv-table td:nth-child(10){width:15%}
+  .inv-table th:nth-child(11),.inv-table td:nth-child(11){width:5%}
 }
 @media(max-width:860px){ .invita-inner{grid-template-columns:1fr} .invita-tools{position:static} }
 
@@ -1766,6 +1767,45 @@ body.no-money #budgetWP{display:block}
 .itin .btable textarea{width:100%;border:1px solid transparent;border-radius:6px;padding:6px 8px;background:transparent;color:var(--ink);font-family:inherit;font-size:14px;resize:none;overflow:hidden;min-height:34px;line-height:1.4;box-sizing:border-box}
 .itin .btable textarea:hover{border-color:var(--line)}
 .itin .btable textarea:focus{outline:none;border-color:var(--sage);background:var(--paper)}
+
+/* filtros interactivos de invitados */
+.inv-filter-row th{background:var(--paper);padding:5px 6px;border-top:1px solid var(--line)}
+.fcol{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:7px;padding:5px 6px;font-family:inherit;font-size:11.5px;background:#fff;color:var(--ink)}
+.fclear{border:1px solid var(--line);background:#fff;color:var(--ink-soft);border-radius:7px;width:26px;height:26px;cursor:pointer;font-size:15px;line-height:1;padding:0}
+.fclear:hover{color:var(--full);border-color:var(--full)}
+.istat.clickable{cursor:pointer}
+.istat.clickable:hover{border-color:var(--gold);box-shadow:var(--shadow)}
+.istat.active{background:var(--gold);border-color:var(--gold)}
+.istat.active b,.istat.active span,.istat.active .material-symbols-outlined{color:#3d3100}
+
+/* celda de teléfono con botón de llamada */
+.tel-cell{display:inline-flex;align-items:center;gap:5px;width:100%}
+.tel-in{min-width:0;flex:1}
+.tel-call{flex:none;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:1px solid var(--line);color:#c3bcae;text-decoration:none;pointer-events:none}
+.tel-call.has{color:#fff;background:var(--ok);border-color:var(--ok);pointer-events:auto}
+.tel-call .material-symbols-outlined{font-size:17px}
+
+/* tabla WP responsiva en teléfono (tarjetas) */
+@media (max-width:760px){
+  .inv-wp-table thead{display:none}
+  .inv-wp-table,.inv-wp-table tbody,.inv-wp-table tr,.inv-wp-table td{display:block;width:100%;box-sizing:border-box}
+  .inv-wp-table tr{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;padding:6px 12px;background:var(--white)}
+  .inv-wp-table td{display:flex;justify-content:space-between;align-items:center;gap:10px;border:0;padding:8px 2px}
+  .inv-wp-table td::before{content:attr(data-lbl);font-size:11px;text-transform:uppercase;letter-spacing:.03em;color:#8a7d84;font-weight:700}
+  .inv-wp-table td.inv-nm{display:block}
+  .inv-wp-table td.inv-nm::before{display:block;margin-bottom:5px}
+  .inv-wp-tools{flex-direction:column;align-items:stretch}
+  .inv-wp-add{width:100%}
+  .inv-wp-add input{flex:1}
+  .dstat-cd .dstat-big b{font-size:52px}
+  .dstat-break{gap:6px}
+}
+/* tablet: la tabla de invitados puede desplazarse si no cabe */
+@media (min-width:761px) and (max-width:1024px){
+  .inv-tablewrap{overflow-x:auto}
+  .inv-table{min-width:820px}
+  .fcol{font-size:11px;padding:4px 5px}
+}
 
 </style>
 </head>
@@ -2122,7 +2162,22 @@ body.no-money #budgetWP{display:block}
     </div>
     <div class="inv-tablewrap" id="invListWrap" style="display:none">
       <table class="btable inv-table">
-        <thead><tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Mesa</th><th>Civil</th><th>Estatus</th><th></th></tr></thead>
+        <thead>
+          <tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Mesa</th><th>Civil</th><th>Estatus</th><th>Teléfono</th><th></th></tr>
+          <tr class="inv-filter-row">
+            <th class="fnamecol"></th>
+            <th><select class="fcol" onchange="setInvFilter('side',this.value)"><option value="">Lado</option><option value="novio">Novio</option><option value="novia">Novia</option></select></th>
+            <th><select class="fcol" onchange="setInvFilter('plus',this.value)"><option value="">Todos</option><option value="1">+1</option><option value="0">Solo</option></select></th>
+            <th><select class="fcol" onchange="setInvFilter('inv',this.value)"><option value="">Todos</option><option value="1">Sí</option><option value="0">No</option></select></th>
+            <th><select class="fcol" onchange="setInvFilter('list',this.value)"><option value="">Lista</option><option value="A">A</option><option value="B">B</option></select></th>
+            <th><select class="fcol" onchange="setInvFilter('att',this.value)"><option value="">Todos</option><option value="si">Sí</option><option value="no">No</option></select></th>
+            <th><select class="fcol" id="fMesa" onchange="setInvFilter('mesa',this.value)"><option value="">Mesa</option></select></th>
+            <th><select class="fcol" onchange="setInvFilter('civil',this.value)"><option value="">Todos</option><option value="1">Sí</option><option value="0">No</option></select></th>
+            <th><select class="fcol" onchange="setInvFilter('status',this.value)"><option value="">Estatus</option><option value="ok">Confirmado</option><option value="pend">Pendiente</option><option value="no">No asistirá</option><option value="sin">Sin invitar</option></select></th>
+            <th></th>
+            <th><button class="fclear" onclick="clearInvFilters()" title="Limpiar filtros">×</button></th>
+          </tr>
+        </thead>
         <tbody id="invBody"></tbody>
       </table>
     </div>
@@ -2137,7 +2192,7 @@ body.no-money #budgetWP{display:block}
       </div>
       <div class="inv-wp-tablewrap">
         <table class="btable inv-wp-table">
-          <thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Dinámica</th><th>Entró</th></tr></thead>
+          <thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Dinámica</th><th>Entró</th><th>Teléfono</th></tr></thead>
           <tbody id="invWPBody"></tbody>
         </table>
       </div>
@@ -2541,7 +2596,7 @@ async function syncGuests(){
     id:g.id, event_id:EVENT.id, name:g.name, plus_one:!!g.plusOne,
     side:g.side||null, invitation_sent:!!g.invitation_sent, list:g.list||null,
     attendance:g.attendance||null, menu_choice:g.menu_choice||'', dietary:g.dietary||'', civil:!!g.civil,
-    checkin:!!g.checkin, dinamica:g.dinamica||'', last_minute:!!g.last_minute, sort_order:i })));
+    checkin:!!g.checkin, dinamica:g.dinamica||'', last_minute:!!g.last_minute, phone:g.phone||'', sort_order:i })));
 }
 async function syncTables(){
   if(!canEdit('layout')) return;
@@ -2631,7 +2686,7 @@ async function loadEventIntoState(ev){
     sb.from('registry_items').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('phase_tasks').select('*').eq('event_id',eid).order('sort_order')
   ]);
-  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||'',civil:!!r.civil,checkin:!!r.checkin,dinamica:r.dinamica||'',last_minute:!!r.last_minute}));
+  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||'',civil:!!r.civil,checkin:!!r.checkin,dinamica:r.dinamica||'',last_minute:!!r.last_minute,phone:r.phone||''}));
   const seatsByTable={}; (s.data||[]).forEach(r=>{ (seatsByTable[r.table_id]=seatsByTable[r.table_id]||[]).push(r.guest_id); });
   state.tables=(t.data||[]).map(r=>({id:r.id,num:r.num,name:r.name,cap:r.cap,shape:r.shape,x:+r.x,y:+r.y,novios:r.is_novios,seats:seatsByTable[r.id]||[]}));
   const paidBy={}; (pay.data||[]).forEach(p=>{ paidBy[p.expense_id]=(paidBy[p.expense_id]||0)+(+p.amount||0); });
@@ -2941,13 +2996,14 @@ function zoomAt(nz,cx,cy){
 }
 function zoomBy(d){ zoomAt(zoom+d,null,null); }
 function zoomReset(){ const wrap=document.querySelector('.garden-wrap'); zoom=1; applyZoom(); if(wrap){ wrap.scrollLeft=0; wrap.scrollTop=0; } }
+function fitLayoutView(){ const wrap=document.querySelector('.garden-wrap'); if(!wrap) return; zoom=fitZoom(); applyZoom(); wrap.scrollLeft=0; wrap.scrollTop=0; }   // WP: ver el plano completo sin zoom
 function toggleLayoutDrawer(){ const b=document.querySelector('.layout-bar'); if(!b) return; const open=b.classList.toggle('lb-open'); document.body.classList.toggle('lb-drawer-open',open); }
 function closeLayoutDrawer(){ const b=document.querySelector('.layout-bar'); if(b) b.classList.remove('lb-open'); document.body.classList.remove('lb-drawer-open'); }
 /* ---------------- menús colapsables ---------------- */
 function toggleNav(){ const on=document.body.classList.toggle('nav-collapsed'); try{localStorage.setItem('acomodo_navcol', on?'1':'0');}catch(e){} }
 function toggleGuestPanel(force){ const a=document.querySelector('.app aside'); if(!a) return; const open=(force===undefined)?!a.classList.contains('open'):!!force; a.classList.toggle('open',open); try{localStorage.setItem('acomodo_guestpanel',open?'1':'0');}catch(e){} }
 let _rzT=null, _wasPhone=null;
-window.addEventListener('resize',()=>{ clearTimeout(_rzT); _rzT=setTimeout(()=>{ const p=isPhone(); if(p!==_wasPhone){ _wasPhone=p; if(typeof EVENT!=='undefined'&&EVENT&&document.body.classList.contains('view-jardin')) renderAll(); } },250); });
+window.addEventListener('resize',()=>{ clearTimeout(_rzT); _rzT=setTimeout(()=>{ const p=isPhone(); if(p!==_wasPhone){ _wasPhone=p; if(typeof EVENT!=='undefined'&&EVENT&&document.body.classList.contains('view-jardin')) renderAll(); } if(document.body.classList.contains('view-jardin')&&document.body.classList.contains('layout-ro')) fitLayoutView(); },250); });
 function toggleLsum(){ const on=document.body.classList.toggle('lsum-collapsed'); try{localStorage.setItem('acomodo_lsumcol', on?'1':'0');}catch(e){} }
 function initPanelDefaults(){ try{
   const nv=localStorage.getItem('acomodo_navcol'); if(nv===null||nv==='1') document.body.classList.add('nav-collapsed');
@@ -2982,7 +3038,8 @@ const T_EN={
 "Banquete":"Catering","Bebidas":"Drinks","Fotografía y Video":"Photography & Video","Flores y Decoración":"Flowers & Decor","Vestuario":"Attire","Belleza":"Beauty","Papelería":"Stationery","Pastel":"Cake","Transporte":"Transport","Fotografía":"Photography","Maquillaje":"Makeup","Pastelería":"Bakery","Sin categoría":"Uncategorized","Nueva tarea":"New task","Sin nombre":"No name","(sin nombre)":"(no name)","Proveedor":"Vendor",
 "Estatus de invitados":"Guest status","Por confirmar":"To confirm","personas":"people","Pendientes por completar":"Tasks to complete","Ver To-Do":"View To-Do","Avance de pago":"Payment progress","Wedding Planner":"Wedding Planner","Planner":"Planner",
 "Dinámica":"Activity","Entró":"Arrived","Ya entró":"Checked in","Último minuto":"Last minute","+ Último minuto":"+ Last minute","Nombre del invitado":"Guest name","Confirmación":"Confirmation",
-"Pagar en":"Pay on","¿Cuándo se paga?":"When is it paid?","Día del evento":"Event day","1 semana antes":"1 week before","1 mes antes":"1 month before","Por pagar el día del evento":"To pay on event day","Marca como pagado cada concepto al liquidarlo el día del evento.":"Check each item as paid when settled on the event day.","Sin conceptos por pagar el día del evento.":"No items to pay on the event day.","Personas":"People"
+"Pagar en":"Pay on","¿Cuándo se paga?":"When is it paid?","Día del evento":"Event day","1 semana antes":"1 week before","1 mes antes":"1 month before","Por pagar el día del evento":"To pay on event day","Marca como pagado cada concepto al liquidarlo el día del evento.":"Check each item as paid when settled on the event day.","Sin conceptos por pagar el día del evento.":"No items to pay on the event day.","Personas":"People",
+"Teléfono":"Phone","Todos":"All","Sin coincidencias con el filtro.":"No matches for the filter.","Limpiar filtros":"Clear filters","Llamar":"Call"
 };
 let LANG='es', _langObs=null;
 function _langSkip(el){ return el && (el.tagName==='SCRIPT'||el.tagName==='STYLE'||(el.classList&&el.classList.contains('material-symbols-outlined'))); }
@@ -3707,7 +3764,7 @@ function setView(v){
   if(v==='regalos') renderRegistry();
   if(v==='invita') renderInvita();
   if(v==='fases') renderFases();
-  if(v==='jardin'){ paintVenueBar(); initLayoutGestures(); renderLayoutSummary(); }
+  if(v==='jardin'){ paintVenueBar(); initLayoutGestures(); renderLayoutSummary(); if(document.body.classList.contains('layout-ro')) requestAnimationFrame(fitLayoutView); }
   if(v==='budget'){ if(!canSeeMoney()){ renderBudget(); loadWPBudget().then(()=>renderBudget()); } else renderBudget(); }
   if(v==='proveedores') renderProviders();
   if(v==='music') renderMusic();
@@ -4110,6 +4167,43 @@ function guestStatus(g){
   return {k:'sin',t:'Sin invitar'};
 }
 function statusPill(g){ const s=guestStatus(g); return '<span class="stpill st-'+s.k+'">'+s.t+'</span>'; }
+/* ---- filtros interactivos de invitados ---- */
+let invFilters={side:'',plus:'',inv:'',list:'',att:'',mesa:'',civil:'',status:''};
+function setInvFilter(k,v){ invFilters[k]=v; renderInvitados(); }
+function clearInvFilters(){
+  invFilters={side:'',plus:'',inv:'',list:'',att:'',mesa:'',civil:'',status:''};
+  const f=document.getElementById('invFilter'); if(f) f.value='';
+  renderInvitados();
+}
+function clickInvStat(k,v){ invFilters[k]=(invFilters[k]===v?'':v); if(_invMode!=='list') setInvMode('list'); else renderInvitados(); }
+function invMatch(g,q){
+  if(q && !((g.name||'').toLowerCase().includes(q))) return false;
+  const f=invFilters;
+  if(f.side && (g.side||'')!==f.side) return false;
+  if(f.plus==='1' && !g.plusOne) return false;
+  if(f.plus==='0' && g.plusOne) return false;
+  if(f.inv==='1' && !g.invitation_sent) return false;
+  if(f.inv==='0' && g.invitation_sent) return false;
+  if(f.list && (g.list||'')!==f.list) return false;
+  if(f.att && (g.attendance||'')!==f.att) return false;
+  if(f.civil==='1' && !g.civil) return false;
+  if(f.civil==='0' && g.civil) return false;
+  if(f.status && guestStatus(g).k!==f.status) return false;
+  if(f.mesa){ if(f.mesa==='__none'){ if(isSeated(g.id)) return false; } else { const t=tableOf(g.id); if(!t||t.id!==f.mesa) return false; } }
+  return true;
+}
+function wireTel(tr,g){
+  const ti=tr.querySelector('.tel-in'), tc=tr.querySelector('.tel-call'); if(!ti||!tc) return;
+  const paint=v=>{ const num=(v||'').replace(/[^0-9+]/g,''); if(num){ tc.href='tel:'+num; tc.classList.add('has'); } else { tc.removeAttribute('href'); tc.classList.remove('has'); } };
+  ti.value=g.phone||''; paint(g.phone||'');
+  ti.addEventListener('input',e=>{ g.phone=e.target.value; paint(e.target.value); mark('guests'); });
+}
+function syncInvFilterUI(){
+  // rellena el select de Mesa y refleja el estado de cada filtro en su control
+  const fm=document.getElementById('fMesa');
+  if(fm){ fm.innerHTML='<option value="">Mesa</option><option value="__none">— Sin lugar —</option>'+state.tables.map(t=>'<option value="'+t.id+'">'+escH(tableLabel(t))+'</option>').join(''); fm.value=invFilters.mesa||''; }
+  document.querySelectorAll('.inv-filter-row select').forEach(s=>{ const m=(s.getAttribute('onchange')||'').match(/setInvFilter\('(\w+)'/); if(m) s.value=invFilters[m[1]]||''; });
+}
 function renderInvStats(){
   const box=document.getElementById('invStats'); if(!box) return;
   const c=invCounts();
@@ -4121,27 +4215,32 @@ function renderInvStats(){
   const mesas=state.tables.length;
   const solos=g.filter(x=>!x.plusOne).length;
   const acomp=g.filter(x=>x.plusOne).length;
-  const card=(cls,ic,n,lbl)=>'<div class="istat '+cls+'"><span class="material-symbols-outlined">'+ic+'</span><div><b>'+n+'</b><span>'+lbl+'</span></div></div>';
+  const card=(cls,ic,n,lbl,fk,fv)=>{
+    const active=fk&&invFilters[fk]===fv;
+    return '<div class="istat '+cls+(fk?' clickable':'')+(active?' active':'')+'"'+(fk?(' data-fk="'+fk+'" data-fv="'+fv+'"'):'')+'><span class="material-symbols-outlined">'+ic+'</span><div><b>'+n+'</b><span>'+lbl+'</span></div></div>';
+  };
   box.innerHTML=
      card('st-inv','mail',invitaciones,'Invitaciones')
     +card('st-per','groups',personas,'Personas')
     +card('st-seat','event_seat',seated,'Sentadas')
-    +card('st-pool','chair_alt',sinLugar,'Sin lugar')
+    +card('st-pool','chair_alt',sinLugar,'Sin lugar','mesa','__none')
     +card('st-mesa','table_restaurant',mesas,'Mesas')
-    +card('st-civil','gavel',c.civilPer,'Civil (personas)')
+    +card('st-civil','gavel',c.civilPer,'Civil (personas)','civil','1')
     +'<div class="ist-sep">Desglose de invitados</div>'
-    +card('st-ok','check_circle',c.si,'Confirmados')
-    +card('st-pend','hourglass_empty',c.pend,'Pendientes')
-    +card('st-no','cancel',c.no,'No asistirán')
-    +card('st-solo','person',solos,'Van solos')
-    +card('st-acomp','group_add',acomp,'Van acompañados (+1)');
+    +card('st-ok','check_circle',c.si,'Confirmados','status','ok')
+    +card('st-pend','hourglass_empty',c.pend,'Pendientes','status','pend')
+    +card('st-no','cancel',c.no,'No asistirán','status','no')
+    +card('st-solo','person',solos,'Van solos','plus','0')
+    +card('st-acomp','group_add',acomp,'Van acompañados (+1)','plus','1');
+  box.querySelectorAll('.istat.clickable').forEach(el=>el.addEventListener('click',()=>clickInvStat(el.dataset.fk,el.dataset.fv)));
 }
 function renderInvitados(){
   const body=document.getElementById('invBody'); if(!body) return;
   if(isWP()){ renderInvWP(); return; }   // el wedding planner ve la tabla operativa
   const q=(document.getElementById('invFilter')?document.getElementById('invFilter').value:'').toLowerCase();
+  syncInvFilterUI();
   body.innerHTML='';
-  state.guests.filter(g=>g.name.toLowerCase().includes(q)).forEach(g=>{
+  state.guests.filter(g=>invMatch(g,q)).forEach(g=>{
     const tr=document.createElement('tr');
     const invSent=!!g.invitation_sent;
     tr.innerHTML=
@@ -4154,8 +4253,10 @@ function renderInvitados(){
       +'<td class="c" data-lbl="Mesa"><select class="mesa-sel">'+mesaOptions(g.id)+'</select></td>'
       +'<td class="c" data-lbl="Civil"><button class="yn '+(g.civil?'yes':'')+'">'+(g.civil?'Sí':'No')+'</button></td>'
       +'<td class="c" data-lbl="Estatus">'+statusPill(g)+'</td>'
+      +'<td class="c phone-c" data-lbl="Teléfono"><span class="tel-cell"><input class="cn tel-in" type="tel" placeholder="Teléfono"><a class="tel-call" title="Llamar"><span class="material-symbols-outlined">call</span></a></span></td>'
       +'<td class="c" data-lbl=""><button class="brow-del" title="Eliminar">×</button></td>';
     const cn=tr.querySelector('.cn'); cn.value=g.name; cn.addEventListener('input',e=>{g.name=e.target.value;mark('guests');renderAll();});
+    wireTel(tr,g);
     tr.querySelector('.mesa-sel').addEventListener('change',e=>assignFromCard(g.id,e.target.value));
     tr.querySelectorAll('.yn')[1].addEventListener('click',()=>toggleCivil(g.id));
     tr.querySelector('.sd.n').addEventListener('click',()=>setSide(g.id,'novio'));
@@ -4193,8 +4294,8 @@ function assignFromCard(gid,val){ if(val) assign(gid,val); else unassign(gid); r
 function renderInvCards(q){
   const box=document.getElementById('invCards'); if(!box) return;
   box.innerHTML='';
-  const list=state.guests.filter(g=>g.name.toLowerCase().includes(q||''));
-  if(!list.length){ box.innerHTML='<div class="iq-empty" style="grid-column:1/-1">Sin invitados. Agrégalos arriba.</div>'; return; }
+  const list=state.guests.filter(g=>invMatch(g,(q||'').toLowerCase()));
+  if(!list.length){ box.innerHTML='<div class="iq-empty" style="grid-column:1/-1">Sin coincidencias con el filtro.</div>'; return; }
   list.forEach(g=>{
     const t=tableOf(g.id); const seated=!!t; const personas=weight(g);
     let opts='<option value="">— Sin lugar —</option>';
@@ -4249,7 +4350,8 @@ function wpGuestRow(g){
     +'<td class="c" data-lbl="Mesa"><span class="wp-mesa">'+(t?escH(tableLabel(t)):'—')+'</span></td>'
     +'<td class="c" data-lbl="Civil"><button class="wp-civil'+(g.civil?' on':'')+'" title="Confirmado para civil">'+(g.civil?'1':'—')+'</button></td>'
     +'<td data-lbl="Dinámica"><input class="inv-wp-din" placeholder="ej. capitán de mesa, peqeñitos"></td>'
-    +'<td class="c" data-lbl="Entró"><button class="wp-checkin'+(g.checkin?' on':'')+'" title="Ya entró">'+(g.checkin?'<span class="material-symbols-outlined">check</span>':'')+'</button></td>';
+    +'<td class="c" data-lbl="Entró"><button class="wp-checkin'+(g.checkin?' on':'')+'" title="Ya entró">'+(g.checkin?'<span class="material-symbols-outlined">check</span>':'')+'</button></td>'
+    +'<td class="c phone-c" data-lbl="Teléfono"><span class="tel-cell"><input class="cn tel-in" type="tel" placeholder="Teléfono"><a class="tel-call" title="Llamar"><span class="material-symbols-outlined">call</span></a></span></td>';
   tr.querySelector('.inv-nm b').textContent=g.name||'—';
   tr.querySelector('.pill').addEventListener('click',()=>togglePlusOne(g.id));
   tr.querySelector('.sd.n').addEventListener('click',()=>setSide(g.id,'novio'));
@@ -4258,6 +4360,7 @@ function wpGuestRow(g){
   tr.querySelector('.wp-civil').addEventListener('click',()=>toggleCivil(g.id));
   const din=tr.querySelector('.inv-wp-din'); din.value=g.dinamica||''; din.addEventListener('input',e=>{ g.dinamica=e.target.value; mark('guests'); });
   tr.querySelector('.wp-checkin').addEventListener('click',()=>toggleCheckin(g.id));
+  wireTel(tr,g);
   return tr;
 }
 function renderInvWP(){
@@ -4274,7 +4377,7 @@ function renderInvWP(){
       const h=document.createElement('h3'); h.innerHTML='<span class="material-symbols-outlined">bolt</span>Último minuto ('+last.length+')'; lastBox.appendChild(h);
       const wrap=document.createElement('div'); wrap.className='inv-wp-tablewrap';
       const tb=document.createElement('table'); tb.className='btable inv-wp-table';
-      tb.innerHTML='<thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Dinámica</th><th>Entró</th></tr></thead><tbody></tbody>';
+      tb.innerHTML='<thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Dinámica</th><th>Entró</th><th>Teléfono</th></tr></thead><tbody></tbody>';
       const tbody=tb.querySelector('tbody'); last.forEach(g=>tbody.appendChild(wpGuestRow(g)));
       wrap.appendChild(tb); lastBox.appendChild(wrap);
     }
