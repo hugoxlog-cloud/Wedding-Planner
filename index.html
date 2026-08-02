@@ -1665,6 +1665,108 @@ body.view-fases .fases{display:block}
 .fcard-del{flex:none;border:none;background:none;color:var(--ink-soft);font-size:19px;cursor:pointer;opacity:.45;padding:0 6px}
 .fcard-del:hover{opacity:1;color:var(--full)}
 
+/* ============ Perfil Wedding Planner + ajustes generales ============ */
+.hz-center{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center}
+.wp-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(180deg,#fdf6df,#efe0ad);border:1px solid #e0cd8f;color:#6b5600;font-weight:700;font-size:12px;letter-spacing:.04em;padding:5px 11px;border-radius:999px;align-self:center;white-space:nowrap;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.wp-badge .material-symbols-outlined{font-size:16px}
+
+/* countdown más grande y centrado */
+.dstat-cd{text-align:center}
+.dstat-cd .dstat-lbl{display:block}
+.dstat-cd .dstat-big{justify-content:center;margin-top:6px}
+.dstat-cd .dstat-big b{font-size:68px}
+.dstat-cd .dstat-big span{font-size:18px}
+.dstat-cd .dstat-sub{font-size:16px}
+
+/* estatus de invitados: desglose */
+.dstat-break{display:flex;gap:10px;margin-top:12px}
+.dstat-break>div{flex:1;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:8px 10px;text-align:center}
+.dstat-break b{display:block;font-family:"Libre Caslon Text",Georgia,serif;font-size:24px;color:var(--gold-ink);line-height:1}
+.dstat-break span{font-size:11px;color:var(--ink-soft);font-weight:600}
+
+/* fases: tareas pendientes en el feed */
+.dphase-todos{list-style:none;margin:6px 0 2px;padding:0;display:flex;flex-direction:column;gap:3px}
+.dphase-todos li{font-size:12.5px;color:var(--ink-soft);display:flex;align-items:center;gap:7px}
+.dphase-todos li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blush);flex:none}
+.dphase-more{font-size:11.5px;color:var(--gold-ink);font-weight:600}
+
+/* ToDo en dashboard */
+.ds-todos-head{display:flex;align-items:center;justify-content:space-between;margin:26px 0 8px}
+.ds-todos-head h3{margin:0}
+.ds-todos{display:flex;flex-direction:column;gap:8px}
+.dtl-row{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:var(--shadow)}
+.dtl-row .dtl-ic{color:var(--gold-ink);flex:none}
+.dtl-row b{font-size:14px;font-weight:600;flex:1;min-width:0;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dtl-row .dtl-meta{font-size:11.5px;color:var(--ink-soft);white-space:nowrap}
+.dtl-tag{font-size:10.5px;font-weight:800;letter-spacing:.03em;border-radius:999px;padding:3px 8px;white-space:nowrap;text-transform:uppercase;flex:none}
+.dtl-tag.soon{background:#fff3d6;color:#8a6400;border:1px solid #e7cf8f}
+.dtl-tag.over{background:#fbe0da;color:#a5352a;border:1px solid #e9b7ad}
+.dtl-empty{color:var(--ink-soft);font-size:13px;padding:14px;text-align:center;background:#fff;border:1px dashed var(--line);border-radius:12px}
+
+/* layout solo-lectura (orientar) */
+body.layout-ro .layout-bar,body.layout-ro .layout-fab,body.layout-ro .garden-hint,
+body.layout-ro .t-tools,body.layout-ro .chair .x,body.layout-ro .chair .ptog,
+body.layout-ro .app>aside{display:none!important}
+body.layout-ro .garden-wrap{flex:1 1 auto}
+
+/* invitados WP */
+#invWP{display:none}
+body.wp-mode #invWP{display:block}
+body.wp-mode .invitados .inv-stats,body.wp-mode .invitados .inv-add,
+body.wp-mode .invitados .inv-toolbar,body.wp-mode #invCardsWrap,
+body.wp-mode #invListWrap{display:none!important}
+.inv-wp-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:4px 0 14px}
+.inv-wp-tools .inv-search{flex:1;min-width:180px}
+.inv-wp-add{display:flex;gap:6px;align-items:center}
+.inv-wp-add input{border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-family:inherit;font-size:13px;background:var(--paper)}
+.inv-wp-count{font-size:12.5px;color:var(--ink-soft)}
+.inv-wp-tablewrap{overflow-x:auto;border-radius:14px}
+.inv-wp-table td{vertical-align:middle}
+.inv-wp-table .wp-per{text-align:center;font-weight:700}
+.wp-checkin{width:30px;height:30px;border-radius:8px;border:2px solid #cbbf9f;background:#fff;cursor:pointer;color:#fff;display:inline-flex;align-items:center;justify-content:center;padding:0}
+.wp-checkin.on{background:var(--ok);border-color:var(--ok)}
+.wp-checkin .material-symbols-outlined{font-size:18px}
+.wp-mesa{font-weight:600;color:var(--gold-ink)}
+.wp-civil{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;font-weight:800;font-size:12px;border:1px solid var(--line);color:var(--ink-soft);cursor:pointer;background:#fff}
+.wp-civil.on{background:var(--gold);color:#3d3100;border-color:var(--gold)}
+.inv-wp-din{border:1px solid transparent;border-radius:8px;padding:6px 8px;font-family:inherit;font-size:13px;background:transparent;width:100%;min-width:120px;color:var(--ink)}
+.inv-wp-din:hover{border-color:var(--line)}
+.inv-wp-din:focus{outline:none;border-color:var(--sage);background:var(--paper)}
+.inv-wp-last{margin-top:22px}
+.inv-wp-last h3{font-family:"Libre Caslon Text",Georgia,serif;color:var(--gold-ink);margin:0 0 10px;display:flex;align-items:center;gap:8px}
+tr.wp-arrived td{background:rgba(110,138,92,.08)}
+
+/* presupuesto WP y modo sin dinero */
+body.no-money .budget-actions,body.no-money #expList,body.no-money .dqa-pay{display:none!important}
+body.no-money #budgetWP{display:block}
+#budgetWP{display:none;margin-top:6px}
+.bwp-head{margin:6px 0 14px}
+.bwp-head h3{font-family:"Libre Caslon Text",Georgia,serif;color:var(--gold-ink);margin:0}
+.bwp-sub{color:var(--ink-soft);font-size:13px;margin-top:2px}
+.bwp-group{margin-bottom:16px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.bwp-group-h{display:flex;align-items:center;gap:8px;padding:11px 14px;background:var(--sage-soft);color:var(--gold-deep);font-weight:700}
+.bwp-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-top:1px solid var(--line)}
+.bwp-item .bwp-cn{flex:1;min-width:0}
+.bwp-item .bwp-cn b{display:block;font-weight:600}
+.bwp-item .bwp-cn span{font-size:12px;color:var(--ink-soft)}
+.bwp-paid{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 13px;cursor:pointer;font-weight:700;font-size:12.5px;background:#fff;color:var(--ink-soft);flex:none}
+.bwp-paid .material-symbols-outlined{font-size:17px}
+.bwp-paid.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.bwp-empty{color:var(--ink-soft);text-align:center;padding:24px;background:#fff;border:1px dashed var(--line);border-radius:14px}
+
+/* selector "pagar en" (novios) */
+.exp-paywhen{display:flex;flex-direction:column;gap:2px}
+.exp-paywhen>span{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-soft);font-weight:700}
+.exp-paywhen select{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-family:inherit;font-size:12.5px;background:var(--paper);color:var(--ink)}
+
+/* itinerario: horas completas y filas que se expanden */
+.itin .btable td{vertical-align:top}
+.itin .btable th:nth-child(2),.itin .btable td:nth-child(2){width:132px;min-width:120px}
+.itin .btable td:nth-child(2) input{text-align:center}
+.itin .btable textarea{width:100%;border:1px solid transparent;border-radius:6px;padding:6px 8px;background:transparent;color:var(--ink);font-family:inherit;font-size:14px;resize:none;overflow:hidden;min-height:34px;line-height:1.4;box-sizing:border-box}
+.itin .btable textarea:hover{border-color:var(--line)}
+.itin .btable textarea:focus{outline:none;border-color:var(--sage);background:var(--paper)}
+
 </style>
 </head>
 <body>
@@ -1846,6 +1948,7 @@ body.view-fases .fases{display:block}
     <span id="saveState" class="savestate"></span>
   </div>
   <div class="hz-center">
+    <span id="wpBadge" class="wp-badge" style="display:none"><span class="material-symbols-outlined">badge</span>Wedding Planner</span>
     <img id="evLogo" class="ev-logo" alt="" style="display:none">
     <h1 class="serif" id="hTitle">Evento<small id="hSub">Acomodo de mesas · 05.09.2026</small></h1>
   </div>
@@ -1884,10 +1987,13 @@ body.view-fases .fases{display:block}
         <div class="dstat-big"><b id="dsDays">—</b><span id="dsDaysLbl">días</span></div>
         <p class="dstat-sub" id="dsEventName">—</p>
       </div>
-      <div class="dstat">
-        <span class="dstat-lbl">Invitados</span>
-        <div class="dstat-big"><b id="dsGuests">0</b></div>
-        <p class="dstat-sub" id="dsGuestsSub">—</p>
+      <div class="dstat dstat-guests">
+        <span class="dstat-lbl">Estatus de invitados</span>
+        <div class="dstat-big"><b id="dsGuests">0</b><span>personas</span></div>
+        <div class="dstat-break">
+          <div><b id="dsGuestsOk">0</b><span>Confirmados</span></div>
+          <div><b id="dsGuestsPend">0</b><span>Por confirmar</span></div>
+        </div>
       </div>
       <div class="dstat dstat-budget">
         <span class="dstat-lbl">Presupuesto</span>
@@ -1901,13 +2007,15 @@ body.view-fases .fases{display:block}
       <div class="dcol-main">
         <div class="dsec-head"><h3 class="serif">Fases de la boda</h3><button class="dsec-link" onclick="setView('fases')">Ver fases <span class="material-symbols-outlined">arrow_forward</span></button></div>
         <div id="dsFases" class="ds-fases"></div>
+        <div class="ds-todos-head"><h3 class="serif">Pendientes por completar</h3><button class="dsec-link" onclick="setView('todo')">Ver To-Do <span class="material-symbols-outlined">arrow_forward</span></button></div>
+        <div id="dsTodos" class="ds-todos"></div>
       </div>
       <div class="dcol-side">
         <div class="dpanel dpanel-dark">
           <h4 class="serif">Acciones rápidas</h4>
           <div class="dqa">
             <button class="dqa-btn" onclick="setView('invitados')"><span class="material-symbols-outlined">person_add</span>Invitado</button>
-            <button class="dqa-btn" onclick="setView('budget');openPay()"><span class="material-symbols-outlined">payments</span>Registrar pago</button>
+            <button class="dqa-btn dqa-pay" onclick="setView('budget');openPay()"><span class="material-symbols-outlined">payments</span>Registrar pago</button>
             <button class="dqa-btn" onclick="setView('jardin')"><span class="material-symbols-outlined">grid_view</span>Ver layout</button>
             <button class="dqa-btn" onclick="setView('todo')"><span class="material-symbols-outlined">checklist</span>Pendientes</button>
           </div>
@@ -2017,6 +2125,23 @@ body.view-fases .fases{display:block}
         <thead><tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Mesa</th><th>Civil</th><th>Estatus</th><th></th></tr></thead>
         <tbody id="invBody"></tbody>
       </table>
+    </div>
+    <div id="invWP">
+      <div class="inv-wp-tools">
+        <input id="invWPFilter" class="inv-search" placeholder="Buscar invitado..." oninput="renderInvWP()">
+        <div class="inv-wp-add">
+          <input id="invWPNew" placeholder="Nombre del invitado" onkeydown="if(event.key==='Enter')addLastMinute()">
+          <button class="blush" onclick="addLastMinute()"><span class="material-symbols-outlined">person_add</span> Último minuto</button>
+        </div>
+        <span class="inv-wp-count" id="invWPCount"></span>
+      </div>
+      <div class="inv-wp-tablewrap">
+        <table class="btable inv-wp-table">
+          <thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Dinámica</th><th>Entró</th></tr></thead>
+          <tbody id="invWPBody"></tbody>
+        </table>
+      </div>
+      <div class="inv-wp-last" id="invWPLast"></div>
     </div>
   </div>
 </div>
@@ -2145,6 +2270,10 @@ body.view-fases .fases{display:block}
       <button class="ghost" onclick="openCatModal()"><span class="material-symbols-outlined">category</span> Categorías</button>
     </div>
     <div id="expList" class="exp-list"></div>
+    <div id="budgetWP">
+      <div class="bwp-head"><h3>Por pagar el día del evento</h3><p class="bwp-sub">Marca como pagado cada concepto al liquidarlo el día del evento.</p></div>
+      <div id="bwpList"></div>
+    </div>
   </div>
 </div>
 <div class="proveedores">
@@ -2195,7 +2324,7 @@ body.view-fases .fases{display:block}
     <h2 class="bsec">Itinerario del evento</h2>
     <div class="itin-prog"><div class="ip-bar"><div id="itinProgFill"></div></div><span id="itinProgTxt"></span></div>
     <table class="btable">
-      <thead><tr><th class="itin-chk">Hecho</th><th style="width:110px">Hora</th><th>Actividad</th><th>Responsable / Notas</th><th></th></tr></thead>
+      <thead><tr><th class="itin-chk">Hecho</th><th style="width:132px">Hora</th><th>Actividad</th><th>Responsable / Notas</th><th></th></tr></thead>
       <tbody id="itinBody"></tbody>
     </table>
     <button class="addrow" onclick="addItin()">＋ Agregar renglón</button>
@@ -2372,7 +2501,7 @@ let MEMBER=null;          // {role,permissions} para el evento activo (o null)
 function defaultPerm(role,tab){
   if(role==='admin') return tab==='presupuesto'?'none':'edit';
   if(role==='novios') return 'edit';
-  if(role==='wedding_planner') return ['invitados','layout','musica','todo','itinerario'].includes(tab)?'edit':(tab==='proveedores'?'read':'none');
+  if(role==='wedding_planner') return ['invitados','musica','todo','itinerario'].includes(tab)?'edit':(['layout','proveedores'].includes(tab)?'read':'none');
   if(role==='jardin') return ['layout','proveedores','itinerario','musica'].includes(tab)?'read':'none';
   return 'none';
 }
@@ -2386,6 +2515,9 @@ function permFor(tab){
 const canRead = tab => ['read','edit'].includes(permFor(tab));
 const canEdit = tab => permFor(tab)==='edit';
 function canEditAny(){ return ['invitados','layout','presupuesto','musica','itinerario','todo'].some(canEdit); }
+function myRole(){ return MEMBER?MEMBER.role:((PROFILE&&PROFILE.platform_role==='super_admin')?'super_admin':null); }
+function isWP(){ return !!(MEMBER && MEMBER.role==='wedding_planner') && !(PROFILE&&PROFILE.platform_role==='super_admin'); }
+function canSeeMoney(){ return (PROFILE&&PROFILE.platform_role==='super_admin')||(MEMBER&&MEMBER.role==='novios'); }
 
 /* ---------------- sincronización con Supabase ---------------- */
 let _dirty=new Set(), _timer=null;
@@ -2408,7 +2540,8 @@ async function syncGuests(){
   await syncRows('guests', state.guests.map((g,i)=>({
     id:g.id, event_id:EVENT.id, name:g.name, plus_one:!!g.plusOne,
     side:g.side||null, invitation_sent:!!g.invitation_sent, list:g.list||null,
-    attendance:g.attendance||null, menu_choice:g.menu_choice||'', dietary:g.dietary||'', civil:!!g.civil, sort_order:i })));
+    attendance:g.attendance||null, menu_choice:g.menu_choice||'', dietary:g.dietary||'', civil:!!g.civil,
+    checkin:!!g.checkin, dinamica:g.dinamica||'', last_minute:!!g.last_minute, sort_order:i })));
 }
 async function syncTables(){
   if(!canEdit('layout')) return;
@@ -2426,7 +2559,8 @@ async function syncExpenses(){
   if(!canEdit('presupuesto')) return;
   await syncRows('budget_expenses', state.budget.expenses.map((e,i)=>({
     id:e.id, event_id:EVENT.id, concepto:e.concepto||'', presupuesto:+e.presupuesto||0,
-    nota:e.nota||'', provider_id:e.provider_id||null, categoria:e.categoria||'', sort_order:i })));
+    nota:e.nota||'', provider_id:e.provider_id||null, categoria:e.categoria||'',
+    pay_when:e.pay_when||null, paid_confirmed:!!e.paid_confirmed, sort_order:i })));
 }
 async function syncMusic(){
   if(!canEdit('musica')) return;
@@ -2497,11 +2631,11 @@ async function loadEventIntoState(ev){
     sb.from('registry_items').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('phase_tasks').select('*').eq('event_id',eid).order('sort_order')
   ]);
-  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||'',civil:!!r.civil}));
+  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||'',civil:!!r.civil,checkin:!!r.checkin,dinamica:r.dinamica||'',last_minute:!!r.last_minute}));
   const seatsByTable={}; (s.data||[]).forEach(r=>{ (seatsByTable[r.table_id]=seatsByTable[r.table_id]||[]).push(r.guest_id); });
   state.tables=(t.data||[]).map(r=>({id:r.id,num:r.num,name:r.name,cap:r.cap,shape:r.shape,x:+r.x,y:+r.y,novios:r.is_novios,seats:seatsByTable[r.id]||[]}));
   const paidBy={}; (pay.data||[]).forEach(p=>{ paidBy[p.expense_id]=(paidBy[p.expense_id]||0)+(+p.amount||0); });
-  state.budget={ expenses:(ex.data||[]).map(r=>({id:r.id,concepto:r.concepto,presupuesto:+r.presupuesto,pagado:paidBy[r.id]||0,nota:r.nota,provider_id:r.provider_id,categoria:r.categoria||''})) };
+  state.budget={ expenses:(ex.data||[]).map(r=>({id:r.id,concepto:r.concepto,presupuesto:+r.presupuesto,pagado:paidBy[r.id]||0,nota:r.nota,provider_id:r.provider_id,categoria:r.categoria||'',pay_when:r.pay_when||null,paid_confirmed:!!r.paid_confirmed})) };
   state.payments=(pay.data||[]).map(p=>({id:p.id,expense_id:p.expense_id,amount:+p.amount,pay_date:p.pay_date,note:p.note}));
   state.music={ moments:(mm.data||[]).map(r=>({id:r.id,momento:r.momento,cancion:r.cancion,artista:r.artista,notas:r.notas})),
                 si:(ms.data||[]).map(r=>({id:r.id,cancion:r.cancion,artista:r.artista})),
@@ -2631,6 +2765,7 @@ function renderStats(){
   document.getElementById("stTables").textContent=state.tables.length;
 }
 function isPhone(){ return window.matchMedia('(max-width:760px)').matches; }
+function canMoveLayout(){ return canEdit('layout') && !isPhone(); }   // teléfono o solo-lectura (WP) => no editar
 function renderPool(){
   const pool=document.getElementById("pool");
   const q=(document.getElementById("filter").value||"").toLowerCase();
@@ -2699,7 +2834,7 @@ function renderTables(){
       const o=occ[i];
       if(o && o.role==="main"){
         chair.classList.add("taken");
-        chair.draggable=!isPhone(); chair.dataset.id=o.gid;
+        chair.draggable=canMoveLayout(); chair.dataset.id=o.gid;
         chair.innerHTML='<div class="seatpad"><span class="nm"></span><button class="ptog" title="Acompañante sí/no">'+(o.plusOne?"+1":"1")+'</button><button class="x" title="Quitar de la mesa">×</button></div>';
         const nm=chair.querySelector(".nm"); nm.textContent=o.label; nm.title=o.label; if(o.side) nm.classList.add('side-'+o.side);
         chair.querySelector(".ptog").addEventListener("click",e=>{e.stopPropagation();togglePlusOne(o.gid);});
@@ -2736,8 +2871,8 @@ function renderTables(){
     }
     ring.addEventListener("dragover",e=>{e.preventDefault();card.classList.add("dragover")});
     ring.addEventListener("dragleave",()=>card.classList.remove("dragover"));
-    ring.addEventListener("drop",e=>{ e.preventDefault();card.classList.remove("dragover"); if(isPhone())return; const gid=e.dataTransfer.getData("text/plain"); if(gid) assign(gid,t.id); });
-    ring.addEventListener("click",e=>{ if(isPhone())return; if(e.target.closest(".chair.taken")||e.target.closest("button")||e.target.closest("[data-handle]")) return; if(selectedGuest) assign(selectedGuest,t.id); });
+    ring.addEventListener("drop",e=>{ e.preventDefault();card.classList.remove("dragover"); if(!canMoveLayout())return; const gid=e.dataTransfer.getData("text/plain"); if(gid) assign(gid,t.id); });
+    ring.addEventListener("click",e=>{ if(!canMoveLayout())return; if(e.target.closest(".chair.taken")||e.target.closest("button")||e.target.closest("[data-handle]")) return; if(selectedGuest) assign(selectedGuest,t.id); });
     enableMove(card,t);
     garden.appendChild(card);
   });
@@ -2844,7 +2979,10 @@ const T_EN={
 "Crear usuario":"Create user","Administrador":"Admin","Miembros de este evento":"Members of this event","Aún no hay miembros en este evento.":"No members in this event yet.","Lectura":"Read","Edicion":"Edit","Por rol":"By role","Quitar":"Remove","Eliminar":"Delete","Borrar":"Delete","Cancelar":"Cancel","Crear":"Create","Listo":"Done","Reset":"Reset","Invitado":"Guest","Asignar":"Assign",
 "Agregar una tarea":"Add a task","Buscar invitado...":"Search guest...","Buscar invitado…":"Search guest…","Buscar por nombre o tipo…":"Search by name or type…","Buscar regalo…":"Search gift…","Contrasena (min 6)":"Password (min 6)","Ej. Ana & Luis":"E.g. Ana & Luis","Escribe aquí unas palabras para los clientes…":"Write a few words for the clients…","Géneros preferidos, volumen, indicaciones especiales, horarios de bloques, etc.":"Preferred genres, volume, special notes, block schedules, etc.","Link (opcional)":"Link (optional)","Monto":"Amount","Nombre del planner / coordinación":"Planner / coordination name","Nombre del platillo":"Dish name","Nombre del proveedor":"Vendor name","Nombre del salón / jardín":"Hall / garden name","Nota del pago":"Payment note","Nueva tarea de esta fase":"New task for this phase","Precio":"Price","Regalo":"Gift","Tienda / marca":"Store / brand","Tipo (ej. Banquete)":"Type (e.g. Catering)","ej. Luna de miel":"e.g. Honeymoon","ej. liquidar 30 ago":"e.g. pay off Aug 30","ej. sin gluten, alergia a nuez":"e.g. gluten-free, nut allergy","ej. transferencia, anticipo":"e.g. transfer, deposit","Pega nombres (uno por linea). Escribe (solo) al final para quien va sin acompanante.":"Paste names (one per line). Write (solo) at the end for anyone without a companion.","Fotógrafo, banquete, DJ, flores…":"Photographer, catering, DJ, flowers…","Tipo de lugar...":"Venue type...","Nota (opcional)":"Note (optional)",
 "Faltan":"Countdown","Resumen del evento":"Event summary","Menú / Platillos":"Menu / Dishes","Layout / Acomodo de mesas":"Layout / Seating","Formato de música (DJ)":"Music format (DJ)","Lista de pendientes (To Do)":"To-Do list","Reporte final para el cliente":"Final client report","Parcial":"Partial","Pendiente":"Pending","Pagado":"Paid","Aún no hay conceptos de presupuesto para desglosar.":"No budget items to break down yet.","¡Todos los confirmados tienen lugar! 🎉":"All confirmed guests are seated! 🎉","Confirmado":"Confirmed","No asistirá":"Not attending","Sin invitar":"Not invited","— Sin lugar —":"— Unseated —","Asignar a…":"Assign to…","Sin proveedores todavía.":"No vendors yet.",
-"Banquete":"Catering","Bebidas":"Drinks","Fotografía y Video":"Photography & Video","Flores y Decoración":"Flowers & Decor","Vestuario":"Attire","Belleza":"Beauty","Papelería":"Stationery","Pastel":"Cake","Transporte":"Transport","Fotografía":"Photography","Maquillaje":"Makeup","Pastelería":"Bakery","Sin categoría":"Uncategorized","Nueva tarea":"New task","Sin nombre":"No name","(sin nombre)":"(no name)","Proveedor":"Vendor"
+"Banquete":"Catering","Bebidas":"Drinks","Fotografía y Video":"Photography & Video","Flores y Decoración":"Flowers & Decor","Vestuario":"Attire","Belleza":"Beauty","Papelería":"Stationery","Pastel":"Cake","Transporte":"Transport","Fotografía":"Photography","Maquillaje":"Makeup","Pastelería":"Bakery","Sin categoría":"Uncategorized","Nueva tarea":"New task","Sin nombre":"No name","(sin nombre)":"(no name)","Proveedor":"Vendor",
+"Estatus de invitados":"Guest status","Por confirmar":"To confirm","personas":"people","Pendientes por completar":"Tasks to complete","Ver To-Do":"View To-Do","Avance de pago":"Payment progress","Wedding Planner":"Wedding Planner","Planner":"Planner",
+"Dinámica":"Activity","Entró":"Arrived","Ya entró":"Checked in","Último minuto":"Last minute","+ Último minuto":"+ Last minute","Nombre del invitado":"Guest name","Confirmación":"Confirmation",
+"Pagar en":"Pay on","¿Cuándo se paga?":"When is it paid?","Día del evento":"Event day","1 semana antes":"1 week before","1 mes antes":"1 month before","Por pagar el día del evento":"To pay on event day","Marca como pagado cada concepto al liquidarlo el día del evento.":"Check each item as paid when settled on the event day.","Sin conceptos por pagar el día del evento.":"No items to pay on the event day.","Personas":"People"
 };
 let LANG='es', _langObs=null;
 function _langSkip(el){ return el && (el.tagName==='SCRIPT'||el.tagName==='STYLE'||(el.classList&&el.classList.contains('material-symbols-outlined'))); }
@@ -2865,7 +3003,7 @@ function setLang(l){
   else { _walkText(document.body,_unTrText); _unTrAttrs(document.body); }
   document.documentElement.lang=l;
   updateLangUI();
-  if(typeof EVENT!=='undefined'&&EVENT){ try{ paintHeader(); setView(currentView()); }catch(e){ console.error(e); } }
+  if(typeof EVENT!=='undefined'&&EVENT){ try{ paintHeader(); setView(currentView()); applyRoleUI(); }catch(e){ console.error(e); } }
 }
 function toggleLang(){ setLang(LANG==='es'?'en':'es'); }
 function updateLangUI(){ const el=document.getElementById('langLbl'); if(el) el.textContent=(LANG==='es'?'English':'Español'); const m=document.getElementById('langLblMini'); if(m) m.textContent=(LANG==='es'?'EN':'ES'); }
@@ -2997,7 +3135,7 @@ function renderObjects(){
 }
 function startObjDrag(e,o,el){
   if(e.button!==undefined && e.button!==0) return;
-  if(isPhone()) return;
+  if(!canMoveLayout()) return;
   e.preventDefault();
   try{ el.setPointerCapture(e.pointerId); }catch(_){}
   const sx=e.clientX,sy=e.clientY,ox=o.x,oy=o.y;
@@ -3068,13 +3206,28 @@ function budgetTotals(){
   const pag=state.payments.reduce((a,p)=>a+(+p.amount||0),0);
   return {pres,pag,pend:pres-pag};
 }
+/* Presupuesto para perfiles sin dinero (WP): solo % y lista de "día del evento" vía RPC (sin montos) */
+let _wpBudget=null;
+async function loadWPBudget(){
+  if(!EVENT || canSeeMoney()){ _wpBudget=null; return; }
+  try{
+    const [{data:prog},{data:list}]=await Promise.all([
+      sb.rpc('wp_budget_progress',{e:EVENT.id}),
+      sb.rpc('wp_paylist',{e:EVENT.id})
+    ]);
+    const p=(prog&&prog[0])||{paid_pct:0,pending_pct:0};
+    _wpBudget={pct:+p.paid_pct||0, pendPct:+p.pending_pct||0, list:list||[]};
+  }catch(e){ console.error('wp budget',e); _wpBudget={pct:0,pendPct:0,list:[]}; }
+}
 function updateBudgetSummary(){
   const t=budgetTotals();
-  const pct=t.pres>0?Math.round(t.pag/t.pres*100):0;
-  const pendPct=t.pres>0?Math.round(t.pend/t.pres*100):0;
+  const money=canSeeMoney();   // solo novios / super_admin ven montos $
+  const pct = money ? (t.pres>0?Math.round(t.pag/t.pres*100):0) : (_wpBudget?_wpBudget.pct:0);
+  const pendPct = money ? (t.pres>0?Math.round(t.pend/t.pres*100):0) : (_wpBudget?_wpBudget.pendPct:0);
   const set=(id,v)=>{const el=document.getElementById(id); if(el) el.textContent=v;};
-  set('bPres',fmtMXN(t.pres)); set('bPag',fmtMXN(t.pag)); set('bPagPct',(t.pres>0?pct+'%':''));
-  set('bPend',fmtMXN(t.pend)); set('bPendPct',(t.pres>0?pendPct+'%':''));
+  set('bPres', money?fmtMXN(t.pres):((pct+pendPct)>0?'100%':'—'));
+  set('bPag', money?fmtMXN(t.pag):(pct+'%')); set('bPagPct', money?(t.pres>0?pct+'%':''):'');
+  set('bPend', money?fmtMXN(t.pend):(pendPct+'%')); set('bPendPct', money?(t.pres>0?pendPct+'%':''):'');
   const f=document.getElementById('bProgFill'); if(f) f.style.width=Math.max(0,Math.min(100,pct))+'%';
   const x=document.getElementById('bProgTxt'); if(x) x.textContent=LANG==='en'?(pct+'% of budget paid'):('Pagado '+pct+'% del presupuesto');
   // dona
@@ -3117,6 +3270,7 @@ function buildExpCard(e){
       +'<input class="exp-cn" type="text" placeholder="Concepto">'
       +'<select class="exp-cat" title="Categoría"></select>'
       +'<select class="exp-prov" title="Proveedor"></select>'
+      +'<label class="exp-f exp-paywhen" title="¿Cuándo se paga?"><span>Pagar en</span><select class="exp-pw"><option value="">—</option><option value="dia_evento">Día del evento</option><option value="semana_antes">1 semana antes</option><option value="mes_antes">1 mes antes</option></select></label>'
       +'<label class="exp-f"><span>Presupuesto</span><input class="exp-pres money" type="number" min="0" step="100"></label>'
       +'<div class="exp-f"><span>Pagado</span><b class="exp-paid"></b></div>'
       +'<div class="exp-f"><span>Pendiente</span><b class="exp-pend"></b></div>'
@@ -3127,6 +3281,7 @@ function buildExpCard(e){
     card.querySelector('.exp-cn').value=e.concepto||'';
     card.querySelector('.exp-cat').innerHTML=catOptions(e.categoria);
     card.querySelector('.exp-prov').innerHTML=provOptions(e.provider_id);
+    const pw=card.querySelector('.exp-pw'); if(pw){ pw.value=e.pay_when||''; pw.addEventListener('change',ev=>{ e.pay_when=ev.target.value||null; mark('budget'); }); }
     card.querySelector('.exp-pres').value=e.presupuesto||0;
     card.querySelector('.exp-paid').textContent=fmtMXN(paid);
     const pendEl=card.querySelector('.exp-pend'); pendEl.textContent=fmtMXN(pend); if(pend<0) pendEl.classList.add('neg');
@@ -3166,7 +3321,7 @@ function renderBudget(){
   exps.forEach(e=>{ const k=e.categoria||''; (groups[k]=groups[k]||[]).push(e); });
   // categorías integradas por el usuario que aún no tienen conceptos → grupo vacío
   (state.shownCats||[]).forEach(c=>{ if(c && !(c in groups)) groups[c]=[]; });
-  if(!Object.keys(groups).length){ list.innerHTML='<div class="exp-empty" style="padding:22px;text-align:center">Aún no hay conceptos. Agrega el primero con “＋ Concepto” o integra categorías.</div>'; updateBudgetSummary(); applyRO(); return; }
+  if(!Object.keys(groups).length){ list.innerHTML='<div class="exp-empty" style="padding:22px;text-align:center">Aún no hay conceptos. Agrega el primero con “＋ Concepto” o integra categorías.</div>'; updateBudgetSummary(); if(!canSeeMoney()) renderBudgetWP(); applyRO(); return; }
   const keys=Object.keys(groups).sort((a,b)=>{
     if(a===''&&b!=='')return 1; if(b===''&&a!=='')return -1;
     const ia=EXP_CATS.indexOf(a), ib=EXP_CATS.indexOf(b);
@@ -3193,7 +3348,45 @@ function renderBudget(){
     list.appendChild(sec);
   });
   updateBudgetSummary();
+  if(!canSeeMoney()) renderBudgetWP();
   applyRO();
+}
+async function toggleExpPaid(id){
+  if(canSeeMoney()){   // novios / super_admin: flujo normal con estado local
+    const e=state.budget.expenses.find(x=>x.id===id); if(!e) return;
+    if(!canEdit('presupuesto')){ toast('No tienes permiso'); return; }
+    e.paid_confirmed=!e.paid_confirmed; mark('budget'); renderBudgetWP(); return;
+  }
+  // Wedding planner (sin acceso a montos): cambia SOLO paid_confirmed vía RPC
+  const item=((_wpBudget&&_wpBudget.list)||[]).find(x=>x.id===id); if(!item) return;
+  const nv=!item.paid_confirmed;
+  const {error}=await sb.rpc('wp_set_expense_paid',{exp_id:id,val:nv});
+  if(error){ toast('No se pudo guardar el pago'); console.error(error); return; }
+  item.paid_confirmed=nv; renderBudgetWP();
+}
+function renderBudgetWP(){
+  const list=document.getElementById('bwpList'); if(!list) return;
+  const EN=LANG==='en';
+  list.innerHTML='';
+  const items=(_wpBudget&&_wpBudget.list)||[];   // datos vía RPC: sin montos
+  if(!items.length){ list.innerHTML='<div class="bwp-empty">'+(EN?'No items to pay on the event day.':'Sin conceptos por pagar el día del evento.')+'</div>'; return; }
+  const provLabel=k=>(k&&k!=='__none')?k:(EN?'No vendor':'Sin proveedor');
+  const byProv={}; items.forEach(e=>{ const k=e.provider_name||'__none'; (byProv[k]=byProv[k]||[]).push(e); });
+  Object.keys(byProv).sort((a,b)=>provLabel(a).localeCompare(provLabel(b))).forEach(k=>{
+    const g=document.createElement('div'); g.className='bwp-group';
+    g.innerHTML='<div class="bwp-group-h"><span class="material-symbols-outlined">storefront</span>'+escH(provLabel(k))+'</div>';
+    byProv[k].forEach(e=>{
+      const paid=!!e.paid_confirmed;
+      const it=document.createElement('div'); it.className='bwp-item';
+      it.innerHTML='<div class="bwp-cn"><b></b><span></span></div>'
+        +'<button class="bwp-paid keep-enabled'+(paid?' on':'')+'"><span class="material-symbols-outlined">'+(paid?'check_circle':'radio_button_unchecked')+'</span>'+(paid?(EN?'Paid':'Pagado'):(EN?'Mark paid':'Marcar pagado'))+'</button>';
+      it.querySelector('.bwp-cn b').textContent=e.concepto||(EN?'(no name)':'(sin nombre)');
+      it.querySelector('.bwp-cn span').textContent=t_cat(e.categoria||'')||'';
+      it.querySelector('.bwp-paid').addEventListener('click',()=>toggleExpPaid(e.id));
+      g.appendChild(it);
+    });
+    list.appendChild(g);
+  });
 }
 function addExpense(cat){ const e={id:uid(),concepto:'',presupuesto:0,provider_id:null,nota:'',categoria:(typeof cat==='string'?cat:'')}; state.budget.expenses.push(e); expandedExp.add(e.id); mark('budget'); renderBudget(); }
 function usedCats(){ const s=new Set(); (state.budget.expenses||[]).forEach(e=>{ if(e.categoria) s.add(e.categoria); }); return s; }
@@ -3233,6 +3426,7 @@ function addCustomCat(){
 }
 function addPayment(id){ const p={id:uid(),expense_id:id,amount:0,pay_date:todayStr(),note:''}; state.payments.push(p); expandedExp.add(id); mark('payments'); renderBudget(); }
 function openPay(){
+  if(!canSeeMoney()){ toast('Solo los novios registran pagos'); return; }
   const sel=document.getElementById('paySel'); sel.innerHTML='';
   if(!state.budget.expenses.length){ toast('Primero agrega un concepto'); return; }
   state.budget.expenses.forEach(e=>{ const o=document.createElement('option'); o.value=e.id; o.textContent=e.concepto||'(sin nombre)'; sel.appendChild(o); });
@@ -3342,16 +3536,23 @@ function renderDash(){
   else if(d===0){ setT('dsDays',EN?'Today!':'¡Hoy!'); setT('dsDaysLbl',''); }
   else { setT('dsDays',Math.abs(d)); setT('dsDaysLbl',EN?(Math.abs(d)===1?'day ago':'days ago'):(Math.abs(d)===1?'día atrás':'días atrás')); }
   setT('dsEventName',(EVENT&&EVENT.couple_names)||(EN?'Your event':'Tu evento'));
-  // invitados
-  const c=invCounts();
-  setT('dsGuests',c.total);
-  setT('dsGuestsSub',EN?(c.si+' confirmed · '+c.inv+' invited'):(c.si+' confirmados · '+c.inv+' con invitación'));
-  // presupuesto
+  // estatus de invitados — por personas (peso): +1 cuenta 2, solo cuenta 1
+  const G=state.guests;
+  const totPer=G.reduce((a,g)=>a+weight(g),0);
+  const okPer=G.filter(g=>g.attendance==='si').reduce((a,g)=>a+weight(g),0);
+  const pendPer=G.filter(g=>g.invitation_sent&&!g.attendance).reduce((a,g)=>a+weight(g),0);
+  setT('dsGuests',totPer); setT('dsGuestsOk',okPer); setT('dsGuestsPend',pendPer);
+  // presupuesto — solo % si el perfil no ve dinero (no novios / no super_admin)
   const t=budgetTotals();
-  const pct=t.pres>0?Math.round(t.pag/t.pres*100):0;
-  setT('dsBudget',fmtMXN(t.pres));
+  const money=canSeeMoney();
+  const pct = money ? (t.pres>0?Math.round(t.pag/t.pres*100):0) : (_wpBudget?_wpBudget.pct:0);
+  const pendPct = money ? (t.pres>0?Math.round(t.pend/t.pres*100):0) : (_wpBudget?_wpBudget.pendPct:0);
+  const bl=document.querySelector('.dstat-budget .dstat-lbl'); if(bl) bl.textContent=money?(EN?'Budget':'Presupuesto'):(EN?'Payment progress':'Avance de pago');
+  setT('dsBudget', money?fmtMXN(t.pres):(pct+'%'));
   const bar=document.getElementById('dsBudgetBar'); if(bar) bar.style.width=Math.max(0,Math.min(100,pct))+'%';
-  setT('dsBudgetSub',EN?(fmtMXN(t.pag)+' paid ('+pct+'%) · '+fmtMXN(t.pend)+' pending'):(fmtMXN(t.pag)+' pagado ('+pct+'%) · '+fmtMXN(t.pend)+' pendiente'));
+  setT('dsBudgetSub', money
+    ? (EN?(fmtMXN(t.pag)+' paid ('+pct+'%) · '+fmtMXN(t.pend)+' pending'):(fmtMXN(t.pag)+' pagado ('+pct+'%) · '+fmtMXN(t.pend)+' pendiente'))
+    : (EN?(pct+'% paid · '+pendPct+'% pending'):(pct+'% pagado · '+pendPct+'% pendiente')) );
   // fases de la boda (feed)
   const fz=document.getElementById('dsFases');
   if(fz){
@@ -3363,12 +3564,36 @@ function renderDash(){
       withTasks.forEach(p=>{
         const c=phaseCounts(p.k); const pc=c.total?Math.round(c.done/c.total*100):0;
         const row=document.createElement('div'); row.className='dphase'+(pc===100?' done':'');
-        row.innerHTML='<div class="dphase-top"><span class="dphase-n">'+p.t+'</span><span class="dphase-c">'+c.done+' / '+c.total+(pc===100?' ✓':'')+'</span></div>'
+        let html='<div class="dphase-top"><span class="dphase-n">'+escH(p.t)+'</span><span class="dphase-c">'+c.done+' / '+c.total+(pc===100?' ✓':'')+'</span></div>'
           +'<div class="dphase-bar"><div style="width:'+pc+'%"></div></div>';
+        if(pc<100){   // fase no cerrada: muestra las actividades pendientes
+          const pend=state.phaseTasks.filter(x=>x.phase===p.k && !x.done);
+          const show=pend.slice(0,4);
+          html+='<ul class="dphase-todos">'+show.map(x=>'<li>'+escH(x.text||'—')+'</li>').join('')
+            +(pend.length>show.length?('<li class="dphase-more">+'+(pend.length-show.length)+(EN?' more':' más')+'</li>'):'')+'</ul>';
+        }
+        row.innerHTML=html;
         row.addEventListener('click',()=>{ _selPhase=p.k; setView('fases'); });
         fz.appendChild(row);
       });
     }
+  }
+  // pendientes (To-Do) con etiqueta por fecha
+  const dtl=document.getElementById('dsTodos');
+  if(dtl){
+    dtl.innerHTML='';
+    const pend=(state.todos||[]).filter(x=>!x.done).slice().sort((a,b)=>{ if(!a.due&&!b.due)return 0; if(!a.due)return 1; if(!b.due)return -1; return a.due<b.due?-1:1; });
+    if(!pend.length){ dtl.innerHTML='<div class="dtl-empty">'+(EN?'No pending tasks 🎉':'Sin pendientes por completar 🎉')+'</div>'; }
+    else pend.slice(0,6).forEach(x=>{
+      const tag=dueTag(x.due);
+      const row=document.createElement('div'); row.className='dtl-row';
+      row.innerHTML='<span class="material-symbols-outlined dtl-ic">radio_button_unchecked</span>'
+        +'<b>'+escH(x.text||'—')+'</b>'
+        +(x.due?('<span class="dtl-meta">'+escH(x.due.split('-').reverse().join('/'))+'</span>'):'')
+        +(tag?('<span class="dtl-tag '+tag.k+'">'+(EN?tag.en:tag.t)+'</span>'):'');
+      row.addEventListener('click',()=>setView('todo'));
+      dtl.appendChild(row);
+    });
   }
   // proveedores
   const pl=document.getElementById('dsProviders');
@@ -3483,7 +3708,7 @@ function setView(v){
   if(v==='invita') renderInvita();
   if(v==='fases') renderFases();
   if(v==='jardin'){ paintVenueBar(); initLayoutGestures(); renderLayoutSummary(); }
-  if(v==='budget') renderBudget();
+  if(v==='budget'){ if(!canSeeMoney()){ renderBudget(); loadWPBudget().then(()=>renderBudget()); } else renderBudget(); }
   if(v==='proveedores') renderProviders();
   if(v==='music') renderMusic();
   if(v==='itin') renderItin();
@@ -3780,8 +4005,17 @@ function addSi(){ state.music.si.push({id:uid(),cancion:"",artista:""}); mark('m
 function addNo(){ state.music.no.push({id:uid(),cancion:"",artista:""}); mark('music'); renderMusic(); }
 
 /* ---------------- itinerario ---------------- */
+function taCell(val,on){
+  const td=document.createElement('td');
+  const ta=document.createElement('textarea'); ta.rows=1; ta.value=val||'';
+  const grow=()=>{ ta.style.height='auto'; ta.style.height=(ta.scrollHeight)+'px'; };
+  ta.addEventListener('input',e=>{ on(e.target.value); mark('itin'); grow(); });
+  td.appendChild(ta); td._ta=ta; td._grow=grow;
+  return td;
+}
 function renderItin(){
   const ib=document.getElementById('itinBody'); ib.innerHTML='';
+  const grows=[];
   state.itin.forEach(r=>{
     const tr=document.createElement('tr'); if(r.done) tr.classList.add('itdone');
     const chk=document.createElement('td'); chk.className='itin-chk';
@@ -3790,11 +4024,12 @@ function renderItin(){
     b.addEventListener('click',()=>{ r.done=!r.done; mark('itin'); renderItin(); });
     chk.appendChild(b); tr.appendChild(chk);
     const h=txtCell(r.hora,v=>r.hora=v); h.querySelector('input').style.textAlign='center'; tr.appendChild(h);
-    const a=txtCell(r.actividad,v=>r.actividad=v); a.className='cinput'; tr.appendChild(a);
-    tr.appendChild(txtCell(r.notas,v=>r.notas=v));
+    const a=taCell(r.actividad,v=>r.actividad=v); a.className='cinput'; tr.appendChild(a); grows.push(a._grow);
+    const nt=taCell(r.notas,v=>r.notas=v); tr.appendChild(nt); grows.push(nt._grow);
     tr.appendChild(delCell(()=>{ state.itin=state.itin.filter(x=>x.id!==r.id); mark('itin'); renderItin(); }));
     ib.appendChild(tr);
   });
+  requestAnimationFrame(()=>grows.forEach(fn=>fn&&fn()));
   const total=state.itin.length, done=state.itin.filter(x=>x.done).length;
   const pct=total?Math.round(done/total*100):0;
   const f=document.getElementById('itinProgFill'); if(f) f.style.width=pct+'%';
@@ -3805,6 +4040,14 @@ function addItin(){ state.itin.push({id:uid(),hora:"",actividad:"",notas:""}); m
 
 /* ---------------- To Do ---------------- */
 function todayStr(){ const d=new Date(); const p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+function dueTag(due){
+  if(!due) return null;
+  if(due<todayStr()) return {t:'Vencido',en:'Overdue',k:'over'};
+  const d=new Date(due+'T00:00:00'), t=new Date(); t.setHours(0,0,0,0);
+  const diff=Math.round((d-t)/86400000);
+  if(diff<=2) return {t:'Por vencer',en:'Due soon',k:'soon'};   // 2 días o menos
+  return null;
+}
 function todoRow(t){
   const div=document.createElement('div'); div.className='todo-item'+(t.done?' done':'');
   div.innerHTML='<button class="tcheck">'+(t.done?'✓':'')+'</button>'
@@ -3895,6 +4138,7 @@ function renderInvStats(){
 }
 function renderInvitados(){
   const body=document.getElementById('invBody'); if(!body) return;
+  if(isWP()){ renderInvWP(); return; }   // el wedding planner ve la tabla operativa
   const q=(document.getElementById('invFilter')?document.getElementById('invFilter').value:'').toLowerCase();
   body.innerHTML='';
   state.guests.filter(g=>g.name.toLowerCase().includes(q)).forEach(g=>{
@@ -3983,6 +4227,63 @@ function renderInvQuick(){
     box.appendChild(it);
   });
 }
+/* ---------------- invitados: vista operativa Wedding Planner ---------------- */
+function toggleCheckin(id){ const g=guestById(id); if(!g) return; g.checkin=!g.checkin; mark('guests'); renderInvitados(); }
+function addLastMinute(){
+  if(!canEdit('invitados')){ toast('No tienes permiso'); return; }
+  const inp=document.getElementById('invWPNew'); const v=(inp&&inp.value.trim())||'';
+  if(!v){ if(inp) inp.focus(); return; }
+  state.guests.push({id:uid(),name:v,plusOne:false,side:null,invitation_sent:true,attendance:'si',civil:false,dinamica:'',checkin:true,last_minute:true});
+  if(inp) inp.value='';
+  mark('guests'); renderInvitados(); renderAll();
+  toast('Invitado de último minuto agregado');
+}
+function wpGuestRow(g){
+  const tr=document.createElement('tr'); if(g.checkin) tr.className='wp-arrived';
+  const t=tableOf(g.id); const invSent=!!g.invitation_sent;
+  tr.innerHTML=
+    '<td class="inv-nm" data-lbl="Invitado"><b></b></td>'
+    +'<td class="wp-per" data-lbl="Personas"><button class="pill '+(g.plusOne?'on':'off')+'" title="1 o 2 personas">'+(g.plusOne?'+1':'Solo')+'</button></td>'
+    +'<td class="c" data-lbl="Lado"><span class="ab"><button class="sd n'+(g.side==='novio'?' on':'')+'">Novio</button><button class="sd v'+(g.side==='novia'?' on':'')+'">Novia</button></span></td>'
+    +'<td class="c" data-lbl="Confirmación">'+(invSent?('<span class="ab"><button class="sd si'+(g.attendance==='si'?' on':'')+'">Sí</button><button class="sd no'+(g.attendance==='no'?' on':'')+'">No</button></span>'):statusPill(g))+'</td>'
+    +'<td class="c" data-lbl="Mesa"><span class="wp-mesa">'+(t?escH(tableLabel(t)):'—')+'</span></td>'
+    +'<td class="c" data-lbl="Civil"><button class="wp-civil'+(g.civil?' on':'')+'" title="Confirmado para civil">'+(g.civil?'1':'—')+'</button></td>'
+    +'<td data-lbl="Dinámica"><input class="inv-wp-din" placeholder="ej. capitán de mesa, peqeñitos"></td>'
+    +'<td class="c" data-lbl="Entró"><button class="wp-checkin'+(g.checkin?' on':'')+'" title="Ya entró">'+(g.checkin?'<span class="material-symbols-outlined">check</span>':'')+'</button></td>';
+  tr.querySelector('.inv-nm b').textContent=g.name||'—';
+  tr.querySelector('.pill').addEventListener('click',()=>togglePlusOne(g.id));
+  tr.querySelector('.sd.n').addEventListener('click',()=>setSide(g.id,'novio'));
+  tr.querySelector('.sd.v').addEventListener('click',()=>setSide(g.id,'novia'));
+  if(invSent){ const si=tr.querySelector('.sd.si'), no=tr.querySelector('.sd.no'); if(si) si.addEventListener('click',()=>setAttendance(g.id,'si')); if(no) no.addEventListener('click',()=>setAttendance(g.id,'no')); }
+  tr.querySelector('.wp-civil').addEventListener('click',()=>toggleCivil(g.id));
+  const din=tr.querySelector('.inv-wp-din'); din.value=g.dinamica||''; din.addEventListener('input',e=>{ g.dinamica=e.target.value; mark('guests'); });
+  tr.querySelector('.wp-checkin').addEventListener('click',()=>toggleCheckin(g.id));
+  return tr;
+}
+function renderInvWP(){
+  const body=document.getElementById('invWPBody'); if(!body) return;
+  const q=(document.getElementById('invWPFilter')?document.getElementById('invWPFilter').value:'').toLowerCase();
+  const all=state.guests.filter(g=>(g.name||'').toLowerCase().includes(q));
+  const considered=all.filter(g=>!g.last_minute);
+  const last=all.filter(g=>g.last_minute);
+  body.innerHTML=''; considered.forEach(g=>body.appendChild(wpGuestRow(g)));
+  const lastBox=document.getElementById('invWPLast');
+  if(lastBox){
+    lastBox.innerHTML='';
+    if(last.length){
+      const h=document.createElement('h3'); h.innerHTML='<span class="material-symbols-outlined">bolt</span>Último minuto ('+last.length+')'; lastBox.appendChild(h);
+      const wrap=document.createElement('div'); wrap.className='inv-wp-tablewrap';
+      const tb=document.createElement('table'); tb.className='btable inv-wp-table';
+      tb.innerHTML='<thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Dinámica</th><th>Entró</th></tr></thead><tbody></tbody>';
+      const tbody=tb.querySelector('tbody'); last.forEach(g=>tbody.appendChild(wpGuestRow(g)));
+      wrap.appendChild(tb); lastBox.appendChild(wrap);
+    }
+  }
+  const cnt=document.getElementById('invWPCount');
+  if(cnt){ const arrived=state.guests.filter(g=>g.checkin).length; const per=state.guests.reduce((a,g)=>a+weight(g),0);
+    cnt.textContent=state.guests.length+' invitados · '+per+' personas · '+arrived+' ya entraron'+(last.length?(' · '+last.length+' último minuto'):''); }
+  applyRO();
+}
 
 /* ---------------- permisos: gate visual de pestañas y edición ---------------- */
 const TAB_OF_VIEW={invitados:'invitados',menu:'invitados',regalos:'invitados',invita:'invitados',fases:'todo',jardin:'layout',budget:'presupuesto',proveedores:'proveedores',music:'musica',itin:'itinerario',todo:'todo'};
@@ -3991,9 +4292,22 @@ function applyTabVisibility(){
     const view=b.dataset.v;
     if(view==='dash'||view==='reporte'){ b.style.display=''; return; }
     const tab=TAB_OF_VIEW[view];
-    const vis = view==='jardin' ? (canRead('layout')||canRead('invitados')) : canRead(tab);
+    let vis;
+    if(view==='jardin') vis=canRead('layout')||canRead('invitados');
+    else if(view==='budget') vis=canRead('presupuesto')||isWP();   // WP ve presupuesto (solo %/pagado vía RPC)
+    else vis=canRead(tab);
     b.style.display=vis?'':'none';
   });
+  applyRoleUI();
+}
+function applyRoleUI(){
+  const wp=isWP();
+  document.body.classList.toggle('wp-mode', wp);
+  document.body.classList.toggle('layout-ro', !!EVENT && !canEdit('layout'));   // oculta herramientas del layout a quien solo orienta
+  document.body.classList.toggle('no-money', !!EVENT && !canSeeMoney());          // esconde montos $ a perfiles sin dinero
+  const br=document.querySelector('.sn-brand h1');
+  if(br){ const txt=wp?'Planner':'Planeación de Eventos'; if(br.textContent!==txt){ delete br.__es; br.textContent=txt; if(LANG==='en') applyLangTo(br); } }
+  const badge=document.getElementById('wpBadge'); if(badge) badge.style.display=wp?'':'none';
 }
 function applyRO(){
   // deshabilita edición en paneles sin permiso (para roles restringidos)
@@ -4092,6 +4406,7 @@ async function openEvent(ev){
   const m=await sb.from('event_members').select('role,permissions').eq('event_id',ev.id).eq('user_id',ME.id).maybeSingle();
   MEMBER=m.data||null;
   await loadEventIntoState(ev);
+  await loadWPBudget();   // % y lista de pagos del día (solo perfiles sin dinero)
   paintHeader(); applyTabVisibility();
   renderAll();
   // aterriza en el Dashboard (resumen del evento)
