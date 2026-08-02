@@ -1483,17 +1483,18 @@ body.view-reporte .app,body.view-reporte .dash{display:none}
   .inv-table .sd,.inv-table .yn,.inv-table .pill{padding:4px 7px;font-size:11px}
   .inv-table .mesa-sel{width:100%;max-width:100%;padding:4px;font-size:11.5px}
   .inv-table .stpill{font-size:10px;padding:3px 6px;white-space:normal}
-  .inv-table th:nth-child(1),.inv-table td:nth-child(1){width:16%}
-  .inv-table th:nth-child(2),.inv-table td:nth-child(2){width:9%}
-  .inv-table th:nth-child(3),.inv-table td:nth-child(3){width:8%}
+  .inv-table th:nth-child(1),.inv-table td:nth-child(1){width:15%}
+  .inv-table th:nth-child(2),.inv-table td:nth-child(2){width:8%}
+  .inv-table th:nth-child(3),.inv-table td:nth-child(3){width:7%}
   .inv-table th:nth-child(4),.inv-table td:nth-child(4){width:6%}
   .inv-table th:nth-child(5),.inv-table td:nth-child(5){width:6%}
-  .inv-table th:nth-child(6),.inv-table td:nth-child(6){width:9%}
-  .inv-table th:nth-child(7),.inv-table td:nth-child(7){width:11%}
+  .inv-table th:nth-child(6),.inv-table td:nth-child(6){width:8%}
+  .inv-table th:nth-child(7),.inv-table td:nth-child(7){width:10%}
   .inv-table th:nth-child(8),.inv-table td:nth-child(8){width:6%}
-  .inv-table th:nth-child(9),.inv-table td:nth-child(9){width:9%}
-  .inv-table th:nth-child(10),.inv-table td:nth-child(10){width:15%}
-  .inv-table th:nth-child(11),.inv-table td:nth-child(11){width:5%}
+  .inv-table th:nth-child(9),.inv-table td:nth-child(9){width:6%}
+  .inv-table th:nth-child(10),.inv-table td:nth-child(10){width:8%}
+  .inv-table th:nth-child(11),.inv-table td:nth-child(11){width:14%}
+  .inv-table th:nth-child(12),.inv-table td:nth-child(12){width:6%}
 }
 @media(max-width:860px){ .invita-inner{grid-template-columns:1fr} .invita-tools{position:static} }
 
@@ -1803,7 +1804,7 @@ body.no-money #budgetWP{display:block}
 /* tablet: la tabla de invitados puede desplazarse si no cabe */
 @media (min-width:761px) and (max-width:1024px){
   .inv-tablewrap{overflow-x:auto}
-  .inv-table{min-width:820px}
+  .inv-table{min-width:900px}
   .fcol{font-size:11px;padding:4px 5px}
 }
 
@@ -2163,7 +2164,7 @@ body.no-money #budgetWP{display:block}
     <div class="inv-tablewrap" id="invListWrap" style="display:none">
       <table class="btable inv-table">
         <thead>
-          <tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Mesa</th><th>Civil</th><th>Estatus</th><th>Teléfono</th><th></th></tr>
+          <tr><th>Nombre</th><th>Lado</th><th>Acompanante</th><th>Invitacion</th><th>Lista</th><th>Asistencia</th><th>Mesa</th><th>Civil</th><th>Hotel</th><th>Estatus</th><th>Teléfono</th><th></th></tr>
           <tr class="inv-filter-row">
             <th class="fnamecol"></th>
             <th><select class="fcol" onchange="setInvFilter('side',this.value)"><option value="">Lado</option><option value="novio">Novio</option><option value="novia">Novia</option></select></th>
@@ -2173,6 +2174,7 @@ body.no-money #budgetWP{display:block}
             <th><select class="fcol" onchange="setInvFilter('att',this.value)"><option value="">Todos</option><option value="si">Sí</option><option value="no">No</option></select></th>
             <th><select class="fcol" id="fMesa" onchange="setInvFilter('mesa',this.value)"><option value="">Mesa</option></select></th>
             <th><select class="fcol" onchange="setInvFilter('civil',this.value)"><option value="">Todos</option><option value="1">Sí</option><option value="0">No</option></select></th>
+            <th><select class="fcol" onchange="setInvFilter('hotel',this.value)"><option value="">Todos</option><option value="1">Sí</option><option value="0">No</option></select></th>
             <th><select class="fcol" onchange="setInvFilter('status',this.value)"><option value="">Estatus</option><option value="ok">Confirmado</option><option value="pend">Pendiente</option><option value="no">No asistirá</option><option value="sin">Sin invitar</option></select></th>
             <th></th>
             <th><button class="fclear" onclick="clearInvFilters()" title="Limpiar filtros">×</button></th>
@@ -2192,7 +2194,7 @@ body.no-money #budgetWP{display:block}
       </div>
       <div class="inv-wp-tablewrap">
         <table class="btable inv-wp-table">
-          <thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Dinámica</th><th>Entró</th><th>Teléfono</th></tr></thead>
+          <thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Hotel</th><th>Dinámica</th><th>Entró</th><th>Teléfono</th></tr></thead>
           <tbody id="invWPBody"></tbody>
         </table>
       </div>
@@ -2596,7 +2598,7 @@ async function syncGuests(){
     id:g.id, event_id:EVENT.id, name:g.name, plus_one:!!g.plusOne,
     side:g.side||null, invitation_sent:!!g.invitation_sent, list:g.list||null,
     attendance:g.attendance||null, menu_choice:g.menu_choice||'', dietary:g.dietary||'', civil:!!g.civil,
-    checkin:!!g.checkin, dinamica:g.dinamica||'', last_minute:!!g.last_minute, phone:g.phone||'', sort_order:i })));
+    checkin:!!g.checkin, dinamica:g.dinamica||'', last_minute:!!g.last_minute, phone:g.phone||'', hotel:!!g.hotel, sort_order:i })));
 }
 async function syncTables(){
   if(!canEdit('layout')) return;
@@ -2686,7 +2688,7 @@ async function loadEventIntoState(ev){
     sb.from('registry_items').select('*').eq('event_id',eid).order('sort_order'),
     sb.from('phase_tasks').select('*').eq('event_id',eid).order('sort_order')
   ]);
-  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||'',civil:!!r.civil,checkin:!!r.checkin,dinamica:r.dinamica||'',last_minute:!!r.last_minute,phone:r.phone||''}));
+  state.guests=(g.data||[]).map(r=>({id:r.id,name:r.name,plusOne:r.plus_one,side:r.side,invitation_sent:r.invitation_sent,list:r.list,attendance:r.attendance,menu_choice:r.menu_choice||'',dietary:r.dietary||'',civil:!!r.civil,checkin:!!r.checkin,dinamica:r.dinamica||'',last_minute:!!r.last_minute,phone:r.phone||'',hotel:!!r.hotel}));
   const seatsByTable={}; (s.data||[]).forEach(r=>{ (seatsByTable[r.table_id]=seatsByTable[r.table_id]||[]).push(r.guest_id); });
   state.tables=(t.data||[]).map(r=>({id:r.id,num:r.num,name:r.name,cap:r.cap,shape:r.shape,x:+r.x,y:+r.y,novios:r.is_novios,seats:seatsByTable[r.id]||[]}));
   const paidBy={}; (pay.data||[]).forEach(p=>{ paidBy[p.expense_id]=(paidBy[p.expense_id]||0)+(+p.amount||0); });
@@ -3039,7 +3041,7 @@ const T_EN={
 "Estatus de invitados":"Guest status","Por confirmar":"To confirm","personas":"people","Pendientes por completar":"Tasks to complete","Ver To-Do":"View To-Do","Avance de pago":"Payment progress","Wedding Planner":"Wedding Planner","Planner":"Planner",
 "Dinámica":"Activity","Entró":"Arrived","Ya entró":"Checked in","Último minuto":"Last minute","+ Último minuto":"+ Last minute","Nombre del invitado":"Guest name","Confirmación":"Confirmation",
 "Pagar en":"Pay on","¿Cuándo se paga?":"When is it paid?","Día del evento":"Event day","1 semana antes":"1 week before","1 mes antes":"1 month before","Por pagar el día del evento":"To pay on event day","Marca como pagado cada concepto al liquidarlo el día del evento.":"Check each item as paid when settled on the event day.","Sin conceptos por pagar el día del evento.":"No items to pay on the event day.","Personas":"People",
-"Teléfono":"Phone","Todos":"All","Sin coincidencias con el filtro.":"No matches for the filter.","Limpiar filtros":"Clear filters","Llamar":"Call"
+"Teléfono":"Phone","Todos":"All","Sin coincidencias con el filtro.":"No matches for the filter.","Limpiar filtros":"Clear filters","Llamar":"Call","Hotel":"Hotel"
 };
 let LANG='es', _langObs=null;
 function _langSkip(el){ return el && (el.tagName==='SCRIPT'||el.tagName==='STYLE'||(el.classList&&el.classList.contains('material-symbols-outlined'))); }
@@ -4181,10 +4183,10 @@ function guestStatus(g){
 }
 function statusPill(g){ const s=guestStatus(g); return '<span class="stpill st-'+s.k+'">'+s.t+'</span>'; }
 /* ---- filtros interactivos de invitados ---- */
-let invFilters={side:'',plus:'',inv:'',list:'',att:'',mesa:'',civil:'',status:''};
+let invFilters={side:'',plus:'',inv:'',list:'',att:'',mesa:'',civil:'',hotel:'',status:''};
 function setInvFilter(k,v){ invFilters[k]=v; renderInvitados(); }
 function clearInvFilters(){
-  invFilters={side:'',plus:'',inv:'',list:'',att:'',mesa:'',civil:'',status:''};
+  invFilters={side:'',plus:'',inv:'',list:'',att:'',mesa:'',civil:'',hotel:'',status:''};
   const f=document.getElementById('invFilter'); if(f) f.value='';
   renderInvitados();
 }
@@ -4201,6 +4203,8 @@ function invMatch(g,q){
   if(f.att && (g.attendance||'')!==f.att) return false;
   if(f.civil==='1' && !g.civil) return false;
   if(f.civil==='0' && g.civil) return false;
+  if(f.hotel==='1' && !g.hotel) return false;
+  if(f.hotel==='0' && g.hotel) return false;
   if(f.status && guestStatus(g).k!==f.status) return false;
   if(f.mesa){ if(f.mesa==='__none'){ if(isSeated(g.id)) return false; } else { const t=tableOf(g.id); if(!t||t.id!==f.mesa) return false; } }
   return true;
@@ -4265,6 +4269,7 @@ function renderInvitados(){
       +'<td class="c att" data-lbl="Asistencia">'+(invSent?('<span class="ab"><button class="sd si'+(g.attendance==='si'?' on':'')+'">Sí</button><button class="sd no'+(g.attendance==='no'?' on':'')+'">No</button></span>'):'<span class="muted">—</span>')+'</td>'
       +'<td class="c" data-lbl="Mesa"><select class="mesa-sel">'+mesaOptions(g.id)+'</select></td>'
       +'<td class="c" data-lbl="Civil"><button class="yn '+(g.civil?'yes':'')+'">'+(g.civil?'Sí':'No')+'</button></td>'
+      +'<td class="c" data-lbl="Hotel"><button class="yn hotel-yn '+(g.hotel?'yes':'')+'">'+(g.hotel?'Sí':'No')+'</button></td>'
       +'<td class="c" data-lbl="Estatus">'+statusPill(g)+'</td>'
       +'<td class="c phone-c" data-lbl="Teléfono"><span class="tel-cell"><input class="cn tel-in" type="tel" placeholder="Teléfono"><a class="tel-call" title="Llamar"><span class="material-symbols-outlined">call</span></a></span></td>'
       +'<td class="c" data-lbl=""><button class="brow-del" title="Eliminar">×</button></td>';
@@ -4272,6 +4277,7 @@ function renderInvitados(){
     wireTel(tr,g);
     tr.querySelector('.mesa-sel').addEventListener('change',e=>assignFromCard(g.id,e.target.value));
     tr.querySelectorAll('.yn')[1].addEventListener('click',()=>toggleCivil(g.id));
+    tr.querySelector('.hotel-yn').addEventListener('click',()=>toggleHotel(g.id));
     tr.querySelector('.sd.n').addEventListener('click',()=>setSide(g.id,'novio'));
     tr.querySelector('.sd.v').addEventListener('click',()=>setSide(g.id,'novia'));
     tr.querySelector('.pill').addEventListener('click',()=>togglePlusOne(g.id));
@@ -4303,6 +4309,7 @@ function setInvMode(m){
 function tableLabel(t){ return t.novios?(LANG==='en'?'Head table':'Mesa de novios'):((LANG==='en'?'Table ':'Mesa ')+t.num); }
 function mesaOptions(gid){ const t=tableOf(gid); let o='<option value="">— Sin lugar —</option>'; state.tables.forEach(tb=>{ o+='<option value="'+tb.id+'"'+(t&&t.id===tb.id?' selected':'')+'>'+escH(tableLabel(tb))+'</option>'; }); return o; }
 function toggleCivil(id){ const g=guestById(id); if(!g) return; g.civil=!g.civil; mark('guests'); renderInvitados(); }
+function toggleHotel(id){ const g=guestById(id); if(!g) return; g.hotel=!g.hotel; mark('guests'); renderInvitados(); }
 function assignFromCard(gid,val){ if(val) assign(gid,val); else unassign(gid); renderInvitados(); }
 function renderInvCards(q){
   const box=document.getElementById('invCards'); if(!box) return;
@@ -4362,6 +4369,7 @@ function wpGuestRow(g){
     +'<td class="c" data-lbl="Confirmación">'+(invSent?('<span class="ab"><button class="sd si'+(g.attendance==='si'?' on':'')+'">Sí</button><button class="sd no'+(g.attendance==='no'?' on':'')+'">No</button></span>'):statusPill(g))+'</td>'
     +'<td class="c" data-lbl="Mesa"><span class="wp-mesa">'+(t?escH(tableLabel(t)):'—')+'</span></td>'
     +'<td class="c" data-lbl="Civil"><button class="wp-civil'+(g.civil?' on':'')+'" title="Confirmado para civil">'+(g.civil?'1':'—')+'</button></td>'
+    +'<td class="c" data-lbl="Hotel"><button class="yn wp-hotel '+(g.hotel?'yes':'')+'" title="Hotel">'+(g.hotel?'Sí':'No')+'</button></td>'
     +'<td data-lbl="Dinámica"><input class="inv-wp-din" placeholder="ej. capitán de mesa, peqeñitos"></td>'
     +'<td class="c" data-lbl="Entró"><button class="wp-checkin'+(g.checkin?' on':'')+'" title="Ya entró">'+(g.checkin?'<span class="material-symbols-outlined">check</span>':'')+'</button></td>'
     +'<td class="c phone-c" data-lbl="Teléfono"><span class="tel-cell"><input class="cn tel-in" type="tel" placeholder="Teléfono"><a class="tel-call" title="Llamar"><span class="material-symbols-outlined">call</span></a></span></td>';
@@ -4371,6 +4379,7 @@ function wpGuestRow(g){
   tr.querySelector('.sd.v').addEventListener('click',()=>setSide(g.id,'novia'));
   if(invSent){ const si=tr.querySelector('.sd.si'), no=tr.querySelector('.sd.no'); if(si) si.addEventListener('click',()=>setAttendance(g.id,'si')); if(no) no.addEventListener('click',()=>setAttendance(g.id,'no')); }
   tr.querySelector('.wp-civil').addEventListener('click',()=>toggleCivil(g.id));
+  tr.querySelector('.wp-hotel').addEventListener('click',()=>toggleHotel(g.id));
   const din=tr.querySelector('.inv-wp-din'); din.value=g.dinamica||''; din.addEventListener('input',e=>{ g.dinamica=e.target.value; mark('guests'); });
   tr.querySelector('.wp-checkin').addEventListener('click',()=>toggleCheckin(g.id));
   wireTel(tr,g);
@@ -4390,7 +4399,7 @@ function renderInvWP(){
       const h=document.createElement('h3'); h.innerHTML='<span class="material-symbols-outlined">bolt</span>Último minuto ('+last.length+')'; lastBox.appendChild(h);
       const wrap=document.createElement('div'); wrap.className='inv-wp-tablewrap';
       const tb=document.createElement('table'); tb.className='btable inv-wp-table';
-      tb.innerHTML='<thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Dinámica</th><th>Entró</th><th>Teléfono</th></tr></thead><tbody></tbody>';
+      tb.innerHTML='<thead><tr><th>Invitado</th><th>Personas</th><th>Lado</th><th>Confirmación</th><th>Mesa</th><th>Civil</th><th>Hotel</th><th>Dinámica</th><th>Entró</th><th>Teléfono</th></tr></thead><tbody></tbody>';
       const tbody=tb.querySelector('tbody'); last.forEach(g=>tbody.appendChild(wpGuestRow(g)));
       wrap.appendChild(tb); lastBox.appendChild(wrap);
     }
