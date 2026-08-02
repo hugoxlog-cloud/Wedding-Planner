@@ -2638,7 +2638,7 @@ async function syncRegistry(){
 }
 async function syncPhases(){
   if(!canEdit('todo')) return;
-  await syncRows('phase_tasks', state.phaseTasks.map((r,i)=>({id:r.id,event_id:EVENT.id,phase:r.phase||'p12',text:r.text||'',done:!!r.done,sort_order:i})));
+  await syncRows('phase_tasks', state.phaseTasks.map((r,i)=>({id:r.id,event_id:EVENT.id,phase:r.phase||'f1',text:r.text||'',done:!!r.done,sort_order:i})));
 }
 async function flush(){
   if(!EVENT) return;
@@ -2701,8 +2701,8 @@ async function loadEventIntoState(ev){
   state.objects=(lo.data||[]).map(r=>({id:r.id,kind:r.kind,label:r.label,x:+r.x,y:+r.y,w:+r.w,h:+r.h,rotation:+r.rotation,z:r.z}));
   state.providers=(pr.data||[]).map(r=>({id:r.id,name:r.name,type:r.type,phone:r.phone,email:r.email,contact_person:r.contact_person,notes:r.notes}));
   state.registry=(rg.data||[]).map(r=>({id:r.id,name:r.name,store:r.store,price:+r.price||0,url:r.url,status:r.status||'pendiente',notes:r.notes}));
-  state.phaseTasks=(pf.data||[]).map(r=>({id:r.id,phase:r.phase||'p12',text:r.text||'',done:!!r.done}));
-  state.shownCats=[];
+  state.phaseTasks=(pf.data||[]).map(r=>({id:r.id,phase:r.phase||'f1',text:r.text||'',done:!!r.done}));
+  state.shownCats=Array.isArray(ev.custom_cats)?ev.custom_cats.slice():[];   // categorías integradas (persistidas en el evento)
 }
 
 /* ---------------- helpers ---------------- */
@@ -2777,7 +2777,7 @@ function addNovios(){
     else { g.plusOne=false; const prev=tableOf(g.id); if(prev) prev.seats=prev.seats.filter(x=>x!==g.id); }
     return g;
   }
-  const cn=(EVENT&&EVENT.couple_names)?EVENT.couple_names.split(/[&y]/i).map(s=>s.trim()).filter(Boolean):[];
+  const cn=(EVENT&&EVENT.couple_names)?EVENT.couple_names.split(/\s*&\s*|\s+y\s+/i).map(s=>s.trim()).filter(Boolean):[];
   const j=ensureGuest(cn[0]||"Novia"), h=ensureGuest(cn[1]||"Novio");
   const t={id:uid(), num:nextNum(), name:"Novios", novios:true, cap:2, shape:'round', x:1166, y:1132, seats:[j.id,h.id]};
   state.tables.push(t);
@@ -3095,7 +3095,7 @@ async function liveRefresh(){
   if(!EVENT) return;
   const ae=document.activeElement, typing=ae&&(ae.tagName==='INPUT'||ae.tagName==='TEXTAREA'||ae.isContentEditable);
   if(_dragging||typing||_dirty.size>0||_flushing){ scheduleLiveRefresh(); return; } // no pisar edición/guardado local en curso
-  if(Date.now()-_lastLocalWrite<2500) return;                            // ignora el eco de mi propio guardado
+  if(Date.now()-_lastLocalWrite<2500){ scheduleLiveRefresh(); return; }   // ignora el eco de mi propio guardado, pero reintenta para no perder cambios remotos
   const wrap=document.querySelector('.garden-wrap'); const sx=wrap?wrap.scrollLeft:0, sy=wrap?wrap.scrollTop:0;
   try{
     const keepCats=(state.shownCats||[]).slice();   // categorías integradas sin conceptos (solo cliente)
@@ -3307,11 +3307,18 @@ function catIcon(c){ c=(c||'').toLowerCase();
   if(/transp|auto/.test(c))return'directions_car';
   return'sell';
 }
+function allCats(){
+  const s=[]; const add=c=>{ if(c && !s.includes(c)) s.push(c); };
+  EXP_CATS.forEach(add);
+  (state.budget.expenses||[]).forEach(e=>add(e.categoria));   // categorías ya usadas
+  (state.shownCats||[]).forEach(add);                          // categorías integradas/personalizadas
+  return s;
+}
 function catOptions(sel){
   const cur=sel||'';
+  const list=allCats(); if(cur && !list.includes(cur)) list.push(cur);
   let opts='<option value="">Sin categoría</option>';
-  const extra=cur&&!EXP_CATS.includes(cur)?[cur]:[];
-  EXP_CATS.concat(extra).forEach(c=>{ opts+='<option value="'+escH(c)+'"'+(c===cur?' selected':'')+'>'+escH(c)+'</option>'; });
+  list.forEach(c=>{ opts+='<option value="'+escH(c)+'"'+(c===cur?' selected':'')+'>'+escH(c)+'</option>'; });
   return opts;
 }
 function provOptions(sel){
@@ -3464,22 +3471,28 @@ function renderCatChips(){
     box.appendChild(b);
   });
 }
+let _catT=null;
+function saveCats(){
+  if(!EVENT || !canEdit('presupuesto')) return;   // persiste las categorías integradas en el evento
+  if(_catT) clearTimeout(_catT);
+  _catT=setTimeout(async()=>{ _lastLocalWrite=Date.now(); if(EVENT) EVENT.custom_cats=(state.shownCats||[]).slice(); const {error}=await sb.from('events').update({custom_cats:state.shownCats||[]}).eq('id',EVENT.id); _lastLocalWrite=Date.now(); if(error) console.error('custom_cats',error); },400);
+}
 function toggleCat(c){
-  if(!canEdit('budget')){toast('No tienes permiso');return;}
+  if(!canEdit('presupuesto')){toast('No tienes permiso');return;}
   const used=usedCats();
   if(used.has(c)){ toast('Esta categoría ya tiene conceptos'); return; }
   state.shownCats=state.shownCats||[];
   const i=state.shownCats.indexOf(c);
   if(i>=0) state.shownCats.splice(i,1); else state.shownCats.push(c);
-  renderCatChips();
+  saveCats(); renderCatChips();
 }
 function addCustomCat(){
-  if(!canEdit('budget')){toast('No tienes permiso');return;}
+  if(!canEdit('presupuesto')){toast('No tienes permiso');return;}
   const inp=document.getElementById('catCustom'); const v=(inp&&inp.value.trim())||''; if(!v) return;
   state.shownCats=state.shownCats||[];
   if(!state.shownCats.includes(v) && !usedCats().has(v)) state.shownCats.push(v);
   if(inp) inp.value='';
-  renderCatChips();
+  saveCats(); renderCatChips();
 }
 function addPayment(id){ const p={id:uid(),expense_id:id,amount:0,pay_date:todayStr(),note:''}; state.payments.push(p); expandedExp.add(id); mark('payments'); renderBudget(); }
 function openPay(){
@@ -4514,7 +4527,7 @@ async function openEvent(ev){
   renderAll();
   // aterriza en el Dashboard (resumen del evento)
   setView('dash');
-  const umb=document.querySelector('.um-btn'); if(umb) umb.style.display=canManageUsers()?'':'none';
+  document.querySelectorAll('.um-btn').forEach(b=>b.style.display=canManageUsers()?'':'none');
   document.getElementById('app-shell').style.display='';
   subscribeRealtime();
 }
@@ -4621,9 +4634,19 @@ async function deleteUserUI(userId,email){
 function renderUsersList(){
   const box=document.getElementById('usersList'); if(!box) return;
   const isSuper=PROFILE.platform_role==='super_admin';
-  box.innerHTML=ALLUSERS.map(u=>'<div class="urow"><div class="uinfo"><b>'+escH(u.email||'(sin correo)')+'</b><span>'+escH(u.full_name||'')+' · '+u.platform_role+'</span></div>'
-    +(isSuper?('<div class="uacts"><button onclick="resetPwUI(\''+u.id+'\',\''+escH(u.email)+'\')">Reset</button><button class="danger" onclick="deleteUserUI(\''+u.id+'\',\''+escH(u.email)+'\')">Borrar</button></div>'):'')
-    +'</div>').join('') || '<div class="um-empty">Sin usuarios.</div>';
+  box.innerHTML='';
+  if(!ALLUSERS.length){ box.innerHTML='<div class="um-empty">Sin usuarios.</div>'; return; }
+  ALLUSERS.forEach(u=>{
+    const row=document.createElement('div'); row.className='urow';
+    row.innerHTML='<div class="uinfo"><b></b><span></span></div>'+(isSuper?'<div class="uacts"><button class="u-reset">Reset</button><button class="danger u-del">Borrar</button></div>':'');
+    row.querySelector('.uinfo b').textContent=u.email||'(sin correo)';
+    row.querySelector('.uinfo span').textContent=(u.full_name||'')+' · '+u.platform_role;
+    if(isSuper){
+      row.querySelector('.u-reset').addEventListener('click',()=>resetPwUI(u.id,u.email));
+      row.querySelector('.u-del').addEventListener('click',()=>deleteUserUI(u.id,u.email));
+    }
+    box.appendChild(row);
+  });
 }
 function emailOf(uid){ const u=ALLUSERS.find(x=>x.id===uid); return u?u.email:uid; }
 function effPerm(m,tab){ const ov=m.permissions?m.permissions[tab]:null; return ov||defaultPerm(m.role,tab); }
